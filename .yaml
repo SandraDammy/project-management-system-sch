@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+      - master  # Adjust as needed
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  appName: 'realestate365'  # Your Azure App Service name
+  azureServiceConnection: 'realestateconnection'  # Your Azure DevOps Service Connection
+  nodeVersion: '20'
+  buildDirectory: 'build'
+
+steps:
+# Install Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '$(nodeVersion)'
+  displayName: 'Install Node.js'
+
+# Install dependencies
+- script: |
+    npm install
+  displayName: 'Install Dependencies'
+
+# Build React App
+- script: |
+    npm run build
+  displayName: 'Build React App'
+
+# Publish build artifacts (only contents of `build/`, not the folder itself)
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(buildDirectory)'  # This makes sure we deploy only the contents
+    includeRootFolder: false
+    archiveFile: '$(Build.ArtifactStagingDirectory)/build.zip'
+  displayName: 'Archive Build Files'
+
+# Deploy only `build/` contents directly into `site/wwwroot/`
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '$(azureServiceConnection)'
+    appName: '$(appName)'
+    package: '$(Build.ArtifactStagingDirectory)/build.zip'  # Deploy only contents
+  displayName: 'Deploy to Azure App Service'
