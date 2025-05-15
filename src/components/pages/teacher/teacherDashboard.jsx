@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SchoolDashboard = () => {
+const TeacherDashboard = () => {
   return (
     <div>
       SchoolDashboard
@@ -8,5 +8,5 @@ const SchoolDashboard = () => {
   )
 }
 
-export default SchoolDashboard
+export default TeacherDashboard
 
