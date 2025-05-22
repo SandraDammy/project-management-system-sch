@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 5px;
+    color: var(--black);
+    padding: 10px;
+}
+
+.userImage {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userDetail {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 1.125rem;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.0375rem;
+}
+
+.userMail {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.03rem;
+}
+
