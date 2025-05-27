@@ -16,7 +16,6 @@ const ProjectActivityModal = ({ onClose }) => {
   const [image, setImage] = useState(null);
   const [codeFile, setCodeFile] = useState(null);
   const [link, setLink] = useState("");
-  const [commit, setCommit] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -28,7 +27,6 @@ const ProjectActivityModal = ({ onClose }) => {
       data.append("chapter", chapter);
       data.append("title", title);
       data.append("description", description);
-      data.append("commit", commit);
 
       // Optional fields
       if (file) data.append("file", file);
@@ -139,16 +137,6 @@ const ProjectActivityModal = ({ onClose }) => {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe this chapter's content..."
                 required
-              />
-            </div>
-
-            <div className={styles.titleText}>
-              <label>Commit Message</label>
-              <input
-                type="text"
-                value={commit}
-                onChange={(e) => setCommit(e.target.value)}
-                placeholder="e.g. Added intro chapter"
               />
             </div>
 

@@ -1,0 +1,15 @@
+header {
+  background-color: var(--white);
+  box-shadow: var(--search-bg);
+  width: 100%;
+  z-index: var(--z-fixed);
+  margin-bottom: 0.5rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5rem;
+  height: 3.5rem;
+}

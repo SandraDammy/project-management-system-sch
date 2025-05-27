@@ -1,16 +1,14 @@
 import React from "react";
 import Banner from "../../common/banner/banner";
-import styles from "./student.module.css"
+import styles from "./student.module.css";
 
 const StudentDashboard = () => {
   return (
     <div className={styles.wrapper}>
-      <Banner title={"Dashboard"}/>
+      <div className={styles.banner}>
+        <Banner title={"Dashboard"} />
+      </div>
       <h1 className="text-2xl font-bold">Student Dashboard</h1>
-    
-    
-    
-    
     </div>
   );
 };

@@ -1,0 +1,56 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  padding: 0rem 1rem;
+  background-color: var(--blue);
+  border-radius: 10px;
+  color: var(--search-bg);
+}
+
+.subBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.projectProfile {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.projectTitle {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  color: var(--blue);
+}
+
+.projectBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-justify: auto;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.projectBody p {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.projectBody strong {
+  font-weight: 600;
+  color: var(--lightBlack);
+}

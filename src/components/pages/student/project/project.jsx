@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "../student.module.css";
 import ProjectTable from "../../../common/table/projectTable";
-import BannerTitle from "../../../common/banner/bannerTitle";
 import Button from "../../../common/button/button";
 import CreateProjectModal from "../../../modal/createProjectModal";
+import Banner from "../../../common/banner/banner";
 
 const Project = () => {
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -28,34 +28,34 @@ const Project = () => {
   const tableData = [
     {
       projectName: "Smart Solar System",
-      projectType: "Single",
+      projectType: "Final Year Project",
       courseCode: "EEE404",
       courseName: "Power Systems",
       lecturerName: "Dr. Adebayo",
-      activityStatus: "Approved",
+      projectStatus: "Approved",
     },
     {
       projectName: "AI Tutor",
-      projectType: "Group",
+      projectType: "Class Project",
       courseCode: "CSE503",
       courseName: "Artificial Intelligence",
       lecturerName: "Prof. Johnson",
-      activityStatus: "Review",
+      projectStatus: "Review",
     },
     {
       projectName: "Mobile Attendance",
-      projectType: "Single",
+      projectType: "Final Year Project",
       courseCode: "CSC401",
       courseName: "Mobile Computing",
       lecturerName: "Dr. Yusuf",
-      activityStatus: "Pending",
+      projectStatus: "Pending",
     },
   ];
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
-        <BannerTitle title={"Project"} />
+        <Banner title={"Project"} />
         <div className={styles.subBanner}>
           <Button
             title={"Create Project"}

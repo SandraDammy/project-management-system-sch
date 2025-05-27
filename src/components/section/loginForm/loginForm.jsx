@@ -46,21 +46,18 @@ const LoginForm = () => {
             />
           </div>
 
- <div className={styles.termPwd}>
-  <span className={styles.forgotPwd}>Forgot Password?</span>
-</div>
-
-
+          <div className={styles.termPwd}>
+            <span className={styles.forgotPwd}>Forgot Password?</span>
+          </div>
 
           <div className={styles.btn}>
             <Button title="Sign in" className="btnLarge" type="submit" />
 
-           <div className={styles.divider}>
-  <span className={styles.line}></span>
-  <span className={styles.dividerText}>or</span>
-  <span className={styles.line}></span>
-</div>
-
+            <div className={styles.divider}>
+              <span className={styles.line}></span>
+              <span className={styles.dividerText}>or</span>
+              <span className={styles.line}></span>
+            </div>
 
             <Button
               title="Continue with Google"

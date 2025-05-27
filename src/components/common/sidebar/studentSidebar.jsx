@@ -7,7 +7,7 @@ import Activity from "../../../Assets/Image/activity.png";
 import Profile from "../../../Assets/Image/profile.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 
-const Sidebar = () => {
+const StudentSidebar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation(); // ✅ Get current location path
 
@@ -53,19 +53,7 @@ const Sidebar = () => {
 
           <li className={styles.sidebarItem}>
             <Link
-              to="/student/activity"
-              className={`${styles.sidebarLink} ${
-                location.pathname === "/activity" ? styles.active : ""
-              }`}
-            >
-              <img src={Activity} alt="Activity" className={styles.icon} />
-              My Activity
-            </Link>
-          </li>
-
-          <li className={styles.sidebarItem}>
-            <Link
-              to="student/profile"
+              to="/student/profile"
               className={`${styles.sidebarLink} ${
                 location.pathname === "/profile" ? styles.active : ""
               }`}
@@ -80,4 +68,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default StudentSidebar;

@@ -66,24 +66,26 @@ const ProjectProfile = () => {
   // Dummy from create project activity
 
   const dummyActivities = [
-  {
-    chapter: "Chapter One",
-    title: "Introduction",
-    description: "Overview of solar energy and its potential for sustainable development.",
-    commit: "Initial draft completed",
-    uploadedBy: "James Fa",
-    date: "2025-05-10",
-    link: ["ref1.pdf", "ref2.pdf"],
-  },
-  {
-    chapter: "Chapter Two",
-    title: "Literature Review",
-    description: "Reviewed scholarly articles on smart grid systems and energy efficiency.",
-    commit: "Second update",
-    uploadedBy: "James Fa",
-    date: "2025-05-17",
-    link: ["ref3.pdf"],
-  },
+    {
+      chapter: "Chapter One",
+      title: "Introduction",
+      description:
+        "Overview of solar energy and its potential for sustainable development.",
+      commit: "Initial draft completed",
+      uploadedBy: "James Fa",
+      date: "2025-05-10",
+      link: ["ref1.pdf", "ref2.pdf"],
+    },
+    {
+      chapter: "Chapter Two",
+      title: "Literature Review",
+      description:
+        "Reviewed scholarly articles on smart grid systems and energy efficiency.",
+      commit: "Second update",
+      uploadedBy: "James Fa",
+      date: "2025-05-17",
+      link: ["ref3.pdf"],
+    },
     {
       chapter: "Chapter Three",
       title: "Implementation and Testing",
@@ -145,15 +147,19 @@ const ProjectProfile = () => {
         </div>
       </div>
 
-     {dummyActivities.map((activity, index) => (
-        <ActivityCard key={index} activity={activity} onView={handleViewActivity} />
+      {dummyActivities.map((activity, index) => (
+        <ActivityCard
+          key={index}
+          activity={activity}
+          onView={handleViewActivity}
+        />
       ))}
 
       {showProjectActivity && (
         <ProjectActivityModal onClose={handleCloseCreateProjectActivity} />
       )}
 
-         {showViewActivity && (
+      {showViewActivity && (
         <ViewActivityModal
           activity={showViewActivity}
           onClose={handleCloseViewModal}

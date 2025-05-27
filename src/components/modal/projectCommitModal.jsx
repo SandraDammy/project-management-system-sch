@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
+import Button from "../common/button/button";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const ViewActivityModal = ({ onClose, activity }) => {
+const ProjectCommitModal = ({ onClose, activity = {} }) => {
+  const navigate = useNavigate();
+  const [commit, setCommit] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const data = new FormData();
+      data.append("commit", commit);
+
+      const response = await fetch("/api/project-activity", {
+        method: "POST",
+        body: data,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit project activity.");
+      }
+
+      toast.success("Project activity submitted successfully!", {
+        position: "top-right",
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (err) {
+      toast.error("Error submitting project. Please try again.", {
+        position: "top-right",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalBody}>
@@ -11,8 +51,8 @@ const ViewActivityModal = ({ onClose, activity }) => {
         </div>
         <div className={styles.modalContainer}>
           <h2>View Project Activity</h2>
-          <div className={styles.body}>
-                <div className={styles.details}>
+          <form className={styles.body} onSubmit={handleSubmit}>
+            <div className={styles.details}>
               <div className={styles.section}>
                 <div className={styles.titleText}>
                   <p>Chapter</p>
@@ -55,15 +95,30 @@ const ViewActivityModal = ({ onClose, activity }) => {
                 {activity.description || "Not provided"}
               </div>
             </div>
+
             <div className={styles.titleText}>
-              <p>Commit Message</p>
-              <div className={styles.textarea}>{activity.commit || "Not provided"}</div>
+              <label>Commit Message</label>
+              <input
+                type="text"
+                value={commit}
+                onChange={(e) => setCommit(e.target.value)}
+                placeholder="e.g. Added intro chapter"
+              />
             </div>
-          </div>
+
+            <div className={styles.btn}>
+              <Button
+                title={loading ? "Submitting..." : "Submit"}
+                className="btnLarge"
+                disabled={loading}
+                type="submit"
+              />
+            </div>
+          </form>
         </div>
       </div>
     </div>
   );
 };
 
-export default ViewActivityModal;
+export default ProjectCommitModal;

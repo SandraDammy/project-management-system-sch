@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 import styles from "./table.module.css";
 import { Link } from "react-router-dom";
 
-const ActivityTable = ({ headers, data }) => {
+const TeacherProjectTable = ({ headers, data }) => {
   const getStatusColor = (status) => {
     const lowerCaseStatus = status.toLowerCase();
     switch (lowerCaseStatus) {
@@ -16,7 +16,6 @@ const ActivityTable = ({ headers, data }) => {
         return "";
     }
   };
-
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -41,7 +40,11 @@ const ActivityTable = ({ headers, data }) => {
                         {value}
                       </span>
                     ) : (
-                      <Link to={`/student/activity/activityProfile/${encodeURIComponent(row.projectName)}`}>
+                      <Link
+                        to={`/teacher/project/projectProfile/${encodeURIComponent(
+                          row.projectName
+                        )}`}
+                      >
                         <span>{value}</span>
                       </Link>
                     )}
@@ -55,4 +58,4 @@ const ActivityTable = ({ headers, data }) => {
   );
 };
 
-export default ActivityTable;
+export default TeacherProjectTable

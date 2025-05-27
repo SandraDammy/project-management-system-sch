@@ -84,7 +84,7 @@ const CreateProjectModal = ({ onClose }) => {
                   />
                 </div>
                 <div className={styles.titleText}>
-                  <label>RegistrationNo:</label>
+                  <label>Registration No:</label>
                   <input
                     type="text"
                     name="registrationNo"

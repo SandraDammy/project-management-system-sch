@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+  background-color: yellow;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5rem;
+  padding-top: 5rem;
+  gap: 2rem;
+  width: 60%;
+}
+
+.title {
+  color: var(--TS-Black, #373435);
+  font-size: 67px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 79px;
+}
