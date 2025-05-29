@@ -1,15 +1,35 @@
-header {
+.header {
   background-color: var(--white);
-  box-shadow: var(--search-bg);
-  width: 100%;
-  z-index: var(--z-fixed);
-  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  padding: 0rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 5rem;
-  height: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--logo-text);
+}
+
+.searchContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+  max-width: 600px;
+  margin: 1rem;
+}
+
+.loginButton {
+  display: flex;
+  align-items: center;
 }

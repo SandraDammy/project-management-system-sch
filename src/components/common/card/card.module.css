@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border: 1px solid var(--search-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s;
+  gap: 1rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.viewTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.viewTitle h3 {
+  color: var(--black);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.viewTitle .department {
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.viewTitle p {
+  color: var(--tertiary-text);
+  font-size: 0.95rem;
+}
+
+
+
+.viewButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}

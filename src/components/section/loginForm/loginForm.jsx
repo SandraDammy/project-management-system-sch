@@ -12,7 +12,9 @@ const LoginForm = () => {
       alert("Please enter your email and password.");
       return;
     }
+
     console.log("Login submitted", { email, password });
+    // Perform login logic here
   };
 
   return (
@@ -61,12 +63,12 @@ const LoginForm = () => {
 
             <Button
               title="Continue with Google"
-              className="btnLargeBorder"
+              className="btnPrimary"
               type="button"
             />
             <Button
               title="Continue with SAML SSO"
-              className="btnLargeBorder"
+              className="btnPrimary"
               type="button"
             />
           </div>

@@ -10,6 +10,9 @@ import TeacherLayout from "../layouts/teacherLayout";
 import TeacherDashboard from "../pages/teacher/teacherDashboard";
 import TeacherProject from "../pages/teacher/project/teacherProject";
 import TeacherProjectProfile from "../pages/teacher/project/teacherProjectProfile";
+import AllProject from "../pages/project/allProject";
+import ViewProject from "../pages/project/viewProject";
+import ProjectLayout from "../layouts/projectLayout";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
@@ -47,8 +50,20 @@ const AppRoutes = () => {
   // ]);
 
   const routes = useRoutes([
-    { path: "/", element: <LandingPage /> },
     { path: "/login", element: <Login /> },
+
+    {
+      path: "/",
+      element: <ProjectLayout />, // <-- Layout includes navbar + footer
+      children: [
+        { path: "", element: <LandingPage /> },
+        { path: "/projects", element: <AllProject /> },
+        {
+          path: "projects/:projectName",
+          element: <ViewProject />,
+        },
+      ],
+    },
 
     {
       path: "/student",
@@ -60,7 +75,7 @@ const AppRoutes = () => {
           path: "project/projectProfile/:projectName",
           element: <ProjectProfile />,
         },
-        {path: "profile", element: <ProfileSetting/>,},
+        { path: "profile", element: <ProfileSetting /> },
       ],
     },
 
@@ -72,7 +87,7 @@ const AppRoutes = () => {
         { path: "project", element: <TeacherProject /> },
         {
           path: "project/projectProfile/:projectName",
-          element: <TeacherProjectProfile/>,
+          element: <TeacherProjectProfile />,
         },
       ],
     },

@@ -59,7 +59,7 @@ const Project = () => {
         <div className={styles.subBanner}>
           <Button
             title={"Create Project"}
-            className={"btnWhite"}
+            className={"btnCreate"}
             onClick={handleCreateProject}
           />
         </div>

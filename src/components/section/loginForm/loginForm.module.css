@@ -1,146 +1,119 @@
 .loginFormContainer {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  height: 100%;
-  margin: 5rem;
+  width: 100%;
+  max-width: 480px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background-color: var(--search-bg);
+  border-radius: 1.5rem; 
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 .loginBanner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  text-align: center;
   color: var(--black);
-  gap: 1rem;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .loginBanner h1 {
-  font-family: Poppins, sans-serif;
-  font-size: 2.5rem;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: -0.075rem;
-  font-weight: bolder;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.05rem;
+  margin-bottom: 0.5rem;
 }
 
 .loginBanner p {
-  font-family: Poppins, sans-serif;
-  font-size: 1.5rem;
-  font-style: normal;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.045rem;
-  text-align: center;
+  letter-spacing: -0.03rem;
+  color: var(--text);
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
+  gap: 1.5rem;
   width: 100%;
-  color: var(--black);
-  margin-bottom: 2.5rem;
-  gap: 2rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  gap: 1.25rem;
 }
 
 .formLabel {
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  width: 100%;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
 }
 
 .form input {
   width: 100%;
-  padding: 1rem 1rem;
+  padding: 0.875rem 1rem;
   border: 1px solid var(--line);
-  border-radius: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
   background-color: transparent;
-  margin: 0.3rem 0rem;
   color: var(--black);
-  font-family: Poppins, sans-serif;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.0375rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form input:focus {
+  border-color: var(--color-primary-MP50);
+  outline: none;
+  background-color: var(--search-bg);
 }
 
 .termPwd {
-  display: flex;
-  justify-content: flex-end; /* Aligns "Forgot Password?" to the right */
-  align-items: center;
-  width: 100%;
-  color: var(--form-text);
-  font-family: Poppins, sans-serif;
+  text-align: right;
   font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: -0.02625rem;
+  color: var(--text);
   cursor: pointer;
 }
 
-.termPwd .forgotPwd {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+.forgotPwd {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
 }
 
 .forgotPwd:hover {
-  color: var(--color-primary-MP50);
+  color: var(--error);
   text-decoration: underline;
 }
 
 .error {
   color: var(--error);
+  font-size: 0.875rem;
+  margin-top: -0.5rem;
 }
 
 .btn {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .divider {
   display: flex;
   align-items: center;
-  width: 100%;
   gap: 1rem;
-  margin: 0.5rem 0;
-  font-family: Poppins, sans-serif;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.05rem;
+  color: var(--line);
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .dividerText {
   white-space: nowrap;
-  color: var(--line); 
 }
 
 .line {
-  flex: 1;
+  flex-grow: 1;
   height: 1px;
   background-color: var(--line);
 }
-

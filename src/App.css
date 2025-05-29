@@ -4,14 +4,16 @@
   --white: #ffffff;
   --background: #f4f5f7;
   --black: #262626;
-  --primary-bg: #ffedf7;
   --secondary-text: #373435;
   --tertiary-text: #8b8b8b;
   --sub-text: #323232;
   --search-bg: #f3f4f6;
   --search-text: #858585;
-  --green: #45916d;
-  --blue: #78c1ec;
+ --green: #006e44;        
+  --blue: #50a9dd;
+  --yellow: #fbc541;        
+  --logo-text: #007c57;   
+  --light-blue: #a1d6f1; 
   --greenText: #55aa55;
   --line: #857a85;
   --text: #27252b;
@@ -19,8 +21,6 @@
   --subBody: #aa80aa;
   --lightBlack: #515a59;
   --error: #FF0000;
-
-
 }
 
 * {
@@ -30,23 +30,52 @@
 }
 
 html {
-  color: var(--almostBlack);
-  background: var(--veryLightGray);
+  background-color: var(--background);
+  color: var(--black);
   font-family: "Manrope", sans-serif;
-  text-wrap: wrap;
   font-size: 1rem;
-  width: 100%;
   height: 100%;
-  overflow: hidden;
+  width: 100%;
+  overflow-x: hidden; 
+  overflow-y: auto; 
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  padding: 0;
   font-family: "Poppins", sans-serif;
   background-color: var(--background);
+  color: var(--black);
   height: 100%;
   width: 100%;
-  color: var(--black);
+}
+
+
+.LandingPage {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.footer {
+  background-color: var(--logo-text);
+  color: var(--white);
+  text-align: center;
+  padding: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .loginPage {
@@ -109,5 +138,35 @@ body {
   padding: 1.5rem 2.5rem;
   background-color: var(--background);
   gap: 2rem;
+}
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--search-bg); 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--logo-text);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--greenText);
+}
+
+
+
+/* Optional: Rounded corners on track and thumb */
+::-webkit-scrollbar-track-piece:start {
+  border-radius: 10px 10px 0 0;
+}
+
+::-webkit-scrollbar-track-piece:end {
+  border-radius: 0 0 10px 10px;
 }
 
