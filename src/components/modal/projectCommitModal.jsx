@@ -71,9 +71,7 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
                 <div className={styles.titleText}>
                   <p>Link</p>
                   <strong>
-                    {Array.isArray(activity.link) && activity.link.length > 0
-                      ? activity.link.join(", ")
-                      : "Not provided"}
+                    {activity.link || "Not provided"}
                   </strong>
                 </div>
               </div>
@@ -109,7 +107,7 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
             <div className={styles.btn}>
               <Button
                 title={loading ? "Submitting..." : "Submit"}
-                className="btnLarge"
+                className="createLarge"
                 disabled={loading}
                 type="submit"
               />

@@ -58,13 +58,12 @@ const ProjectProfile = () => {
     courseName: "Project Design and Implementation",
     faculty: "Engineering",
     semester: "Second Semester",
-    lectureName: "Dr. Jane Smith",
+    supervisor: "Dr. Jane Smith",
     courseCode: "EEE401",
     programme: "B.Eng Electrical/Electronics Engineering",
   };
 
   // Dummy from create project activity
-
   const dummyActivities = [
     {
       chapter: "Chapter One",
@@ -74,7 +73,13 @@ const ProjectProfile = () => {
       commit: "Initial draft completed",
       uploadedBy: "James Fa",
       date: "2025-05-10",
-      link: ["ref1.pdf", "ref2.pdf"],
+      document: "chapter1.pdf",
+      presentationFile: "chapter1_presentation.pptx",
+      image: "solar_intro.jpg",
+      video: "chapter1_intro.mp4",
+      music: "intro_theme.mp3",
+      codeFile: "intro_code.zip",
+      link: "https://www.google.com",
     },
     {
       chapter: "Chapter Two",
@@ -84,7 +89,11 @@ const ProjectProfile = () => {
       commit: "Second update",
       uploadedBy: "James Fa",
       date: "2025-05-17",
-      link: ["ref3.pdf"],
+      document: "chapter2.pdf",
+      presentationFile: "literature_review.pptx",
+      image: "review_chart.png",
+      video: "review_discussion.mp4",
+      link: "https://drive.google.com/file/d/12345/view",
     },
     {
       chapter: "Chapter Three",
@@ -92,9 +101,14 @@ const ProjectProfile = () => {
       description:
         "Describes the coding process, test cases, and evaluation of the prototype.",
       commit: "Implemented real-time data logging and output display",
+      uploadedBy: "James Fa",
+      date: "2025-05-24",
+      document: "chapter3.pdf",
+      codeFile: "implementation_code.zip",
+      video: "testing_demo.mp4",
+      music: "test_results.mp3",
     },
   ];
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
@@ -102,7 +116,7 @@ const ProjectProfile = () => {
         <div className={styles.subBanner}>
           <Button
             title={"Create Project Activity"}
-            className={"btnWhite"}
+            className={"btnCreate"}
             onClick={handleCreateProjectActivity}
           />
         </div>
@@ -139,7 +153,7 @@ const ProjectProfile = () => {
             <strong>Course Code:</strong> {defaultProject.courseCode}
           </p>
           <p>
-            <strong>Lecturer's Name:</strong> {defaultProject.lectureName}
+            <strong>Lecturer's Name:</strong> {defaultProject.supervisor}
           </p>
           <p>
             <strong>Project Type:</strong> {defaultProject.projectType}

@@ -25,7 +25,7 @@ const { chapter, title, description, commit } = activity;
 
         <div className={styles.btn}>
           <Button
-            className={"btnWhite"}
+            className={"btnCreate"}
             title={"View"}
             onClick={() => onView(activity)}
           />

@@ -18,7 +18,7 @@ const CreateProjectModal = ({ onClose }) => {
     courseName: "",
     faculty: "",
     semester: "",
-    lectureName: "",
+    supervisor: "",
     courseCode: "",
     programme: "",
     registrationNo: "",
@@ -122,14 +122,29 @@ const CreateProjectModal = ({ onClose }) => {
               <div className={styles.section}>
                 <div className={styles.titleText}>
                   <label>Project Type:</label>
-                  <input
-                    type="text"
+                  <select
+                    id="projectType"
                     name="projectType"
-                    placeholder="Enter your project type"
-                    value={formData.projectType}
+                    value={formData.programme}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="">Select Project Type</option>
+                    <option value="research">Research Project</option>
+                    <option value="design">Design & Implementation</option>
+                    <option value="caseStudy">Case Study</option>
+                    <option value="softwareDevelopment">
+                      Software Development
+                    </option>
+                    <option value="hardwareProject">
+                      Hardware-Based Project
+                    </option>
+                    <option value="thesis">Thesis / Dissertation</option>
+                    <option value="finalYear">Final Year Project</option>
+                    <option value="fieldWork">
+                      Field Work / Industrial Training Report
+                    </option>
+                  </select>
                 </div>
                 <div className={styles.titleText}>
                   <label>Student Name:</label>
@@ -172,9 +187,9 @@ const CreateProjectModal = ({ onClose }) => {
                   <label>Lecturer Name:</label>
                   <input
                     type="text"
-                    name="lectureName"
+                    name="supervisor"
                     placeholder="Enter lecturer name"
-                    value={formData.lectureName}
+                    value={formData.supervisor}
                     onChange={handleChange}
                     required
                   />
@@ -193,14 +208,39 @@ const CreateProjectModal = ({ onClose }) => {
 
                 <div className={styles.titleText}>
                   <label>Programme:</label>
-                  <input
-                    type="text"
+                  <select
+                    id="programme"
                     name="programme"
-                    placeholder="Enter programme"
                     value={formData.programme}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="">Select Academic Program</option>
+                    <option value="bsc">B.Sc. – Bachelor of Science</option>
+                    <option value="ba">B.A. – Bachelor of Arts</option>
+                    <option value="beng">
+                      B.Eng. – Bachelor of Engineering
+                    </option>
+                    <option value="btech">
+                      B.Tech. – Bachelor of Technology
+                    </option>
+                    <option value="bed">B.Ed. – Bachelor of Education</option>
+                    <option value="llb">LLB – Bachelor of Law</option>
+                    <option value="hnd">HND – Higher National Diploma</option>
+                    <option value="nd">ND – National Diploma</option>
+                    <option value="msc">M.Sc. – Master of Science</option>
+                    <option value="ma">M.A. – Master of Arts</option>
+                    <option value="meng">M.Eng. – Master of Engineering</option>
+                    <option value="mba">
+                      MBA – Master of Business Administration
+                    </option>
+                    <option value="phd">Ph.D. – Doctor of Philosophy</option>
+                    <option value="pgd">PGD – Postgraduate Diploma</option>
+                    <option value="nce">
+                      NCE – Nigeria Certificate in Education
+                    </option>
+                    <option value="foundation">Foundation / Pre-degree</option>
+                  </select>
                 </div>
 
                 <div className={styles.titleText}>
@@ -219,7 +259,7 @@ const CreateProjectModal = ({ onClose }) => {
             <div className={styles.btn}>
               <Button
                 title={loading ? "Submitting..." : "Submit"}
-                className="btnLarge"
+                 className="createLarge"
                 disabled={loading}
                 type="submit"
               />

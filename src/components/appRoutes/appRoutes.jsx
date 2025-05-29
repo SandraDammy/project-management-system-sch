@@ -13,6 +13,8 @@ import TeacherProjectProfile from "../pages/teacher/project/teacherProjectProfil
 import AllProject from "../pages/project/allProject";
 import ViewProject from "../pages/project/viewProject";
 import ProjectLayout from "../layouts/projectLayout";
+import ViewTeacherProject from "../pages/teacher/project/viewTeacherProject";
+import ViewStudentProject from "../pages/student/project/viewStudentProject";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
@@ -75,6 +77,7 @@ const AppRoutes = () => {
           path: "project/projectProfile/:projectName",
           element: <ProjectProfile />,
         },
+        { path: ":projectName", element: <ViewStudentProject /> },
         { path: "profile", element: <ProfileSetting /> },
       ],
     },
@@ -89,6 +92,7 @@ const AppRoutes = () => {
           path: "project/projectProfile/:projectName",
           element: <TeacherProjectProfile />,
         },
+        { path: ":projectName", element: <ViewTeacherProject /> },
       ],
     },
 

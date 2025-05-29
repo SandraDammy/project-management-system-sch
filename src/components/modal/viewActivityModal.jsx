@@ -12,11 +12,15 @@ const ViewActivityModal = ({ onClose, activity }) => {
         <div className={styles.modalContainer}>
           <h2>View Project Activity</h2>
           <div className={styles.body}>
-                <div className={styles.details}>
+            <div className={styles.details}>
               <div className={styles.section}>
                 <div className={styles.titleText}>
                   <p>Chapter</p>
                   <strong>{activity.chapter || "Not provided"}</strong>
+                </div>
+                <div className={styles.titleText}>
+                  <p>Upload Presentation File</p>
+                  <strong>{activity.presentationFile || "Not provided"}</strong>
                 </div>
                 <div className={styles.titleText}>
                   <p>Upload Image</p>
@@ -29,18 +33,28 @@ const ViewActivityModal = ({ onClose, activity }) => {
                   <strong>{activity.title || "Not provided"}</strong>
                 </div>
                 <div className={styles.titleText}>
+                  <p>Upload Video</p>
+                  <strong>{activity.video || "Not provided"}</strong>
+                </div>
+                <div className={styles.titleText}>
                   <p>Link</p>
-                  <strong>
+                  <strong>{activity.link || "Not provided"}</strong>
+
+                  {/* <strong>
                     {Array.isArray(activity.link) && activity.link.length > 0
                       ? activity.link.join(", ")
                       : "Not provided"}
-                  </strong>
+                  </strong> */}
                 </div>
               </div>
               <div className={styles.section}>
                 <div className={styles.titleText}>
-                  <p>Upload Document</p>
-                  <strong>{activity.file || "Not provided"}</strong>
+                  <p>Upload Document (PDF)</p>
+                  <strong>{activity.document || "Not provided"}</strong>
+                </div>
+                <div className={styles.titleText}>
+                  <p>Upload Music</p>
+                  <strong>{activity.music || "Not provided"}</strong>
                 </div>
                 <div className={styles.titleText}>
                   <p>Upload Code File</p>
@@ -57,7 +71,9 @@ const ViewActivityModal = ({ onClose, activity }) => {
             </div>
             <div className={styles.titleText}>
               <p>Commit Message</p>
-              <div className={styles.textarea}>{activity.commit || "Not provided"}</div>
+              <div className={styles.textarea}>
+                {activity.commit || "Not provided"}
+              </div>
             </div>
           </div>
         </div>

@@ -12,8 +12,11 @@ const ProjectActivityModal = ({ onClose }) => {
   const [chapter, setChapter] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState(null);
+  const [presentationFile, setPresentationFile] = useState(null);
   const [image, setImage] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [music, setMusic] = useState(null);
+  const [document, setDocument] = useState(null);
   const [codeFile, setCodeFile] = useState(null);
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,10 +30,11 @@ const ProjectActivityModal = ({ onClose }) => {
       data.append("chapter", chapter);
       data.append("title", title);
       data.append("description", description);
-
-      // Optional fields
-      if (file) data.append("file", file);
+      if (presentationFile) data.append("presentation", presentationFile);
       if (image) data.append("image", image);
+      if (video) data.append("video", video);
+      if (music) data.append("music", music);
+      if (document) data.append("document", document);
       if (codeFile) data.append("codeFile", codeFile);
       if (link) data.append("link", link);
 
@@ -81,6 +85,14 @@ const ProjectActivityModal = ({ onClose }) => {
                   />
                 </div>
                 <div className={styles.titleText}>
+                  <label>Upload Presentation File</label>
+                  <input
+                    type="file"
+                    accept=".ppt,.pptx,.pdf"
+                    onChange={(e) => setPresentationFile(e.target.files[0])}
+                  />
+                </div>
+                <div className={styles.titleText}>
                   <label>Upload Image</label>
                   <input
                     type="file"
@@ -102,6 +114,14 @@ const ProjectActivityModal = ({ onClose }) => {
                   />
                 </div>
                 <div className={styles.titleText}>
+                  <label>Upload Video</label>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={(e) => setVideo(e.target.files[0])}
+                  />
+                </div>
+                <div className={styles.titleText}>
                   <label>Link</label>
                   <input
                     type="url"
@@ -114,10 +134,19 @@ const ProjectActivityModal = ({ onClose }) => {
 
               <div className={styles.section}>
                 <div className={styles.titleText}>
-                  <label>Upload Document</label>
+                  <label>Upload Document (PDF)</label>
                   <input
                     type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
+                    accept="application/pdf"
+                    onChange={(e) => setDocument(e.target.files[0])}
+                  />
+                </div>
+                <div className={styles.titleText}>
+                  <label>Upload Music</label>
+                  <input
+                    type="file"
+                    accept="audio/*"
+                    onChange={(e) => setMusic(e.target.files[0])}
                   />
                 </div>
                 <div className={styles.titleText}>
@@ -143,7 +172,7 @@ const ProjectActivityModal = ({ onClose }) => {
             <div className={styles.btn}>
               <Button
                 title={loading ? "Submitting..." : "Submit"}
-                className="btnLarge"
+                className="createLarge"
                 disabled={loading}
                 type="submit"
               />

@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "./project.module.css";
 import { useParams } from "react-router-dom";
+import styles from "../teacher.module.css";
+import Banner from "../../../common/banner/banner";
 
-const ViewProject = () => {
+const ViewTeacherProject = () => {
   const { projectName } = useParams();
 
   const projectDetails = {
@@ -32,15 +33,10 @@ const ViewProject = () => {
         </a>
       </div>
     ) : null;
-
   return (
-    <div className={styles.project}>
+    <div className={styles.wrapper}>
       <div className={styles.banner}>
-        <h1>{decodeURIComponent(projectName)}</h1>
-        <div className={styles.text}>
-          <p>({projectDetails.projectType})</p>
-          <p>{projectDetails.program}</p>
-        </div>
+        <Banner title={decodeURIComponent(projectName)} />
       </div>
 
       <div className={styles.projectProfile}>
@@ -90,4 +86,4 @@ const ViewProject = () => {
   );
 };
 
-export default ViewProject;
+export default ViewTeacherProject;

@@ -96,9 +96,21 @@
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   color: var(--lightBlack);
+  cursor: pointer;
 }
 
 .titleText input {
+  width: 100%;
+  height: 45px;
+  padding: 0.75rem;
+  border: 1px solid var(--lightBlack);
+  border-radius: 6px;
+  background-color: transparent;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+}
+.titleText select {
   width: 100%;
   height: 45px;
   padding: 0.75rem;

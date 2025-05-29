@@ -62,7 +62,7 @@
 
 .titleJob {
   font-family: "Poppins", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -96,9 +96,10 @@
   resize: none;
   overflow: auto;
   font-family: "Poppins", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.0375rem;
+  color: var(--tertiary-text);
 }

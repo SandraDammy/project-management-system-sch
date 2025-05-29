@@ -9,18 +9,18 @@
   --sub-text: #323232;
   --search-bg: #f3f4f6;
   --search-text: #858585;
- --green: #006e44;        
+  --green: #006e44;
   --blue: #50a9dd;
-  --yellow: #fbc541;        
-  --logo-text: #007c57;   
-  --light-blue: #a1d6f1; 
+  --yellow: #fbc541;
+  --logo-text: #007c57;
+  --light-blue: #a1d6f1;
   --greenText: #55aa55;
   --line: #857a85;
   --text: #27252b;
   --body: #99cccc;
   --subBody: #aa80aa;
   --lightBlack: #515a59;
-  --error: #FF0000;
+  --error: #ff0000;
 }
 
 * {
@@ -36,8 +36,8 @@ html {
   font-size: 1rem;
   height: 100%;
   width: 100%;
-  overflow-x: hidden; 
-  overflow-y: auto; 
+  overflow-x: hidden;
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
@@ -51,11 +51,10 @@ body {
   width: 100%;
 }
 
-
 .LandingPage {
   background-color: var(--background);
   color: var(--text);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -147,7 +146,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--search-bg); 
+  background: var(--search-bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -159,8 +158,6 @@ body {
   background-color: var(--greenText);
 }
 
-
-
 /* Optional: Rounded corners on track and thumb */
 ::-webkit-scrollbar-track-piece:start {
   border-radius: 10px 10px 0 0;
@@ -169,4 +166,3 @@ body {
 ::-webkit-scrollbar-track-piece:end {
   border-radius: 0 0 10px 10px;
 }
-
