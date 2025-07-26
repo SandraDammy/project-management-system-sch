@@ -1,0 +1,48 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.wrapperTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  width: 100%;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.15rem solid var(--blue);
+  padding-bottom: 0.5rem;
+}
+.preTxt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   color: var(--black);
+  font-size: 1.75rem;
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.06rem;
+}
+
+.wrapperBack {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

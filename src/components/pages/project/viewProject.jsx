@@ -1,10 +1,15 @@
 import React from "react";
 import styles from "./project.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "../../common/button/button";
 
 const ViewProject = () => {
   const { projectName } = useParams();
+  const navigate = useNavigate();
 
+  const handleGoBack = () => {
+    navigate("/");
+  };
   const projectDetails = {
     author: "Jane Doe",
     department: "Mass Communication",
@@ -85,6 +90,14 @@ const ViewProject = () => {
           {renderLink("Video", projectDetails.video)}
           {renderLink("Music", projectDetails.music)}
         </div>
+      </div>
+
+      <div className={styles.backArrow}>
+        <Button
+          title="Go Back"
+          className="btnPrimary"
+          onClick={handleGoBack}
+        />
       </div>
     </div>
   );

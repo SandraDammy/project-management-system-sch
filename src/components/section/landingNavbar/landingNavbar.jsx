@@ -3,22 +3,25 @@ import styles from "./landingNavbar.module.css";
 import Button from "../../common/button/button";
 import Input from "../../common/input/input";
 import Select from "../../common/select/select";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import RoleDropdown from "../../common/roleDropdown/roleDropdown";
 
 const LandingNavbar = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  // const handleLogin = () => {
+  //   navigate("/login");
+  // };
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <div className={styles.logo}>UNILAG Projects</div>
+        <Link to="/" className={styles.logo}>
+          UNILAG Projects
+        </Link>
 
         <div className={styles.searchContainer}>
-          <Input placeholder="Search projects..."  className="input"/>
+          <Input placeholder="Search projects..." className="input" />
           <Select
             options={[
               { value: "", label: "Select Department" },
@@ -30,7 +33,8 @@ const LandingNavbar = () => {
         </div>
 
         <div className={styles.loginButton}>
-          <Button title="Login" className="btnLarge" onClick={handleLogin} />
+          {/* <Button title="Login" className="btnLarge" onClick={handleLogin} /> */}
+          <RoleDropdown />
         </div>
       </nav>
     </header>

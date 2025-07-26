@@ -10,6 +10,7 @@ const TeacherLayout = () => {
         <TeacherSidebar/>
       </div>
       <div className="container-body">
+        Teacher Page
         <Navbar />
         <Outlet /> {/* Renders the child route content */}
       </div>

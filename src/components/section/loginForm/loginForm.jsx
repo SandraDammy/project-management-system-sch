@@ -1,20 +1,54 @@
 import React, { useState } from "react";
 import styles from "./loginForm.module.css";
 import Button from "../../common/button/button";
+import ErrorMsg from "../../common/errorMsg/errorMsg";
+import { post } from "../../context/api";
+import { baseUrl } from "../../context/baseUrl";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ role }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Please enter your email and password.");
+      setErrorMsg("Please enter your email and password.");
       return;
     }
 
-    console.log("Login submitted", { email, password });
-    // Perform login logic here
+    try {
+      const response = await post(`${baseUrl}Authentications/UserLogin`, {
+        email,
+        password,
+        role, // pass role if backend needs it
+      });
+
+      const userData = response.user || response;
+
+      // Save necessary data
+      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", userData.token || "");
+      localStorage.setItem("role", userData.roles || role);
+
+      // Redirect based on role
+      const routeMap = {
+        admin: "/admin",
+        student: "/student",
+        staff: "/staff",
+      };
+
+      const target = routeMap[userData.roles || role] || "/login";
+      navigate(target);
+    } catch (err) {
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Login failed. Please try again.";
+      setErrorMsg(message);
+    }
   };
 
   return (
@@ -54,13 +88,12 @@ const LoginForm = () => {
 
           <div className={styles.btn}>
             <Button title="Sign in" className="btnLarge" type="submit" />
-
             <div className={styles.divider}>
               <span className={styles.line}></span>
               <span className={styles.dividerText}>or</span>
               <span className={styles.line}></span>
             </div>
-
+            {errorMsg && <ErrorMsg message={errorMsg} />}
             <Button
               title="Continue with Google"
               className="btnPrimary"

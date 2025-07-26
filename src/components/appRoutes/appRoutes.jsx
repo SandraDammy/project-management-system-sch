@@ -15,41 +15,15 @@ import ViewProject from "../pages/project/viewProject";
 import ProjectLayout from "../layouts/projectLayout";
 import ViewTeacherProject from "../pages/teacher/project/viewTeacherProject";
 import ViewStudentProject from "../pages/student/project/viewStudentProject";
+import AdminLayout from "../layouts/adminLayout";
+import Admin from "../pages/admin/admin";
+import Faculty from "../pages/admin/faculty/faculty";
+import FacultyDept from "../pages/admin/faculty/facultyDept";
+import DeptCourse from "../pages/admin/faculty/deptCourse";
+import AdminUser from "../pages/admin/adminUser";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
-  // const { user } = useAuth();
-
-  // const routes = useRoutes([
-  //   { path: "/", element: <LandingPage /> },
-  //   { path: "/login", element: <Login /> },
-  //   { path: "/student", element: <StudentDashboard /> },
-  //   { path: "/student/project", element: <Project /> },
-  //   { path: "/student/project/projectProfile/:projectName", element: <ProjectProfile/> },
-  //   { path: "/student/profile", element: <Profile/> },
-
-  //   { path: "/teacher", element: <TeacherDashboard/> },
-  //   { path: "/teacher/project", element: <TeacherDashboard/> },
-  //   // {
-  //   //   path: "/student",
-  //   //   element:
-  //   //     user?.role === "student" ? (
-  //   //       <StudentDashboard />
-  //   //     ) : (
-  //   //       <Navigate to="/login" />
-  //   //     ),
-  //   // },
-  //   // {
-  //   //   path: "/teacher",
-  //   //   element:
-  //   //     user?.role === "teacher" ? (
-  //   //       <TeacherDashboard/>
-  //   //     ) : (
-  //   //       <Navigate to="/login" />
-  //   //     ),
-  //   // },
-  //   { path: "*", element: <Navigate to="/" /> },
-  // ]);
 
   const routes = useRoutes([
     { path: "/login", element: <Login /> },
@@ -83,7 +57,7 @@ const AppRoutes = () => {
     },
 
     {
-      path: "/teacher",
+      path: "/staff",
       element: <TeacherLayout />, // <-- Teacher layout
       children: [
         { path: "", element: <TeacherDashboard /> }, // default: /teacher
@@ -93,6 +67,17 @@ const AppRoutes = () => {
           element: <TeacherProjectProfile />,
         },
         { path: ":projectName", element: <ViewTeacherProject /> },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />, 
+      children: [
+        { path: "", element: <Admin /> }, 
+        { path: "user", element: <AdminUser/> }, 
+        { path: "faculty", element: <Faculty /> }, 
+        { path: "faculty/facultyDept/:id", element: <FacultyDept /> }, 
+        { path: "faculty/facultyDept/deptCourse/:id", element: <DeptCourse/> }, 
       ],
     },
 

@@ -101,7 +101,7 @@
   color: var(--black);
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: 0.15rem solid var(--green);
+   border-bottom: 0.15rem solid var(--green);
   padding-bottom: 0.2rem;
 }
 
@@ -159,5 +159,13 @@
 
 .titleText a:hover {
   text-decoration: underline;
+}
+
+.backArrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
 }
 

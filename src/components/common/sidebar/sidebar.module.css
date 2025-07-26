@@ -5,11 +5,22 @@
   z-index: var(--z-fixed);
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .sidebarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+}
+.navbarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logoWrapper {
@@ -45,6 +56,24 @@
   padding-right: 1rem;
 }
 
+.navbarMenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbarList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .sidebarList {
   list-style: none;
   padding: 0;
@@ -69,11 +98,9 @@
 }
 
 .active {
-  /* background-color: var(--blue);  */
+  background-color: var(--blue);
   color: var(--black);
-  border-color: var(--blue);
 }
-
 
 .sidebarLink:hover,
 .sidebarLink:active {

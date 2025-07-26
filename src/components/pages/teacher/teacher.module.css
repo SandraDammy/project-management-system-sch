@@ -84,7 +84,7 @@
   color: var(--black);
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: 0.15rem solid var(--green);
+   border-bottom: 0.15rem solid var(--blue);
   padding-bottom: 0.2rem;
 }
 

@@ -9,7 +9,7 @@ import { IoClose, IoMenu } from "react-icons/io5";
 
 const StudentSidebar = () => {
   const [open, setOpen] = useState(false);
-  const location = useLocation(); // ✅ Get current location path
+  const location = useLocation(); 
 
   const toggleMenu = () => setOpen(!open);
 
@@ -43,7 +43,7 @@ const StudentSidebar = () => {
             <Link
               to="/student/project"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/project" ? styles.active : ""
+                location.pathname === "/student/project" ? styles.active : ""
               }`}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
@@ -55,7 +55,7 @@ const StudentSidebar = () => {
             <Link
               to="/student/profile"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/profile" ? styles.active : ""
+                location.pathname === "/student/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />

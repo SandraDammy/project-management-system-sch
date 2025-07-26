@@ -1,0 +1,85 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 55555;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 25rem;
+  height: 25rem;
+  background-color: var(--search-bg);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  gap: 2rem;
+}
+.modalIcon {
+  display: flex;
+  width: 8rem;
+  height: 8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodyModel {
+  display: flex;
+  width: 16rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.bodyModel p {
+  color: var(--blue);
+  font-family: Poppins, sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.045rem;
+  width: 100%;
+}
+
+.modalBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSuccess {
+  display: flex;
+  width: 15.625rem;
+  height: 3.5rem;
+  padding: 0.75rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 9999px;
+  background-color: var(--blue);
+  color: var(--white);
+  box-shadow: 0px -1px 0px 0px rgba(255, 255, 255, 0.05) inset;
+  font-size: 1.25rem;
+  font-family: Poppins, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.0375rem;
+  cursor: pointer;
+}

@@ -43,7 +43,7 @@ const TeacherSidebar = () => {
             <Link
               to="/teacher/project"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/project" ? styles.active : ""
+                location.pathname === "/teacher/project" ? styles.active : ""
               }`}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
@@ -55,7 +55,7 @@ const TeacherSidebar = () => {
             <Link
               to="teacher/profile"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/profile" ? styles.active : ""
+                location.pathname === "teacher/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />

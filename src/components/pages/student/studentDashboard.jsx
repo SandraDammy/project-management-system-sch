@@ -56,7 +56,7 @@ const StudentDashboard = () => {
             onViewMore={() => handleViewMore(project)}
           />
         ))}
-      </div>{" "}
+      </div>
     </div>
   );
 };
