@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../../common/banner/banner";
 import styles from "./student.module.css";
 import { useNavigate } from "react-router-dom";
 import ProjectCard from "../../common/card/projectCard";
+import { baseUrl } from "../../context/baseUrl";
+import { get } from "../../context/api";
 
 const sampleProjects = [
   {
@@ -38,6 +40,36 @@ const sampleProjects = [
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchProjects = async () => {
+      try {
+        const data = await get(
+          `${baseUrl}Projects/AllProjects/AllStudentCompletedProject?studentId=${user.id}`
+        );
+        setProjects(data || []);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [user]);
 
   const handleViewMore = (project) => {
     const encodedTitle = encodeURIComponent(project.title);
@@ -48,15 +80,26 @@ const StudentDashboard = () => {
       <div className={styles.banner}>
         <Banner title={"Dashboard"} />
       </div>
-      <div className={styles.grid}>
-        {sampleProjects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            {...project}
-            onViewMore={() => handleViewMore(project)}
-          />
-        ))}
-      </div>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className={styles.errorText}>Error: {error.toString()}</p>
+      ) : projects.length === 0 ? (
+        <div className={styles.emptyState}>
+          <p>No Project found.</p>
+        </div>
+      ) : (
+        <div className={styles.grid}>
+          {sampleProjects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              {...project}
+              onViewMore={() => handleViewMore(project)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

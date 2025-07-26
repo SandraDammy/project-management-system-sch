@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "../teacher.module.css";
+import styles from "../lecturer.module.css";
 import Banner from "../../../common/banner/banner";
 import { useParams } from "react-router-dom";
 import ActivityCard from "../../../section/activityCard/activityCard";
 import ProjectCommitModal from "../../../modal/projectCommitModal";
 
-const TeacherProjectProfile = () => {
+const LecturerProjectProfile = () => {
   const { projectName } = useParams();
   const [showProjectCommit, setShowProjectCommit] = useState(null);
 
@@ -88,4 +88,4 @@ const TeacherProjectProfile = () => {
   );
 };
 
-export default TeacherProjectProfile;
+export default LecturerProjectProfile;

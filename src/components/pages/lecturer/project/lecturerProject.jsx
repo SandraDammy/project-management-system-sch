@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "../teacher.module.css";
+import styles from "../lecturer.module.css";
 import Banner from "../../../common/banner/banner";
-import TeacherProjectTable from "../../../common/table/teacherProjectTable";
+import LecturerProjectTable from "../../../common/table/lecturerProjectTable";
 
-const TeacherProject = () => {
+const LecturerProject = () => {
     const tableHeaders = [
     "Project Name",
     "Project Type",
@@ -46,9 +46,9 @@ const TeacherProject = () => {
         <Banner title={"Project"} />
       </div>
 
-      <TeacherProjectTable headers={tableHeaders} data={tableData}/>
+      <LecturerProjectTable headers={tableHeaders} data={tableData}/>
     </div>
   );
 };
 
-export default TeacherProject;
+export default LecturerProject;

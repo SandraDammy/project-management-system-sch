@@ -1,17 +1,11 @@
 import React from "react";
 import styles from "./landingNavbar.module.css";
-import Button from "../../common/button/button";
 import Input from "../../common/input/input";
 import Select from "../../common/select/select";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import RoleDropdown from "../../common/roleDropdown/roleDropdown";
 
 const LandingNavbar = () => {
-  // const navigate = useNavigate();
-
-  // const handleLogin = () => {
-  //   navigate("/login");
-  // };
 
   return (
     <header className={styles.header}>
@@ -33,7 +27,6 @@ const LandingNavbar = () => {
         </div>
 
         <div className={styles.loginButton}>
-          {/* <Button title="Login" className="btnLarge" onClick={handleLogin} /> */}
           <RoleDropdown />
         </div>
       </nav>

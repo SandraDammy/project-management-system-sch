@@ -7,7 +7,7 @@ import Activity from "../../../Assets/Image/activity.png";
 import Profile from "../../../Assets/Image/profile.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 
-const TeacherSidebar = () => {
+const LecturerSidebar = () => {
     const [open, setOpen] = useState(false);
   const location = useLocation(); // ✅ Get current location path
 
@@ -16,7 +16,7 @@ const TeacherSidebar = () => {
     return (
     <div className={styles.container}>
       <div className={styles.sidebarHeader}>
-        <Link to="/teacher" className={styles.logoWrapper}>
+        <Link to="/lecturer" className={styles.logoWrapper}>
           <img src={Logo} alt="Unilag Logo" className={styles.logo} />
           <h1 className={styles.title}>University of Lagos</h1>
         </Link>
@@ -29,9 +29,9 @@ const TeacherSidebar = () => {
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarItem}>
             <Link
-              to="/teacher"
+              to="/lecturer"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/teacher" ? styles.active : ""
+                location.pathname === "/lecturer" ? styles.active : ""
               }`}
             >
               <img src={Dashboard} alt="Dashboard" className={styles.icon} />
@@ -41,9 +41,9 @@ const TeacherSidebar = () => {
 
           <li className={styles.sidebarItem}>
             <Link
-              to="/teacher/project"
+              to="/lecturer/project"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/teacher/project" ? styles.active : ""
+                location.pathname === "/lecturer/project" ? styles.active : ""
               }`}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
@@ -53,9 +53,9 @@ const TeacherSidebar = () => {
 
           <li className={styles.sidebarItem}>
             <Link
-              to="teacher/profile"
+              to="lecturer/profile"
               className={`${styles.sidebarLink} ${
-                location.pathname === "teacher/profile" ? styles.active : ""
+                location.pathname === "lecturer/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />
@@ -68,4 +68,4 @@ const TeacherSidebar = () => {
   );
 };
 
-export default TeacherSidebar
+export default LecturerSidebar

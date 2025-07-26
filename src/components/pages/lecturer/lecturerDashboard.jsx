@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./teacher.module.css";
+import styles from "./lecturer.module.css";
 import Banner from "../../common/banner/banner";
 import ProjectCard from "../../common/card/projectCard";
 import { useNavigate } from "react-router-dom";
@@ -51,12 +51,12 @@ const sampleProjects = [
     description: "Track sales, inventory, and supplier records in real-time.",
   },
 ];
-const TeacherDashboard = () => {
+const LecturerDashboard = () => {
   const navigate = useNavigate();
 
   const handleViewMore = (project) => {
     const encodedTitle = encodeURIComponent(project.title);
-    navigate(`/teacher/${encodedTitle}`);
+    navigate(`/lecturer/${encodedTitle}`);
   };
 
   return (
@@ -78,4 +78,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard;
+export default LecturerDashboard;

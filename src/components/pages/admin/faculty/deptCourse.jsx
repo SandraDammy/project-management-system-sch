@@ -9,7 +9,7 @@ import Button from "../../../common/button/button";
 import Dashboard from "../../../../Assets/Image/dashboard.png";
 
 const DeptCourse = () => {
-      const [course, setCourse] = useState([]);
+  const [course, setCourse] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCreateDepartment, setShowCreateDepartment] = useState(false);
@@ -27,9 +27,7 @@ const DeptCourse = () => {
 
     const fetchCourse = async () => {
       try {
-        const data = await get(
-          `${baseUrl}Course/AllCourse?departmentId=${id}`
-        );
+        const data = await get(`${baseUrl}Course/AllCourse?departmentId=${id}`);
         setCourse(data || []);
       } catch (err) {
         setError(err);
@@ -79,7 +77,8 @@ const DeptCourse = () => {
       {showCreateDepartment && (
         <CreateFaculty onClose={handleCloseCreateDepartment} />
       )}
-    </div>  )
-}
+    </div>
+  );
+};
 
-export default DeptCourse
+export default DeptCourse;

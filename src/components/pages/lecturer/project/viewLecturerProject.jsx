@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import styles from "../teacher.module.css";
+import styles from "../lecturer.module.css";
 import Banner from "../../../common/banner/banner";
 
-const ViewTeacherProject = () => {
+const ViewLecturerProject = () => {
   const { projectName } = useParams();
 
   const projectDetails = {
@@ -86,4 +86,4 @@ const ViewTeacherProject = () => {
   );
 };
 
-export default ViewTeacherProject;
+export default ViewLecturerProject;

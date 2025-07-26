@@ -22,7 +22,7 @@ const Project = () => {
     setShowCreateProject(false);
   };
 
-  const tableHeaders = [
+  const headers = [
     "Project Name",
     "Project Type",
     "Course Code",
@@ -31,15 +31,15 @@ const Project = () => {
     "Status",
   ];
 
-  // Format data to match the table columns
-  const tableData = projects.map((project) => ({
-    projectName: project.projectName || "N/A",
-    projectType: project.projectType || "N/A",
-    courseCode: project.courseCode || "N/A",
-    courseName: project.courseName || "N/A",
-    lecturerName: project.lecturerName || "N/A",
-    status: project.status || "N/A",
-  }));
+  const formatProjectData = (projectsArray) =>
+    projectsArray.map((project) => ({
+      "Project Name": project.projectName || "N/A",
+      "Project Type": project.projectType || "N/A",
+      "Course Code": project.courseCode || "N/A",
+      "Course Name": project.courseName || "N/A",
+      "Lecturer Name": project.lecturerName || "N/A",
+      Status: project.status || "N/A",
+    }));
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -49,14 +49,16 @@ const Project = () => {
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) return;
 
     const fetchProjects = async () => {
       try {
-        const data = await get(`${baseUrl}Projects/AllProjects`);
-        setProjects(data || []);
+        const data = await get(
+          `${baseUrl}Projects/AllProjects/AllStudentProject?studentId=${user.id}`
+        );
+        setProjects(formatProjectData(data || []));
       } catch (err) {
-        setError(err);
+        setError(err.message || "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -92,7 +94,7 @@ const Project = () => {
           />
         </div>
       ) : (
-        <ProjectTable headers={tableHeaders} data={tableData} />
+        <ProjectTable headers={headers} data={projects} />
       )}
 
       {showCreateProject && (

@@ -12,7 +12,7 @@ const RoleDropdown = () => {
   const roles = [
     { label: "Admin", value: "admin" },
     { label: "Student", value: "student" },
-    { label: "Staff", value: "staff" },
+    { label: "Lecturer", value: "lecturer" },
   ];
 
   const handleSelect = (role) => {

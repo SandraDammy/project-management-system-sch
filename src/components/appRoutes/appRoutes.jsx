@@ -6,21 +6,23 @@ import StudentDashboard from "../pages/student/studentDashboard";
 import Project from "../pages/student/project/project";
 import ProjectProfile from "../pages/student/project/projectProfile";
 import ProfileSetting from "../pages/student/profileSetting";
-import TeacherLayout from "../layouts/teacherLayout";
-import TeacherDashboard from "../pages/teacher/teacherDashboard";
-import TeacherProject from "../pages/teacher/project/teacherProject";
-import TeacherProjectProfile from "../pages/teacher/project/teacherProjectProfile";
+import LecturerLayout from "../layouts/lecturerLayout";
+import LecturerDashboard from "../pages/lecturer/lecturerDashboard";
+import LecturerProject from "../pages/lecturer/project/lecturerProject";
+import LecturerProjectProfile from "../pages/lecturer/project/lecturerProjectProfile";
 import AllProject from "../pages/project/allProject";
 import ViewProject from "../pages/project/viewProject";
 import ProjectLayout from "../layouts/projectLayout";
-import ViewTeacherProject from "../pages/teacher/project/viewTeacherProject";
+import ViewLecturerProject from "../pages/lecturer/project/viewLecturerProject";
 import ViewStudentProject from "../pages/student/project/viewStudentProject";
 import AdminLayout from "../layouts/adminLayout";
 import Admin from "../pages/admin/admin";
 import Faculty from "../pages/admin/faculty/faculty";
 import FacultyDept from "../pages/admin/faculty/facultyDept";
 import DeptCourse from "../pages/admin/faculty/deptCourse";
-import AdminUser from "../pages/admin/adminUser";
+import AdminUser from "../pages/admin/user/adminUser";
+import AllLecturer from "../pages/admin/user/allLecturer";
+import AllStudent from "../pages/admin/user/allStudent";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
@@ -57,16 +59,16 @@ const AppRoutes = () => {
     },
 
     {
-      path: "/staff",
-      element: <TeacherLayout />, // <-- Teacher layout
+      path: "/lecturer",
+      element: <LecturerLayout />, // <-- Lecturer layout
       children: [
-        { path: "", element: <TeacherDashboard /> }, // default: /teacher
-        { path: "project", element: <TeacherProject /> },
+        { path: "", element: <LecturerDashboard /> }, // default: /Lecturer
+        { path: "project", element: <LecturerProject /> },
         {
           path: "project/projectProfile/:projectName",
-          element: <TeacherProjectProfile />,
+          element: <LecturerProjectProfile />,
         },
-        { path: ":projectName", element: <ViewTeacherProject /> },
+        { path: ":projectName", element: <ViewLecturerProject /> },
       ],
     },
     {
@@ -75,6 +77,8 @@ const AppRoutes = () => {
       children: [
         { path: "", element: <Admin /> }, 
         { path: "user", element: <AdminUser/> }, 
+        { path: "user/allLecturer/", element: <AllLecturer/> }, 
+        { path: "user/allStudent", element: <AllStudent/> }, 
         { path: "faculty", element: <Faculty /> }, 
         { path: "faculty/facultyDept/:id", element: <FacultyDept /> }, 
         { path: "faculty/facultyDept/deptCourse/:id", element: <DeptCourse/> }, 

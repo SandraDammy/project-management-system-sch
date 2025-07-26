@@ -2,7 +2,7 @@ import React from 'react'
 import styles from "./table.module.css";
 import { Link } from "react-router-dom";
 
-const TeacherProjectTable = ({ headers, data }) => {
+const LecturerProjectTable = ({ headers, data }) => {
   const getStatusColor = (status) => {
     const lowerCaseStatus = status.toLowerCase();
     switch (lowerCaseStatus) {
@@ -41,7 +41,7 @@ const TeacherProjectTable = ({ headers, data }) => {
                       </span>
                     ) : (
                       <Link
-                        to={`/teacher/project/projectProfile/${encodeURIComponent(
+                        to={`/lecturer/project/projectProfile/${encodeURIComponent(
                           row.projectName
                         )}`}
                       >
@@ -58,4 +58,4 @@ const TeacherProjectTable = ({ headers, data }) => {
   );
 };
 
-export default TeacherProjectTable
+export default LecturerProjectTable

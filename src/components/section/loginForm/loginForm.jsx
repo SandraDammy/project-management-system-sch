@@ -5,11 +5,13 @@ import ErrorMsg from "../../common/errorMsg/errorMsg";
 import { post } from "../../context/api";
 import { baseUrl } from "../../context/baseUrl";
 import { useNavigate } from "react-router-dom";
+import RegisterModal from "../registerModal/registerModal";
 
 const LoginForm = ({ role }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -37,7 +39,7 @@ const LoginForm = ({ role }) => {
       const routeMap = {
         admin: "/admin",
         student: "/student",
-        staff: "/staff",
+        lecturer: "/lecturer",
       };
 
       const target = routeMap[userData.roles || role] || "/login";
@@ -104,9 +106,18 @@ const LoginForm = ({ role }) => {
               className="btnPrimary"
               type="button"
             />
+
+            <div className={styles.registerLink}>
+              <p onClick={() => setShowRegisterModal(true)}>
+                New User? Register Now
+              </p>
+            </div>
           </div>
         </form>
       </div>
+      {showRegisterModal && (
+        <RegisterModal onClose={() => setShowRegisterModal(false)} />
+      )}
     </div>
   );
 };

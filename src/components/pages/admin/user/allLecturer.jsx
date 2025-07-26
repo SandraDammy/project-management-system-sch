@@ -1,0 +1,86 @@
+import React, { useEffect, useState } from "react";
+import styles from "../admin.module.css";
+import UserTable from "../../../common/table/userTable";
+import UserInfoModal from "../../../modal/userInfoModal";
+import { get } from "../../../context/api";
+import { baseUrl } from "../../../context/baseUrl";
+import { Link } from "react-router-dom";
+import Dashboard from "../../../../Assets/Image/dashboard.png";
+
+const AllLecturer = () => {
+  const [lecturers, setLecturers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const headers = [
+    { label: "Staff ID", key: "staffId" },
+    { label: "First Name", key: "firstName" },
+    { label: "Last Name", key: "lastName" },
+    { label: "Role", key: "role" },
+  ];
+
+  useEffect(() => {
+    const fetchLecturers = async () => {
+      try {
+        const response = await get(`${baseUrl}Lecturers/AllLecturers`);
+        setLecturers(response || []);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLecturers();
+  }, []);
+
+  const handleRowClick = (user) => {
+    setSelectedUser(user);
+    setShowUserModal(true);
+  };
+
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.wrapperTitle}>
+        <Link to="/admin/user" className={styles.wrapperBack}>
+          <img src={Dashboard} alt="Dashboard" className={styles.icon} />
+          <h1 className={styles.preTxt}>List of Lecturer</h1>
+        </Link>
+      </div>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className={styles.errorText}>Error: {error.toString()}</p>
+      ) : lecturers.length === 0 ? (
+        <div className={styles.emptyState}>
+          <p>No lecturers available.</p>
+        </div>
+      ) : (
+        <UserTable
+          headers={headers}
+          data={lecturers}
+          onRowClick={handleRowClick}
+        />
+      )}
+
+      {showUserModal && selectedUser && (
+        <UserInfoModal
+          user={selectedUser}
+          onClose={() => setShowUserModal(false)}
+          fields={[
+            { label: "First Name", key: "firstName" },
+            { label: "Last Name", key: "lastName" },
+            { label: "Email", key: "email" },
+            { label: "Staff ID", key: "staffId" },
+            { label: "Role", key: "role" },
+          ]}
+        />
+      )}
+    </div>
+  );
+};
+
+export default AllLecturer;

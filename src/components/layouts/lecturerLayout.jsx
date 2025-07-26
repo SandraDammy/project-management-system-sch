@@ -1,16 +1,16 @@
 import React from 'react'
 import Navbar from '../common/navbar/navbar'
-import TeacherSidebar from '../common/sidebar/teacherSidebar'
+import LecturerSidebar from '../common/sidebar/lecturerSidebar'
 import { Outlet } from 'react-router-dom'
 
-const TeacherLayout = () => {
+const LecturerLayout = () => {
   return (
       <div className="container">
       <div className="container-side">
-        <TeacherSidebar/>
+        <LecturerSidebar/>
       </div>
       <div className="container-body">
-        Teacher Page
+        Lecturer Page
         <Navbar />
         <Outlet /> {/* Renders the child route content */}
       </div>
@@ -18,4 +18,4 @@ const TeacherLayout = () => {
   )
 }
 
-export default TeacherLayout
+export default LecturerLayout
