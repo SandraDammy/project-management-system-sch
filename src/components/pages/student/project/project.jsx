@@ -23,7 +23,7 @@ const Project = () => {
   };
 
   const headers = [
-    "Project Name",
+    "Project Title",
     "Project Type",
     "Course Code",
     "Course Name",
@@ -33,12 +33,13 @@ const Project = () => {
 
   const formatProjectData = (projectsArray) =>
     projectsArray.map((project) => ({
-      "Project Name": project.projectName || "N/A",
-      "Project Type": project.projectType || "N/A",
-      "Course Code": project.courseCode || "N/A",
-      "Course Name": project.courseName || "N/A",
-      "Lecturer Name": project.lecturerName || "N/A",
-      Status: project.status || "N/A",
+      projectId: project.id,
+      projectTitle: project.projectTitle || "N/A",
+      projectType: project.projectType || "N/A",
+      courseCode: project.courseCode || "N/A",
+      courseName: project.courseName || "N/A",
+      lecturerName: project.lecturerName || "N/A",
+      projectStatus: project.projectStatus || "N/A",
     }));
 
   useEffect(() => {

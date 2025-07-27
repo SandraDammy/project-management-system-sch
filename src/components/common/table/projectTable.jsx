@@ -16,6 +16,7 @@ const ProjectTable = ({ headers, data }) => {
         return "";
     }
   };
+
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -28,9 +29,9 @@ const ProjectTable = ({ headers, data }) => {
         </thead>
         <tbody className={styles.body}>
           {data.map((row, rowIndex) => (
-            <tr key={row.id || `row-${rowIndex}`} className={styles.row}>
+            <tr key={row.projectId || `row-${rowIndex}`} className={styles.row}>
               {Object.entries(row)
-                .slice(0)
+                .slice(1)
                 .map(([key, value], colIndex) => (
                   <td key={colIndex} className={styles.cell}>
                     {key === "projectStatus" ? (
@@ -39,14 +40,12 @@ const ProjectTable = ({ headers, data }) => {
                       >
                         {value}
                       </span>
-                    ) : (
-                      <Link
-                        to={`/student/project/projectProfile/${encodeURIComponent(
-                          row.projectName
-                        )}`}
-                      >
+                    ) : key ={colIndex} ? (
+                      <Link to={`/student/project/projectProfile/${row.projectId}`}>
                         <span>{value}</span>
                       </Link>
+                    ) : (
+                      <span>{value}</span>
                     )}
                   </td>
                 ))}

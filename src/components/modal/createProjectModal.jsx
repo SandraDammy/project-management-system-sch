@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { post } from "../context/api";
+import { get, post } from "../context/api";
 import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 
 const CreateProjectModal = ({ onClose }) => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   const [projectTitle, setProjectTitle] = useState("");
-  const [studentId, setStudentId] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [session, setSession] = useState("");
   const [projectType, setProjectType] = useState("");
@@ -29,13 +29,61 @@ const CreateProjectModal = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const [faculties, setFaculties] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [lecturers, setLecturers] = useState([]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchLecturers = async () => {
+      try {
+        const data = await get(`${baseUrl}Lecturers/AllLecturers`);
+        setLecturers(data || []);
+      } catch (error) {
+        console.error("Failed to load lecturers", error);
+      }
+    };
+    fetchLecturers();
+  }, []);
+
+  useEffect(() => {
+    const fetchFaculties = async () => {
+      try {
+        const data = await get(`${baseUrl}Faculties/AllFaculties`);
+        setFaculties(data || []);
+      } catch (error) {
+        console.error("Failed to load faculties", error);
+      }
+    };
+    fetchFaculties();
+  }, []);
+
+  useEffect(() => {
+    if (!facultyName) return;
+    const fetchDepartments = async () => {
+      try {
+        const data = await get(`${baseUrl}Departments/AllDepartments?facultyId=${facultyName}`);
+        setDepartments(data || []);
+      } catch (error) {
+        console.error("Failed to load departments", error);
+      }
+    };
+    fetchDepartments();
+  }, [facultyName]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     const newErrors = {};
 
     if (!projectTitle) newErrors.projectTitle = "Project Title is required";
-    if (!studentId) newErrors.studentId = "Student Name is required";
+    if (!matricNo) newErrors.matricNo = "Registration No is required";
     if (!departmentName) newErrors.departmentName = "Department is required";
     if (!session) newErrors.session = "Session is required";
     if (!projectType) newErrors.projectType = "Project Type is required";
@@ -45,7 +93,6 @@ const CreateProjectModal = ({ onClose }) => {
     if (!lecturerId) newErrors.lecturerId = "Supervisor is required";
     if (!courseCode) newErrors.courseCode = "Course Code is required";
     if (!programme) newErrors.programme = "Programme is required";
-    if (!matricNo) newErrors.matricNo = "Registration No is required";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -55,7 +102,7 @@ const CreateProjectModal = ({ onClose }) => {
 
     const mainData = {
       ProjectTitle: projectTitle,
-      StudentId: studentId,
+      StudentId: user?.id,
       DepartmentName: departmentName,
       Session: session,
       ProjectType: projectType,
@@ -69,12 +116,10 @@ const CreateProjectModal = ({ onClose }) => {
     };
 
     try {
-      const response = await post(`${baseUrl}Projects/AddProject`, mainData);
-      console.log("Response:", response.data);
+      await post(`${baseUrl}Projects/AddProject`, mainData);
       setShowSuccessModal(true);
-      // Reset all fields
+      // Reset form
       setProjectTitle("");
-      setStudentId("");
       setDepartmentName("");
       setSession("");
       setProjectType("");
@@ -108,26 +153,30 @@ const CreateProjectModal = ({ onClose }) => {
               <div className={styles.section}>
                 <InputField
                   label="Project Title"
+                  placeholder="Enter Project Title"
                   value={projectTitle}
                   onChange={(e) => setProjectTitle(e.target.value)}
                   error={errors.projectTitle}
                 />
                 <InputField
                   label="Registration No"
+                  placeholder="Enter Registration No"
                   value={matricNo}
                   onChange={(e) => setMatricNo(e.target.value)}
                   error={errors.matricNo}
                 />
-                <InputField
-                  label="Department"
-                  value={departmentName}
-                  onChange={(e) => setDepartmentName(e.target.value)}
-                  error={errors.departmentName}
+                <SelectField
+                  label="Faculty"
+                  value={facultyName}
+                  onChange={(e) => setFacultyName(e.target.value)}
+                  error={errors.facultyName}
+                  options={faculties.map((f) => ({ value: f.id, label: f.facultyName }))}
                 />
-                <InputField
+                <SelectField
                   label="Semester"
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
+                  options={["First Semester", "Second Semester"]}
                   error={errors.semester}
                 />
               </div>
@@ -152,18 +201,20 @@ const CreateProjectModal = ({ onClose }) => {
                 />
                 <InputField
                   label="Student Name"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
-                  error={errors.studentId}
+                  placeholder="Student Name"
+                  value={user ? `${user.firstName} ${user.lastName}` : ""}
+                  disabled
                 />
-                <InputField
-                  label="Faculty"
-                  value={facultyName}
-                  onChange={(e) => setFacultyName(e.target.value)}
-                  error={errors.facultyName}
+                <SelectField
+                  label="Department"
+                  value={departmentName}
+                  onChange={(e) => setDepartmentName(e.target.value)}
+                  error={errors.departmentName}
+                  options={departments.map((d) => ({ value: d.id, label: d.departmentName }))}
                 />
                 <InputField
                   label="Course Name"
+                  placeholder="Enter Course Name"
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
                   error={errors.courseName}
@@ -172,17 +223,12 @@ const CreateProjectModal = ({ onClose }) => {
 
               {/* Section 3 */}
               <div className={styles.section}>
-                <InputField
+                <SelectField
                   label="Lecturer Name"
                   value={lecturerId}
                   onChange={(e) => setLecturerId(e.target.value)}
                   error={errors.lecturerId}
-                />
-                <InputField
-                  label="Session"
-                  value={session}
-                  onChange={(e) => setSession(e.target.value)}
-                  error={errors.session}
+                  options={lecturers.map((l) => ({ value: l.id, label: l.fullName }))}
                 />
                 <SelectField
                   label="Programme"
@@ -209,7 +255,15 @@ const CreateProjectModal = ({ onClose }) => {
                   error={errors.programme}
                 />
                 <InputField
+                  label="Session"
+                  placeholder="Enter Session (e.g., 2024/2025)"
+                  value={session}
+                  onChange={(e) => setSession(e.target.value)}
+                  error={errors.session}
+                />
+                <InputField
                   label="Course Code"
+                  placeholder="Enter Course Code (e.g., EEE401)"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
                   error={errors.courseCode}
@@ -228,6 +282,7 @@ const CreateProjectModal = ({ onClose }) => {
           </form>
         </div>
       </div>
+
       {showSuccessModal && (
         <SuccessModal
           title="Project created successfully"
@@ -239,26 +294,32 @@ const CreateProjectModal = ({ onClose }) => {
   );
 };
 
-// Reusable input field
-const InputField = ({ label, value, onChange, error }) => (
+const InputField = ({ label, value, onChange, placeholder, disabled, error }) => (
   <div className={styles.titleText}>
     <label>{label}:</label>
-    <input type="text" value={value} onChange={onChange} />
+    <input
+      type="text"
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+    />
     {error && <span className={styles.error}>{error}</span>}
   </div>
 );
 
-// Reusable select field
 const SelectField = ({ label, value, onChange, options, error }) => (
   <div className={styles.titleText}>
     <label>{label}:</label>
     <select value={value} onChange={onChange}>
       <option value="">Select {label}</option>
-      {options.map((option, i) => (
-        <option key={i} value={option.split("–")[0].trim().toLowerCase()}>
-          {option}
-        </option>
-      ))}
+      {options.map((opt, i) =>
+        typeof opt === "string" ? (
+          <option key={i} value={opt.toLowerCase()}>{opt}</option>
+        ) : (
+          <option key={i} value={opt.value}>{opt.label}</option>
+        )
+      )}
     </select>
     {error && <span className={styles.error}>{error}</span>}
   </div>

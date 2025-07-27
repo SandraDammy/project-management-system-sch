@@ -50,7 +50,7 @@ const AppRoutes = () => {
         { path: "", element: <StudentDashboard /> },
         { path: "project", element: <Project /> },
         {
-          path: "project/projectProfile/:projectName",
+          path: "project/projectProfile/:projectId",
           element: <ProjectProfile />,
         },
         { path: ":projectName", element: <ViewStudentProject /> },
