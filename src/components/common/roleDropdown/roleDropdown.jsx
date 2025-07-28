@@ -1,4 +1,3 @@
-// RoleDropdown.jsx
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./roleDropdown.module.css";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +9,9 @@ const RoleDropdown = () => {
   const navigate = useNavigate();
 
   const roles = [
-    { label: "Admin", value: "admin" },
     { label: "Student", value: "student" },
     { label: "Lecturer", value: "lecturer" },
+    { label: "Admin", value: "admin" },
   ];
 
   const handleSelect = (role) => {

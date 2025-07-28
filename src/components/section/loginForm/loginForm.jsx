@@ -107,11 +107,14 @@ const LoginForm = ({ role }) => {
               type="button"
             />
 
-            <div className={styles.registerLink}>
-              <p onClick={() => setShowRegisterModal(true)}>
-                New User? Register Now
-              </p>
-            </div>
+            {/* user with the role of admin should not see the register link */}
+            {role !== "admin" && (
+              <div className={styles.registerLink}>
+                <p onClick={() => setShowRegisterModal(true)}>
+                  New User? Register Now
+                </p>
+              </div>
+            )}
           </div>
         </form>
       </div>
