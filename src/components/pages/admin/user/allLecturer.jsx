@@ -21,7 +21,9 @@ const AllLecturer = () => {
     { label: "Staff ID", key: "staffId" },
     { label: "First Name", key: "firstName" },
     { label: "Last Name", key: "lastName" },
-    { label: "Role", key: "role" },
+    { label: "Email", key: "email" },
+    { label: "Faculty", key: "facultyName" },
+    { label: "Department", key: "departmentName" },
   ];
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const AllLecturer = () => {
     setShowUserModal(true);
   };
 
-      if (loading) return <Loading/>;
+  if (loading) return <Loading />;
 
   if (error) return <ErrorMsg error={error} message={error} />;
 
@@ -79,7 +81,8 @@ const AllLecturer = () => {
             { label: "Last Name", key: "lastName" },
             { label: "Email", key: "email" },
             { label: "Staff ID", key: "staffId" },
-            { label: "Role", key: "role" },
+            { label: "Faculty", key: "facultyName" },
+            { label: "Department", key: "departmentName" },
           ]}
         />
       )}

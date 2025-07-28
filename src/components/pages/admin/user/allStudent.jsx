@@ -18,16 +18,19 @@ const AllStudent = () => {
   const [error, setError] = useState(null);
 
   const headers = [
+    { label: "Matric No", key: "matricNo" },
     { label: "First Name", key: "firstName" },
     { label: "Last Name", key: "lastName" },
-    { label: "Role", key: "role" },
-    { label: "Student ID", key: "studentId" },
+    { label: "Email", key: "email" },
+
+    { label: "Faculty", key: "faculty" },
+    { label: "Department", key: "department" },
   ];
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await get(`${baseUrl}Students/All`);
+        const response = await get(`${baseUrl}Students/AllStudents`);
         setStudents(response || []);
       } catch (err) {
         setError(err);
@@ -75,11 +78,12 @@ const AllStudent = () => {
           user={selectedUser}
           onClose={() => setShowUserModal(false)}
           fields={[
+            { label: "Matric No", key: "matricNo" },
             { label: "First Name", key: "firstName" },
             { label: "Last Name", key: "lastName" },
             { label: "Email", key: "email" },
-            { label: "Student ID", key: "studentId" },
-            { label: "Role", key: "role" },
+            { label: "Faculty", key: "faculty" },
+            { label: "Department", key: "department" },
           ]}
         />
       )}
