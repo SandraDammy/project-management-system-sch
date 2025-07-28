@@ -81,11 +81,11 @@
 }
 
 .pending {
-  color: var(--text) !important;
+  color: var(--error) !important;
 }
 
 .review {
-  color: var(--error) !important;
+  color: var(--yellow) !important;
 }
 
 .status {

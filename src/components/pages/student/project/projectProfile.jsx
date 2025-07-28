@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "../student.module.css";
 import ActivityCard from "../../../section/activityCard/activityCard";
 import BannerTitle from "../../../common/banner/bannerTitle";
 import Button from "../../../common/button/button";
 import ProjectActivityModal from "../../../modal/projectActivityModal";
 import ViewActivityModal from "../../../modal/viewActivityModal";
+import { get } from "../../../context/api";
+import { baseUrl } from "../../../context/baseUrl";
+import empty from "../../../../Assets/Image/empty.png";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
 
 const ProjectProfile = () => {
   const { projectId } = useParams();
-  const navigate = useNavigate();
   const [projectData, setProjectData] = useState(null);
+  const [projectsActivity, setProjectsActivity] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [showProjectActivity, setShowProjectActivity] = useState(false);
   const [showViewActivity, setShowViewActivity] = useState(null);
 
+  
   const handleCreateProjectActivity = () => {
     setShowProjectActivity(true);
   };
@@ -32,13 +39,16 @@ const ProjectProfile = () => {
   };
 
   useEffect(() => {
+    if (!projectId) return;
+
     const fetchProject = async () => {
       try {
-        const response = await fetch(`/api/projects/${projectId}`);
+        const response = await fetch(`${baseUrl}projects/${projectId}`);
         const data = await response.json();
         setProjectData(data);
       } catch (error) {
         console.error("Error fetching project:", error);
+        setError("Failed to load project details.");
       } finally {
         setLoading(false);
       }
@@ -47,33 +57,41 @@ const ProjectProfile = () => {
     fetchProject();
   }, [projectId]);
 
-  const dummyActivities = [
-    {
-      chapter: "Chapter One",
-      title: "Introduction",
-      description: "Overview of solar energy and its potential for sustainable development.",
-      commit: "Initial draft completed",
-      uploadedBy: "James Fa",
-      date: "2025-05-10",
-      document: "chapter1.pdf",
-      presentationFile: "chapter1_presentation.pptx",
-      image: "solar_intro.jpg",
-      video: "chapter1_intro.mp4",
-      music: "intro_theme.mp3",
-      codeFile: "intro_code.zip",
-      link: "https://www.google.com",
-    },
-    // ... more activities
-  ];
+  useEffect(() => {
+    if (!projectData?.projectId) return;
+
+    const fetchActivities = async () => {
+      try {
+        const data = await get(
+          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.projectId}`
+        );
+        setProjectsActivity(data || []);
+      } catch (err) {
+        console.error("Error fetching activities:", err);
+        setError("Failed to load project activities.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivities();
+  }, [projectData]);
+
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
-        <BannerTitle title={projectData?.projectTitle || "Project Details"} />
+        <BannerTitle
+          title={projectData?.projectTitle || "Project Details"}
+          href={`/student/project`}
+        />
         <div className={styles.subBanner}>
           <Button
-            title={"Create Project Activity"}
-            className={"btnCreate"}
+            title="Create Project Activity"
+            className="btnCreate"
             onClick={handleCreateProjectActivity}
           />
         </div>
@@ -82,29 +100,62 @@ const ProjectProfile = () => {
       <div className={styles.projectProfile}>
         <h2 className={styles.projectTitle}>Project Details</h2>
         <div className={styles.projectBody}>
-          <p><strong>Session:</strong> {projectData?.session || "2024/2025"}</p>
-          <p><strong>Semester:</strong> {projectData?.semester || "Second Semester"}</p>
-          <p><strong>Course Name:</strong> {projectData?.courseName || "Project Design and Implementation"}</p>
-          <p><strong>Course Code:</strong> {projectData?.courseCode || "EEE401"}</p>
-          <p><strong>Lecturer's Name:</strong> {projectData?.supervisor || "Dr. Jane Smith"}</p>
-          <p><strong>Project Type:</strong> {projectData?.projectType || "Final Year Project"}</p>
+          <p>
+            <strong>Session:</strong>
+            {projectData?.session}
+          </p>
+          <p>
+            <strong>Semester:</strong>
+            {projectData?.semester}
+          </p>
+          <p>
+            <strong>Course Name:</strong>
+            {projectData?.courseName}
+          </p>
+          <p>
+            <strong>Course Code:</strong> {projectData?.courseCode}
+          </p>
+          <p>
+            <strong>Lecturer's Name:</strong>
+            {projectData?.lecturerName}
+          </p>
+          <p>
+            <strong>Project Type:</strong>
+            {projectData?.projectType}
+            {projectData?.projectId}
+          </p>
         </div>
       </div>
 
-      {dummyActivities.map((activity, index) => (
-        <ActivityCard
-          key={index}
-          activity={activity}
-          onView={handleViewActivity}
-        />
-      ))}
+      {projectsActivity.length === 0 ? (
+        <div className={styles.emptyState}>
+          <img src={empty} alt="arrowBack" className={styles.icon} />
+          <p>No activities available.</p>
+          <Button
+            title="Create Project Activity"
+            className="createEmptyState"
+            onClick={handleCreateProjectActivity}
+          />
+        </div>
+      ) : (
+        projectsActivity.map((activity, index) => (
+          <ActivityCard
+            key={index}
+            activity={activity}
+            onView={() => handleViewActivity(activity)}
+          />
+        ))
+      )}
 
       {showProjectActivity && (
-        <ProjectActivityModal onClose={handleCloseCreateProjectActivity} />
+        <ProjectActivityModal onClose={handleCloseCreateProjectActivity} projectId={projectId}/>
       )}
 
       {showViewActivity && (
-        <ViewActivityModal activity={showViewActivity} onClose={handleCloseViewModal} />
+        <ViewActivityModal
+          activity={showViewActivity}
+          onClose={handleCloseViewModal}
+        />
       )}
     </div>
   );

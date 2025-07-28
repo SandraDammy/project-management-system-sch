@@ -4,13 +4,11 @@ import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { get, post } from "../context/api";
 import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 
 const CreateProjectModal = ({ onClose }) => {
-  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   const [projectTitle, setProjectTitle] = useState("");
@@ -296,7 +294,7 @@ const CreateProjectModal = ({ onClose }) => {
 
 const InputField = ({ label, value, onChange, placeholder, disabled, error }) => (
   <div className={styles.titleText}>
-    <label>{label}:</label>
+    <label>{label}{error && <span className={styles.error}>({error})</span>}</label>
     <input
       type="text"
       placeholder={placeholder}
@@ -304,13 +302,13 @@ const InputField = ({ label, value, onChange, placeholder, disabled, error }) =>
       onChange={onChange}
       disabled={disabled}
     />
-    {error && <span className={styles.error}>{error}</span>}
+    
   </div>
 );
 
 const SelectField = ({ label, value, onChange, options, error }) => (
   <div className={styles.titleText}>
-    <label>{label}:</label>
+    <label>{label}{error && <span className={styles.error}>({error})</span>}</label>
     <select value={value} onChange={onChange}>
       <option value="">Select {label}</option>
       {options.map((opt, i) =>
@@ -321,7 +319,7 @@ const SelectField = ({ label, value, onChange, options, error }) => (
         )
       )}
     </select>
-    {error && <span className={styles.error}>{error}</span>}
+    
   </div>
 );
 

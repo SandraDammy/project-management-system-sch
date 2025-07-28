@@ -186,3 +186,8 @@
   width: 100%;
   margin-top: 1rem;
 }
+
+.error {
+  color: var(--error);
+  margin-left: 0.5rem;
+}

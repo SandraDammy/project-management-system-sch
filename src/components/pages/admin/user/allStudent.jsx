@@ -6,6 +6,9 @@ import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
 import { Link } from "react-router-dom";
 import Dashboard from "../../../../Assets/Image/dashboard.png";
+import empty from "../../../../Assets/Image/empty.png";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
 
 const AllStudent = () => {
   const [students, setStudents] = useState([]);
@@ -41,6 +44,10 @@ const AllStudent = () => {
     setShowUserModal(true);
   };
 
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -50,12 +57,9 @@ const AllStudent = () => {
         </Link>
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : students.length === 0 ? (
-        <div className={styles.emptyState}>
+      {students.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="arrowBack" className={styles.icons} />
           <p>No students available.</p>
         </div>
       ) : (

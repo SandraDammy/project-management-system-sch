@@ -94,3 +94,17 @@
 .createLarge:hover {
   background-color: var(--light-blue);
 }
+.createEmptyState {
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 9999px;
+  font-size: 1rem;
+  background-color: var(--blue);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.createEmptyState:hover {
+  background-color: var(--light-blue);
+}

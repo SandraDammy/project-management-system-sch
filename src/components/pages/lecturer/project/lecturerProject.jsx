@@ -4,6 +4,9 @@ import Banner from "../../../common/banner/banner";
 import LecturerProjectTable from "../../../common/table/lecturerProjectTable";
 import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const LecturerProject = () => {
   const [user, setUser] = useState(null);
@@ -27,35 +30,9 @@ const LecturerProject = () => {
       "Course Code": project.courseCode || "N/A",
       "Course Name": project.courseName || "N/A",
       "Student Name": project.studentName || "N/A",
-      Status: project.status || "N/A",
+      projectStatus: project.projectStatus || "N/A",
     }));
 
-  //  const tableData = [
-  //   {
-  //     projectName: "Smart Solar System",
-  //     projectType: "Final Year Project",
-  //     courseCode: "EEE404",
-  //     courseName: "Power Systems",
-  //     studentName: "Adebayo Yemi",
-  //     projectStatus: "Approved",
-  //   },
-  //   {
-  //     projectName: "AI Tutor",
-  //     projectType: "Class Project",
-  //     courseCode: "CSE503",
-  //     courseName: "Artificial Intelligence",
-  //     studentName: "Obi Johnson",
-  //     projectStatus: "Review",
-  //   },
-  //   {
-  //     projectName: "Mobile Attendance",
-  //     projectType: "Final Year Project",
-  //     courseCode: "CSC401",
-  //     courseName: "Mobile Computing",
-  //     studentName: "Ali Yusuf",
-  //     projectStatus: "Pending",
-  //   },
-  // ];
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -73,7 +50,7 @@ const LecturerProject = () => {
         );
         setProjects(formatProjectData(data || []));
       } catch (err) {
-        setError(err.message || "Something went wrong.");
+        setError("Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -81,18 +58,20 @@ const LecturerProject = () => {
 
     fetchProjects();
   }, [user]);
+
+      if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
         <Banner title={"Project"} />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p style={{ color: "red" }}>Error: {error}</p>
-      ) : projects.length === 0 ? (
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+      {projects.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="arrowBack" className={styles.icon} />
           <p>No projects available.</p>
         </div>
       ) : (

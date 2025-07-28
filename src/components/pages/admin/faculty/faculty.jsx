@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import CreateFaculty from "../../../modal/createFaculty";
 import { baseUrl } from "../../../context/baseUrl";
 import { get } from "../../../context/api";
+import empty from "../../../../Assets/Image/empty.png";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
 
 const Faculty = () => {
   const [showCreateFaculty, setShowCreateFaculty] = useState(false);
@@ -51,6 +54,10 @@ const Faculty = () => {
     fetchFaculties();
   }, [user]);
 
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -62,13 +69,15 @@ const Faculty = () => {
         />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : faculties.length === 0 ? (
-        <div className={styles.emptyState}>
+      {faculties.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="empty" className={styles.icons} />
           <p>No faculties found.</p>
+          <Button
+            title="Create Faculty"
+            className="createEmptyState"
+            onClick={handleCreateFaculty}
+          />
         </div>
       ) : (
         <div className={styles.grid}>

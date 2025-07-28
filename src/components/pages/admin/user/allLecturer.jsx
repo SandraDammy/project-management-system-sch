@@ -6,6 +6,9 @@ import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
 import { Link } from "react-router-dom";
 import Dashboard from "../../../../Assets/Image/dashboard.png";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const AllLecturer = () => {
   const [lecturers, setLecturers] = useState([]);
@@ -41,6 +44,10 @@ const AllLecturer = () => {
     setShowUserModal(true);
   };
 
+      if (loading) return <Loading/>;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -50,12 +57,9 @@ const AllLecturer = () => {
         </Link>
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : lecturers.length === 0 ? (
-        <div className={styles.emptyState}>
+      {lecturers.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="empty" className={styles.icons} />
           <p>No lecturers available.</p>
         </div>
       ) : (

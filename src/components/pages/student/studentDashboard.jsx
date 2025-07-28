@@ -5,38 +5,9 @@ import { useNavigate } from "react-router-dom";
 import ProjectCard from "../../common/card/projectCard";
 import { baseUrl } from "../../context/baseUrl";
 import { get } from "../../context/api";
-
-// const sampleProjects = [
-//   {
-//     title: "Design and Implementation of a Smart Solar System",
-//     department: "Electrical Engineering",
-//     description:
-//       "A system to optimize solar power distribution for rural areas.",
-//   },
-//   {
-//     title: "Inventory System for Retail Stores",
-//     department: "Business Admin",
-//     description: "Track sales, inventory, and supplier records in real-time.",
-//   },
-//   {
-//     title: "Design and Implementation of a Smart Solar System",
-//     department: "Electrical Engineering",
-//     description:
-//       "A system to optimize solar power distribution for rural areas.",
-//   },
-//   {
-//     title: "Web-Based Hospital Management System",
-//     department: "Computer Science",
-//     description:
-//       "Managing patients, appointments, and billing through a digital portal.",
-//   },
-
-//   {
-//     title: "Inventory System for Retail Stores",
-//     department: "Business Admin",
-//     description: "Track sales, inventory, and supplier records in real-time.",
-//   },
-// ];
+import empty from "../../../Assets/Image/empty.png";
+import ErrorMsg from "../../common/errorMsg/errorMsg";
+import Loading from "../../common/loading/loading";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -45,6 +16,7 @@ const StudentDashboard = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
+  // Get user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -52,6 +24,7 @@ const StudentDashboard = () => {
     }
   }, []);
 
+  // Fetch projects when user is loaded
   useEffect(() => {
     if (!user?.id) return;
 
@@ -62,7 +35,8 @@ const StudentDashboard = () => {
         );
         setProjects(data || []);
       } catch (err) {
-        setError(err);
+        setError("Failed to fetch projects.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -75,18 +49,20 @@ const StudentDashboard = () => {
     const encodedTitle = encodeURIComponent(project.title);
     navigate(`/student/${encodedTitle}`);
   };
+
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
-        <Banner title={"Dashboard"} />
+        <Banner title="Dashboard" />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : projects.length === 0 ? (
-        <div className={styles.emptyState}>
+      {projects.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="No Projects" className={styles.icon} />
           <p>No Project found.</p>
         </div>
       ) : (

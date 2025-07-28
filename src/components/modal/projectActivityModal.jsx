@@ -2,61 +2,107 @@ import React, { useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { post } from "../context/api";
+import { baseUrl } from "../context/baseUrl";
+import SuccessModal from "../modalMsg/successModal";
+import ErrorMsg from "../common/errorMsg/errorMsg";
 
-const ProjectActivityModal = ({ onClose }) => {
-  const navigate = useNavigate();
+const ProjectActivityModal = ({ onClose, projectId }) => {
+  const [formData, setFormData] = useState({
+    chapter: "",
+    title: "",
+    description: "",
+    presentationFile: null,
+    image: null,
+    video: null,
+    music: null,
+    document: null,
+    codeFile: null,
+    links: [],
+    projectTitle: "ProjectTitle",
+    commitMessage: "Add projectId to formData",
+  });
 
-  const [chapter, setChapter] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [presentationFile, setPresentationFile] = useState(null);
-  const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null);
-  const [music, setMusic] = useState(null);
-  const [document, setDocument] = useState(null);
-  const [codeFile, setCodeFile] = useState(null);
-  const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+
+    if (
+      [
+        "presentationFile",
+        "document",
+        "codeFile",
+        "video",
+        "music",
+        "image",
+      ].includes(name) &&
+      type === "file"
+    ) {
+      const file = files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result.split(",")[1];
+          setFormData((prev) => ({
+            ...prev,
+            [name]: base64String,
+          }));
+        };
+        reader.readAsDataURL(file);
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const newErrors = {};
+
+    if (!formData.title) newErrors.title = "Title is required.";
+    if (!formData.description)
+      newErrors.description = "Description is required.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
+    }
+
+    const payload = {
+      ...formData,
+      projectId,
+    };
 
     try {
-      const data = new FormData();
-      data.append("chapter", chapter);
-      data.append("title", title);
-      data.append("description", description);
-      if (presentationFile) data.append("presentation", presentationFile);
-      if (image) data.append("image", image);
-      if (video) data.append("video", video);
-      if (music) data.append("music", music);
-      if (document) data.append("document", document);
-      if (codeFile) data.append("codeFile", codeFile);
-      if (link) data.append("link", link);
+      await post(`${baseUrl}ProjectActivities/AddProjectActivity`, payload);
 
-      const response = await fetch("/api/project-activity", {
-        method: "POST",
-        body: data,
+      setShowSuccessModal(true);
+      setFormData({
+        chapter: "",
+        title: "",
+        description: "",
+        presentationFile: null,
+        image: null,
+        video: null,
+        music: null,
+        document: null,
+        codeFile: null,
+        links: [],
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit project activity.");
-      }
-
-      toast.success("Project activity submitted successfully!", {
-        position: "top-right",
-      });
-
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } catch (err) {
-      toast.error("Error submitting project. Please try again.", {
-        position: "top-right",
+      setErrors({});
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+      setErrors({
+        submit: "Failed to submit project activity. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -69,103 +115,96 @@ const ProjectActivityModal = ({ onClose }) => {
         <div className={styles.close} onClick={onClose}>
           <img src={closeIcon} alt="Close Icon" width="32" height="32" />
         </div>
+
         <div className={styles.modalContainer}>
           <h2>Create Project Activity</h2>
+
+          {errors.submit && <ErrorMsg message={errors.submit} />}
+
           <form className={styles.body} onSubmit={handleSubmit}>
             <div className={styles.details}>
               <div className={styles.section}>
-                <div className={styles.titleText}>
-                  <label>Chapter</label>
-                  <input
-                    type="text"
-                    value={chapter}
-                    onChange={(e) => setChapter(e.target.value)}
-                    placeholder="e.g. Chapter One"
-                    required
-                  />
-                </div>
-                <div className={styles.titleText}>
-                  <label>Upload Presentation File</label>
-                  <input
-                    type="file"
-                    accept=".ppt,.pptx,.pdf"
-                    onChange={(e) => setPresentationFile(e.target.files[0])}
-                  />
-                </div>
-                <div className={styles.titleText}>
-                  <label>Upload Image</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setImage(e.target.files[0])}
-                  />
-                </div>
+                <InputField
+                  label="Chapter"
+                  placeholder="Enter Chapter"
+                  name="chapter"
+                  value={formData.chapter}
+                  onChange={handleChange}
+                />
+                <FileInput
+                  label="Upload Presentation File"
+                  name="presentationFile"
+                  onChange={handleChange}
+                />
+                <FileInput
+                  label="Upload Image"
+                  name="image"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className={styles.section}>
-                <div className={styles.titleText}>
-                  <label>Title</label>
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="e.g. Introduction"
-                    required
-                  />
-                </div>
-                <div className={styles.titleText}>
-                  <label>Upload Video</label>
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e) => setVideo(e.target.files[0])}
-                  />
-                </div>
+                <InputField
+                  label="Title"
+                  placeholder="Enter Title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  error={errors.title}
+                />
+                <FileInput
+                  label="Upload Video"
+                  name="video"
+                  onChange={handleChange}
+                />
                 <div className={styles.titleText}>
                   <label>Link</label>
-                  <input
-                    type="url"
-                    value={link}
-                    onChange={(e) => setLink(e.target.value)}
-                    placeholder="https://example.com"
-                  />
+                    <input
+    type="text"
+    name="links"
+    placeholder="https://example.com"
+    value={formData.links[0] || ""}
+    onChange={(e) =>
+      setFormData((prev) => ({
+        ...prev,
+        links: [e.target.value],
+      }))
+    }
+  />
                 </div>
               </div>
 
               <div className={styles.section}>
-                <div className={styles.titleText}>
-                  <label>Upload Document (PDF)</label>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={(e) => setDocument(e.target.files[0])}
-                  />
-                </div>
-                <div className={styles.titleText}>
-                  <label>Upload Music</label>
-                  <input
-                    type="file"
-                    accept="audio/*"
-                    onChange={(e) => setMusic(e.target.files[0])}
-                  />
-                </div>
-                <div className={styles.titleText}>
-                  <label>Upload Code File</label>
-                  <input
-                    type="file"
-                    onChange={(e) => setCodeFile(e.target.files[0])}
-                  />
-                </div>
+                <FileInput
+                  label="Upload Document (PDF)"
+                  name="document"
+                  onChange={handleChange}
+                />
+                <FileInput
+                  label="Upload Music"
+                  name="music"
+                  onChange={handleChange}
+                />
+                <FileInput
+                  label="Upload Code File"
+                  name="codeFile"
+                  onChange={handleChange}
+                />
               </div>
             </div>
 
             <div className={styles.titleText}>
-              <label>Description</label>
+              <label>
+                Description
+                {errors.description && (
+                  <span className={styles.error}> ({errors.description})</span>
+                )}
+              </label>
               <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
                 placeholder="Describe this chapter's content..."
-                required
               />
             </div>
 
@@ -180,8 +219,48 @@ const ProjectActivityModal = ({ onClose }) => {
           </form>
         </div>
       </div>
+
+      {showSuccessModal && (
+        <SuccessModal
+          title="Project Activity created successfully"
+          btnTitle="Done"
+          btnOnclick={() => (window.location.href = "/")}
+        />
+      )}
     </div>
   );
 };
+
+const InputField = ({
+  label,
+  name,
+  value,
+  onChange,
+  placeholder,
+  disabled,
+  error,
+}) => (
+  <div className={styles.titleText}>
+    <label>
+      {label}
+      {error && <span className={styles.error}> ({error})</span>}
+    </label>
+    <input
+      type="text"
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+    />
+  </div>
+);
+
+const FileInput = ({ label, name, onChange }) => (
+  <div className={styles.titleText}>
+    <label>{label}</label>
+    <input type="file" name={name} onChange={onChange} />
+  </div>
+);
 
 export default ProjectActivityModal;

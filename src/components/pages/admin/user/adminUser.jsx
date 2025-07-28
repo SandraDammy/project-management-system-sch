@@ -6,6 +6,9 @@ import UserInfoModal from "../../../modal/userInfoModal";
 import UserTable from "../../../common/table/userTable";
 import { baseUrl } from "../../../context/baseUrl";
 import { get } from "../../../context/api";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const AdminUser = () => {
   const navigate = useNavigate();
@@ -54,6 +57,11 @@ const AdminUser = () => {
   const handleListStudent = () => {
     navigate("/admin/user/allStudent");
   };
+
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -75,12 +83,10 @@ const AdminUser = () => {
         />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : admins.length === 0 ? (
-        <div className={styles.emptyState}>
+      {admins.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="arrowBack" className={styles.icons} />
+
           <p>No admins available.</p>
         </div>
       ) : (

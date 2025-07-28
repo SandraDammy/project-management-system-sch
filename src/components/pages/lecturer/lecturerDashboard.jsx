@@ -5,6 +5,9 @@ import ProjectCard from "../../common/card/projectCard";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../context/baseUrl";
 import { get } from "../../context/api";
+import Loading from "../../common/loading/loading";
+import ErrorMsg from "../../common/errorMsg/errorMsg";
+import empty from "../../../Assets/Image/empty.png";
 
 const LecturerDashboard = () => {
   const navigate = useNavigate();
@@ -44,18 +47,19 @@ const LecturerDashboard = () => {
     navigate(`/lecturer/${encodedTitle}`);
   };
 
+    if (loading) return <Loading/>;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.banner}>
         <Banner title={"Dashboard"} />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : projects.length === 0 ? (
-        <div className={styles.emptyState}>
+      {projects.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="No Projects" className={styles.icon} />
           <p>No Project found.</p>
         </div>
       ) : (

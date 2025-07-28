@@ -7,6 +7,9 @@ import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import Button from "../../../common/button/button";
 import Dashboard from "../../../../Assets/Image/dashboard.png";
 import CreateDept from "../../../modal/createDept";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const FacultyDept = () => {
   const [departments, setDepartments] = useState([]);
@@ -29,9 +32,9 @@ const FacultyDept = () => {
 
   const handleViewMore = (department) => {
     navigate(
-      `/admin/faculty/facultyDept/deptCourse/${department.id}?name=${encodeURIComponent(
-        department.departmentName
-      )}`
+      `/admin/faculty/facultyDept/deptCourse/${
+        department.id
+      }?name=${encodeURIComponent(department.departmentName)}`
     );
   };
 
@@ -55,6 +58,10 @@ const FacultyDept = () => {
     }
   }, [id]);
 
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -71,13 +78,15 @@ const FacultyDept = () => {
         />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : departments.length === 0 ? (
-        <div className={styles.emptyState}>
+      {departments.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="empty" className={styles.icons} />
           <p>No departments available.</p>
+          <Button
+            title="Create Department"
+            className="createEmptyState"
+            onClick={handleCreateDept}
+          />
         </div>
       ) : (
         <div className={styles.grid}>

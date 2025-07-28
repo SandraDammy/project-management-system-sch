@@ -7,6 +7,9 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import CreateFaculty from "../../../modal/createFaculty";
 import Button from "../../../common/button/button";
 import Dashboard from "../../../../Assets/Image/dashboard.png";
+import empty from "../../../../Assets/Image/empty.png";
+import Loading from "../../../common/loading/loading";
+import ErrorMsg from "../../../common/errorMsg/errorMsg";
 
 const DeptCourse = () => {
   const [course, setCourse] = useState([]);
@@ -38,6 +41,11 @@ const DeptCourse = () => {
 
     fetchCourse();
   }, [id]);
+
+  if (loading) return <Loading />;
+
+  if (error) return <ErrorMsg error={error} message={error} />;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
@@ -54,13 +62,15 @@ const DeptCourse = () => {
         />
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className={styles.errorText}>Error: {error.toString()}</p>
-      ) : course.length === 0 ? (
-        <div className={styles.emptyState}>
+      {course.length === 0 ? (
+        <div className={styles.emptyTable}>
+          <img src={empty} alt="empty" className={styles.icons} />
           <p>No course available.</p>
+          <Button
+            title="Create Course"
+            className="createEmptyState"
+            onClick={handleCreateDepartment}
+          />
         </div>
       ) : (
         <div className={styles.grid}>

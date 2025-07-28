@@ -46,3 +46,31 @@
   width: 20px;
   height: 20px;
 }
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text);
+  gap: 1rem;
+  border: 2px dashed var(--line);
+  padding: 1rem;
+}
+.emptyTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text);
+  gap: 1rem;
+  border: 2px dashed var(--line);
+  padding: 10rem;
+}
+
+.icons {
+  width: 5rem;
+  height: 5rem;
+}
