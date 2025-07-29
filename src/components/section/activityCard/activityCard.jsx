@@ -4,7 +4,10 @@ import styles from "./activityCard.module.css";
 import Button from "../../common/button/button";
 
 const ActivityCard = ({ activity, onView }) => {
-const { chapter, title, description, commit } = activity;
+  if (!activity) return null;
+  const isValid = (val) =>
+    val && val.toString().toLowerCase().trim() !== "not provided";
+
   return (
     <div className={styles.card}>
       <div className={styles.inputPreview}>
@@ -12,13 +15,13 @@ const { chapter, title, description, commit } = activity;
           <div className={styles.section}>
             <div className={styles.titleTextView}>
               <div className={styles.titleJob}>Chapter</div>
-              <div className={styles.txt}>{chapter}</div>
+              <div className={styles.txt}>{activity.chapter}</div>
             </div>
           </div>
           <div className={styles.section}>
             <div className={styles.titleTextView}>
               <div className={styles.titleJob}>Title</div>
-              <div className={styles.txt}>{title}</div>
+              <div className={styles.txt}>{activity.projectTitle}</div>
             </div>
           </div>
         </div>
@@ -35,15 +38,17 @@ const { chapter, title, description, commit } = activity;
       <div className={styles.cardBody}>
         <div className={styles.titleTextView}>
           <div className={styles.titleJob}>Description</div>
-          <div className={styles.textarea}>{description}</div>
+          <div className={styles.textarea}>{activity.description}</div>
         </div>
       </div>
-      <div className={styles.cardBody}>
-        <div className={styles.titleTextView}>
-          <div className={styles.titleJob}>Commit Message</div>
-          <div className={styles.textarea}>{commit}</div>
+      {isValid(activity.commitMessage) && (
+        <div className={styles.cardBody}>
+          <div className={styles.titleTextView}>
+            <div className={styles.titleJob}>Commit Message</div>
+            <div className={styles.textarea}>{activity.commitMessage}</div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

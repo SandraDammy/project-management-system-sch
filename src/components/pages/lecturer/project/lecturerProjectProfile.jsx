@@ -47,12 +47,12 @@ const LecturerProjectProfile = () => {
   }, [projectId]);
 
   useEffect(() => {
-    if (!projectData?.projectId) return;
+    if (!projectData?.id) return;
 
     const fetchActivities = async () => {
       try {
         const data = await get(
-          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.projectId}`
+          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.id}`
         );
         setProjectsActivity(data || []);
       } catch (err) {

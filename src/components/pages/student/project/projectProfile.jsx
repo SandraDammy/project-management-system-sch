@@ -57,12 +57,12 @@ const ProjectProfile = () => {
   }, [projectId]);
 
   useEffect(() => {
-    if (!projectData?.projectId) return;
+    if (!projectData?.id) return;
 
     const fetchActivities = async () => {
       try {
         const data = await get(
-          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.projectId}`
+          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.id}`
         );
         setProjectsActivity(data || []);
       } catch (err) {
@@ -130,7 +130,7 @@ const ProjectProfile = () => {
           <img src={empty} alt="arrowBack" className={styles.icon} />
           <p>No activities available.</p>
           <Button
-            title="Create Project Activity"
+            title="Add Project Activity"
             className="createEmptyState"
             onClick={handleCreateProjectActivity}
           />

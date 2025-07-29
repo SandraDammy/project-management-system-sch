@@ -79,8 +79,23 @@
   width: 100%;
   gap: 0.5rem;
 }
+.titleFile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-justify: auto;
+  width: 100%;
+  gap: 0.5rem;
+}
 
 .titleText label {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.titleFile label {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
   font-weight: 500;
@@ -111,6 +126,17 @@
   font-size: 1rem;
   color: var(--text);
   text-transform: capitalize;
+}
+.titleFile input {
+  width: 100%;
+  height: 45px;
+  padding: 0.75rem;
+  border: 1px solid var(--lightBlack);
+  border-radius: 6px;
+  background-color: transparent;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  color: var(--text);
 }
 
 .grid {
