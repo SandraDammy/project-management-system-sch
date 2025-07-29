@@ -6,7 +6,7 @@ import { baseUrl } from "../../context/baseUrl";
 import Button from "../../common/button/button";
 import SuccessModal from "../../modalMsg/successModal";
 
-const RegisterModal = ({ onClose }) => {
+const RegisterModal = ({ onClose, initialRole }) => {
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -21,6 +21,12 @@ const RegisterModal = ({ onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+    if (initialRole === "student" || initialRole === "lecturer") {
+      setRole(initialRole);
+    }
+  }, [initialRole]);
 
   // Faculty & Department data
   const [faculties, setFaculties] = useState([]);
@@ -145,34 +151,25 @@ const RegisterModal = ({ onClose }) => {
           <form className={styles.body} onSubmit={handleSubmit}>
             <div className={styles.details}>
               <div className={styles.section}>
-                <div className={styles.sectionTxt}>
-                  <SelectField
-                    label="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    options={["Mr", "Mrs", "Miss"]}
-                    error={errors.title}
-                  />
-                  <InputField
-                    placeholder="Matric No or Staff ID"
-                    value={matricNoOrStaffId}
-                    onChange={(e) => setMatricNoOrStaffId(e.target.value)}
-                    error={errors.matricNoOrStaffId}
-                  />
-                </div>
-                <InputField
+                <SelectField
+                  label="Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  options={["Mr", "Mrs", "Miss"]}
+                  error={errors.title}
+                />
+
+                <InputEmail
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   error={errors.email}
                 />
-
-                <SelectField
-                  label="Role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  error={errors.role}
-                  options={["Student", "Lecturer"]}
+                <InputNo
+                  placeholder="Matric No or Staff ID"
+                  value={matricNoOrStaffId}
+                  onChange={(e) => setMatricNoOrStaffId(e.target.value)}
+                  error={errors.matricNoOrStaffId}
                 />
               </div>
 
@@ -264,9 +261,34 @@ const InputField = ({ placeholder, value, onChange, error }) => (
     {error && <span className={styles.error}>{error}</span>}
   </div>
 );
+
 // Reusable input field
+const InputNo = ({ placeholder, value, onChange, error }) => (
+  <div className={styles.titleNo}>
+    <input
+      type="text"
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
+    {error && <span className={styles.error}>{error}</span>}
+  </div>
+);
+// Reusable email input field
+const InputEmail = ({ placeholder, value, onChange, error }) => (
+  <div className={styles.titleTexts}>
+    <input
+      type="email"
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
+    {error && <span className={styles.error}>{error}</span>}
+  </div>
+);
+// Reusable password input field
 const InputPwd = ({ placeholder, value, onChange, error }) => (
-  <div className={styles.titleText}>
+  <div className={styles.titlePwd}>
     <input
       type="password"
       placeholder={placeholder}

@@ -21,7 +21,6 @@ const ProjectProfile = () => {
   const [showProjectActivity, setShowProjectActivity] = useState(false);
   const [showViewActivity, setShowViewActivity] = useState(null);
 
-  
   const handleCreateProjectActivity = () => {
     setShowProjectActivity(true);
   };
@@ -122,7 +121,6 @@ const ProjectProfile = () => {
           <p>
             <strong>Project Type:</strong>
             {projectData?.projectType}
-            {projectData?.projectId}
           </p>
         </div>
       </div>
@@ -148,7 +146,11 @@ const ProjectProfile = () => {
       )}
 
       {showProjectActivity && (
-        <ProjectActivityModal onClose={handleCloseCreateProjectActivity} projectId={projectId}/>
+        <ProjectActivityModal
+          onClose={handleCloseCreateProjectActivity}
+          projectId={projectId}
+          projectTitle={projectData?.projectTitle}
+        />
       )}
 
       {showViewActivity && (

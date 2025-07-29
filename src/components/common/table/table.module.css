@@ -50,6 +50,7 @@
 }
 .row {
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .body td {

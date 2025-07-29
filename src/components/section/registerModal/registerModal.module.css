@@ -67,11 +67,6 @@
   flex-direction: column;
   gap: 1rem;
 }
-.sectionTxt {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
 
 .titleText {
   display: flex;
@@ -92,7 +87,41 @@
   background-color: transparent;
   color: var(--black);
   font-family: "Poppins", sans-serif;
+  text-transform: capitalize;
 }
+
+.titleTexts input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--black);
+  font-family: "Poppins", sans-serif;
+  text-transform: lowercase;
+}
+.titlePwd input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--black);
+  font-family: "Poppins", sans-serif;
+}
+.titleNo input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--black);
+  font-family: "Poppins", sans-serif;
+}
+
 .titleText select {
   width: 100%;
   padding: 0.875rem 1rem;

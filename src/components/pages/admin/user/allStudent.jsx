@@ -22,9 +22,8 @@ const AllStudent = () => {
     { label: "First Name", key: "firstName" },
     { label: "Last Name", key: "lastName" },
     { label: "Email", key: "email" },
-
-    { label: "Faculty", key: "faculty" },
-    { label: "Department", key: "department" },
+    { label: "Faculty", key: "facultyName" },
+    { label: "Department", key: "departmentName" },
   ];
 
   useEffect(() => {
@@ -82,8 +81,8 @@ const AllStudent = () => {
             { label: "First Name", key: "firstName" },
             { label: "Last Name", key: "lastName" },
             { label: "Email", key: "email" },
-            { label: "Faculty", key: "faculty" },
-            { label: "Department", key: "department" },
+            { label: "Faculty", key: "facultyName" },
+            { label: "Department", key: "departmentName" },
           ]}
         />
       )}

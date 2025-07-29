@@ -119,7 +119,10 @@ const LoginForm = ({ role }) => {
         </form>
       </div>
       {showRegisterModal && (
-        <RegisterModal onClose={() => setShowRegisterModal(false)} />
+        <RegisterModal
+          onClose={() => setShowRegisterModal(false)}
+          initialRole={role}
+        />
       )}
     </div>
   );

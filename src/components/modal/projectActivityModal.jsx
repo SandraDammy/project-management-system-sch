@@ -7,7 +7,7 @@ import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 import ErrorMsg from "../common/errorMsg/errorMsg";
 
-const ProjectActivityModal = ({ onClose, projectId }) => {
+const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
   const [formData, setFormData] = useState({
     chapter: "",
     title: "",
@@ -19,7 +19,8 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
     document: null,
     codeFile: null,
     links: [],
-    projectTitle: "ProjectTitle",
+    projectId: projectId || "",
+    projectTitle: projectTitle || "",
     commitMessage: "Add projectId to formData",
   });
 
@@ -61,7 +62,6 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -79,7 +79,6 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
 
     const payload = {
       ...formData,
-      projectId,
     };
 
     try {
@@ -97,6 +96,9 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
         document: null,
         codeFile: null,
         links: [],
+        projectId: projectId,
+        projectTitle: projectTitle,
+        commitMessage: "Add projectId to formData",
       });
       setErrors({});
     } catch (error) {
@@ -159,18 +161,18 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
                 />
                 <div className={styles.titleText}>
                   <label>Link</label>
-                    <input
-    type="text"
-    name="links"
-    placeholder="https://example.com"
-    value={formData.links[0] || ""}
-    onChange={(e) =>
-      setFormData((prev) => ({
-        ...prev,
-        links: [e.target.value],
-      }))
-    }
-  />
+                  <input
+                    type="text"
+                    name="links"
+                    placeholder="https://example.com"
+                    value={formData.links[0] || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        links: [e.target.value],
+                      }))
+                    }
+                  />
                 </div>
               </div>
 

@@ -65,7 +65,7 @@ const AppRoutes = () => {
         { path: "", element: <LecturerDashboard /> }, // default: /Lecturer
         { path: "project", element: <LecturerProject /> },
         {
-          path: "project/projectProfile/:projectName",
+          path: "project/projectProfile/:projectId",
           element: <LecturerProjectProfile />,
         },
         { path: ":projectName", element: <ViewLecturerProject /> },

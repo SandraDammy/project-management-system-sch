@@ -181,7 +181,7 @@ const InputField = ({ placeholder, value, onChange, error }) => (
   </div>
 );
 
-// Reusable password input field
+// Reusable email input field
 const InputEmail = ({ placeholder, value, onChange, error }) => (
   <div className={styles.titleTexts}>
     <input
@@ -193,7 +193,7 @@ const InputEmail = ({ placeholder, value, onChange, error }) => (
     {error && <span className={styles.error}>{error}</span>}
   </div>
 );
-
+// Reusable password input field
 const InputPwd = ({ placeholder, value, onChange, error }) => (
   <div className={styles.titlePwd}>
     <input
