@@ -23,6 +23,7 @@ import DeptCourse from "../pages/admin/faculty/deptCourse";
 import AdminUser from "../pages/admin/user/adminUser";
 import AllLecturer from "../pages/admin/user/allLecturer";
 import AllStudent from "../pages/admin/user/allStudent";
+import ViewAdminProject from "../pages/admin/viewAdminProject";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
@@ -76,6 +77,8 @@ const AppRoutes = () => {
       element: <AdminLayout />, 
       children: [
         { path: "", element: <Admin /> }, 
+                { path: ":projectName", element: <ViewAdminProject/> },
+
         { path: "user", element: <AdminUser/> }, 
         { path: "user/allLecturer/", element: <AllLecturer/> }, 
         { path: "user/allStudent", element: <AllStudent/> }, 

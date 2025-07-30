@@ -1,15 +1,12 @@
 import React from "react";
-import styles from "./project.module.css";
-import { useNavigate, useParams } from "react-router-dom";
-import Button from "../../common/button/button";
+import { useParams } from "react-router-dom";
+import Banner from "../../common/banner/banner";
+import styles from "./admin.module.css";
+import BannerTitle from "../../common/banner/bannerTitle";
 
-const ViewProject = () => {
+const ViewAdminProject = () => {
   const { projectName } = useParams();
-  const navigate = useNavigate();
 
-  const handleGoBack = () => {
-    navigate("/");
-  };
   const projectDetails = {
     author: "Jane Doe",
     faculty: "System Engineering",
@@ -38,15 +35,10 @@ const ViewProject = () => {
         </a>
       </div>
     ) : null;
-
   return (
-    <div className={styles.project}>
+    <div className={styles.wrapper}>
       <div className={styles.banner}>
-        <h1>{decodeURIComponent(projectName)}</h1>
-        <div className={styles.text}>
-          <p>({projectDetails.projectType})</p>
-          <p>{projectDetails.program}</p>
-        </div>
+        <BannerTitle title={decodeURIComponent(projectName)} href={`/admin`} />
       </div>
 
       <div className={styles.projectProfile}>
@@ -57,7 +49,7 @@ const ViewProject = () => {
           </p>
           <p>
             <strong>Project Type:</strong> {projectDetails.projectType}
-          </p>{" "}
+          </p>
           <p>
             <strong>Faculty:</strong> {projectDetails.faculty}
           </p>
@@ -95,12 +87,8 @@ const ViewProject = () => {
           {renderLink("Music", projectDetails.music)}
         </div>
       </div>
-
-      <div className={styles.backArrow}>
-        <Button title="Go Back" className="btnPrimary" onClick={handleGoBack} />
-      </div>
     </div>
   );
 };
 
-export default ViewProject;
+export default ViewAdminProject;
