@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
@@ -6,53 +6,75 @@ import { post } from "../context/api";
 import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 import ErrorMsg from "../common/errorMsg/errorMsg";
+import axios from "axios";
 
-const ProjectActivityModal = ({ onClose, projectId }) => {
+const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
   const [formData, setFormData] = useState({
     chapter: "",
     title: "",
     description: "",
+    document: null,
     presentationFile: null,
+    codeFile: null,
     image: null,
     video: null,
     music: null,
-    document: null,
-    codeFile: null,
-    links: [],
-    projectTitle: "ProjectTitle",
-    commitMessage: "Add projectId to formData",
+    links: [""],
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [user, setUser] = useState(null);
+
+    useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
-    if (
-      [
-        "presentationFile",
-        "document",
-        "codeFile",
-        "video",
-        "music",
-        "image",
-      ].includes(name) &&
-      type === "file"
-    ) {
+    if (name === "links") {
+      setFormData((prev) => ({
+        ...prev,
+        links: [value],
+      }));
+      return;
+    }
+
+    if (type === "file") {
       const file = files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64String = reader.result.split(",")[1];
-          setFormData((prev) => ({
-            ...prev,
-            [name]: base64String,
-          }));
-        };
-        reader.readAsDataURL(file);
+      if (!file) return;
+
+      const allowedTypes = {
+        document: ["application/pdf"],
+        presentationFile: ["application/pdf"],
+        image: ["application/pdf"],
+        video: ["video/mp4"],
+        music: ["audio/mpeg", "audio/mp3"],
+        codeFile: ["application/zip", "application/x-zip-compressed"],
+      };
+
+      const maxSizeMB = 10;
+      const isValidType = allowedTypes[name]?.includes(file.type);
+
+      if (!isValidType) {
+        alert(`Invalid file type for ${name}.`);
+        return;
       }
+
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        alert(`File size for ${name} exceeds ${maxSizeMB}MB.`);
+        return;
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: file,
+      }));
     } else {
       setFormData((prev) => ({
         ...prev,
@@ -61,51 +83,56 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
     }
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.title) newErrors.title = "Title is required";
+    if (!formData.description)
+      newErrors.description = "Description is required";
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const newErrors = {};
-
-    if (!formData.title) newErrors.title = "Title is required.";
-    if (!formData.description)
-      newErrors.description = "Description is required.";
-
+    const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setLoading(false);
       return;
     }
 
-    const payload = {
-      ...formData,
-      projectId,
-    };
+    setIsLoading(true);
+
+    const payload = new FormData();
+    payload.append("Chapter", formData.chapter);
+    payload.append("Title", formData.title);
+    payload.append("Description", formData.description);
+    payload.append("Document", formData.document);
+    payload.append("PresentationFile", formData.presentationFile);
+    payload.append("CodeFile", formData.codeFile);
+    payload.append("Image", formData.image);
+    payload.append("Video", formData.video);
+    payload.append("Music", formData.music);
+    payload.append("Links", JSON.stringify(formData.links));
+    payload.append("ProjectId", projectId);
+    payload.append("ProjectTitle", projectTitle);
 
     try {
-      await post(`${baseUrl}ProjectActivities/AddProjectActivity`, payload);
-
+      const response = await axios.post(
+        `${baseUrl}ProjectActivities/AddProjectActivity`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      console.log("Response:", response.data);
       setShowSuccessModal(true);
-      setFormData({
-        chapter: "",
-        title: "",
-        description: "",
-        presentationFile: null,
-        image: null,
-        video: null,
-        music: null,
-        document: null,
-        codeFile: null,
-        links: [],
-      });
-      setErrors({});
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-      setErrors({
-        submit: "Failed to submit project activity. Please try again.",
-      });
+      console.error("Error:", error);
+      setErrors({ submit: "Something went wrong. Try again." });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -117,79 +144,123 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
         </div>
 
         <div className={styles.modalContainer}>
-          <h2>Create Project Activity</h2>
-
+          <h2>Add Project Activity</h2>
           {errors.submit && <ErrorMsg message={errors.submit} />}
 
           <form className={styles.body} onSubmit={handleSubmit}>
             <div className={styles.details}>
               <div className={styles.section}>
-                <InputField
-                  label="Chapter"
-                  placeholder="Enter Chapter"
-                  name="chapter"
-                  value={formData.chapter}
-                  onChange={handleChange}
-                />
-                <FileInput
-                  label="Upload Presentation File"
-                  name="presentationFile"
-                  onChange={handleChange}
-                />
-                <FileInput
-                  label="Upload Image"
-                  name="image"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className={styles.section}>
-                <InputField
-                  label="Title"
-                  placeholder="Enter Title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  error={errors.title}
-                />
-                <FileInput
-                  label="Upload Video"
-                  name="video"
-                  onChange={handleChange}
-                />
                 <div className={styles.titleText}>
-                  <label>Link</label>
-                    <input
-    type="text"
-    name="links"
-    placeholder="https://example.com"
-    value={formData.links[0] || ""}
-    onChange={(e) =>
-      setFormData((prev) => ({
-        ...prev,
-        links: [e.target.value],
-      }))
-    }
-  />
+                  <label htmlFor="chapter">Chapter</label>
+                  <input
+                    type="text"
+                    id="chapter"
+                    name="chapter"
+                    placeholder="Enter project stage"
+                    value={formData.chapter}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleFile}>
+                  <label htmlFor="presentationFile">
+                    Upload Presentation (PDF Only)
+                  </label>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    name="presentationFile"
+                    id="presentationFile"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleFile}>
+                  <label htmlFor="image">Upload Doc Images (PDF Only)</label>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    name="image"
+                    id="image"
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
 
               <div className={styles.section}>
-                <FileInput
-                  label="Upload Document (PDF)"
-                  name="document"
-                  onChange={handleChange}
-                />
-                <FileInput
-                  label="Upload Music"
-                  name="music"
-                  onChange={handleChange}
-                />
-                <FileInput
-                  label="Upload Code File"
-                  name="codeFile"
-                  onChange={handleChange}
-                />
+                <div className={styles.titleText}>
+                  <label htmlFor="title">
+                    Title
+                    {errors.title && (
+                      <span className={styles.error}> ({errors.title})</span>
+                    )}
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter title"
+                    value={formData.title}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleFile}>
+                  <label htmlFor="video">Upload Video (MP4 Only)</label>
+                  <input
+                    type="file"
+                    accept="video/mp4"
+                    name="video"
+                    id="video"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleText}>
+                  <label htmlFor="links">Link</label>
+                  <input
+                    type="text"
+                    name="links"
+                    placeholder="https://example.com"
+                    value={formData.links[0] || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.section}>
+                <div className={styles.titleFile}>
+                  <label htmlFor="document">Upload Document (PDF Only)</label>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    name="document"
+                    id="document"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleFile}>
+                  <label htmlFor="music">Upload Music (MP3 Only)</label>
+                  <input
+                    type="file"
+                    accept=".mp3,audio/mpeg"
+                    name="music"
+                    id="music"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.titleFile}>
+                  <label htmlFor="codeFile">Upload Code File (ZIP Only)</label>
+                  <input
+                    type="file"
+                    accept=".zip"
+                    name="codeFile"
+                    id="codeFile"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
 
@@ -210,9 +281,9 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
 
             <div className={styles.btn}>
               <Button
-                title={loading ? "Submitting..." : "Submit"}
+                title={isLoading ? "Submitting..." : "Submit"}
                 className="createLarge"
-                disabled={loading}
+                disabled={isLoading}
                 type="submit"
               />
             </div>
@@ -224,43 +295,11 @@ const ProjectActivityModal = ({ onClose, projectId }) => {
         <SuccessModal
           title="Project Activity created successfully"
           btnTitle="Done"
-          btnOnclick={() => (window.location.href = "/")}
+          btnOnclick={() => (window.location.href = "/student/project")}
         />
       )}
     </div>
   );
 };
-
-const InputField = ({
-  label,
-  name,
-  value,
-  onChange,
-  placeholder,
-  disabled,
-  error,
-}) => (
-  <div className={styles.titleText}>
-    <label>
-      {label}
-      {error && <span className={styles.error}> ({error})</span>}
-    </label>
-    <input
-      type="text"
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-    />
-  </div>
-);
-
-const FileInput = ({ label, name, onChange }) => (
-  <div className={styles.titleText}>
-    <label>{label}</label>
-    <input type="file" name={name} onChange={onChange} />
-  </div>
-);
 
 export default ProjectActivityModal;

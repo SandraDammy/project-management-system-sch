@@ -9,6 +9,7 @@ const ViewStudentProject = () => {
   const projectDetails = {
     author: "Jane Doe",
     department: "Mass Communication",
+    faculty: "System Engineering",
     program: "HND Mass Communication",
     supervisor: "Dr. Emmanuel Okoro",
     date: "April 22, 2025",
@@ -34,7 +35,7 @@ const ViewStudentProject = () => {
       </div>
     ) : null;
   return (
-        <div className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.banner}>
         <Banner title={decodeURIComponent(projectName)} />
       </div>
@@ -47,6 +48,9 @@ const ViewStudentProject = () => {
           </p>
           <p>
             <strong>Project Type:</strong> {projectDetails.projectType}
+          </p>{" "}
+          <p>
+            <strong>Faculty:</strong> {projectDetails.faculty}
           </p>
           <p>
             <strong>Department:</strong> {projectDetails.department}

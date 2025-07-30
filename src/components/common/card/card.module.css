@@ -24,6 +24,15 @@
   width: 100%;
   gap: 0.5rem;
 }
+.projectName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
 
 .viewTitle h3 {
   color: var(--black);
@@ -31,10 +40,12 @@
   font-size: 1.2rem;
 }
 
+.viewTitle .faculty {
+    color: var(--tertiary-text);
+}
 .viewTitle .department {
   color: var(--green);
   font-weight: 500;
-  margin-bottom: 0.75rem;
 }
 
 .viewTitle p {

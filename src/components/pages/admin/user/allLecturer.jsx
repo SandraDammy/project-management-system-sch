@@ -5,7 +5,7 @@ import UserInfoModal from "../../../modal/userInfoModal";
 import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
 import { Link } from "react-router-dom";
-import Dashboard from "../../../../Assets/Image/dashboard.png";
+import ArrowBack from "../../../../Assets/Image/ArrowBack.svg";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
 import empty from "../../../../Assets/Image/empty.png";
@@ -21,7 +21,9 @@ const AllLecturer = () => {
     { label: "Staff ID", key: "staffId" },
     { label: "First Name", key: "firstName" },
     { label: "Last Name", key: "lastName" },
-    { label: "Role", key: "role" },
+    { label: "Email", key: "email" },
+    { label: "Faculty", key: "facultyName" },
+    { label: "Department", key: "departmentName" },
   ];
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const AllLecturer = () => {
     setShowUserModal(true);
   };
 
-      if (loading) return <Loading/>;
+  if (loading) return <Loading />;
 
   if (error) return <ErrorMsg error={error} message={error} />;
 
@@ -52,7 +54,7 @@ const AllLecturer = () => {
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
         <Link to="/admin/user" className={styles.wrapperBack}>
-          <img src={Dashboard} alt="Dashboard" className={styles.icon} />
+          <img src={ArrowBack} alt="ArrowBack" className={styles.icon} />
           <h1 className={styles.preTxt}>List of Lecturer</h1>
         </Link>
       </div>
@@ -79,7 +81,8 @@ const AllLecturer = () => {
             { label: "Last Name", key: "lastName" },
             { label: "Email", key: "email" },
             { label: "Staff ID", key: "staffId" },
-            { label: "Role", key: "role" },
+            { label: "Faculty", key: "facultyName" },
+            { label: "Department", key: "departmentName" },
           ]}
         />
       )}

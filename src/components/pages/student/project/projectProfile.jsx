@@ -21,7 +21,6 @@ const ProjectProfile = () => {
   const [showProjectActivity, setShowProjectActivity] = useState(false);
   const [showViewActivity, setShowViewActivity] = useState(null);
 
-  
   const handleCreateProjectActivity = () => {
     setShowProjectActivity(true);
   };
@@ -58,12 +57,12 @@ const ProjectProfile = () => {
   }, [projectId]);
 
   useEffect(() => {
-    if (!projectData?.projectId) return;
+    if (!projectData?.id) return;
 
     const fetchActivities = async () => {
       try {
         const data = await get(
-          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.projectId}`
+          `${baseUrl}ProjectActivities/AllProjectActivities/${projectData.id}`
         );
         setProjectsActivity(data || []);
       } catch (err) {
@@ -122,7 +121,6 @@ const ProjectProfile = () => {
           <p>
             <strong>Project Type:</strong>
             {projectData?.projectType}
-            {projectData?.projectId}
           </p>
         </div>
       </div>
@@ -132,7 +130,7 @@ const ProjectProfile = () => {
           <img src={empty} alt="arrowBack" className={styles.icon} />
           <p>No activities available.</p>
           <Button
-            title="Create Project Activity"
+            title="Add Project Activity"
             className="createEmptyState"
             onClick={handleCreateProjectActivity}
           />
@@ -148,7 +146,11 @@ const ProjectProfile = () => {
       )}
 
       {showProjectActivity && (
-        <ProjectActivityModal onClose={handleCloseCreateProjectActivity} projectId={projectId}/>
+        <ProjectActivityModal
+          onClose={handleCloseCreateProjectActivity}
+          projectId={projectId}
+          projectTitle={projectData?.projectTitle}
+        />
       )}
 
       {showViewActivity && (

@@ -48,11 +48,13 @@
   font-size: 1rem;
   color: var(--text);
   line-height: 1.5;
+  text-transform: capitalize;
 }
 
 .projectBody strong {
   font-weight: 600;
   color: var(--lightBlack);
+  margin-right: 0.5rem;
 }
 .grid {
   display: grid;

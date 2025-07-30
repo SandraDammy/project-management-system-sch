@@ -10,9 +10,8 @@ const LecturerLayout = () => {
         <LecturerSidebar/>
       </div>
       <div className="container-body">
-        Lecturer Page
         <Navbar />
-        <Outlet /> {/* Renders the child route content */}
+        <Outlet /> 
       </div>
     </div>
   )

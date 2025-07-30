@@ -43,7 +43,7 @@ const StudentSidebar = () => {
             <Link
               to="/student/project"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/student/project" ? styles.active : ""
+                location.pathname === "/student/project" ? styles.active : "/student/project"
               }`}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
@@ -53,9 +53,11 @@ const StudentSidebar = () => {
 
           <li className={styles.sidebarItem}>
             <Link
-              to="/student/profile"
+              to=""
+              // to="/student/profile"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/student/profile" ? styles.active : ""
+                location.pathname === "" ? styles.active : ""
+                // location.pathname === "/student/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />

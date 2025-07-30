@@ -1,68 +1,22 @@
-import React, { useEffect, useState } from "react";
-import styles from "./registerModal.module.css";
-import closeIcon from "../../../Assets/Image/close.svg";
-import { post, get } from "../../context/api";
-import { baseUrl } from "../../context/baseUrl";
+import React, { useState } from "react";
 import Button from "../../common/button/button";
+import styles from "./createAdmin.module.css";
+import { baseUrl } from "../../context/baseUrl";
+import { post } from "../../context/api";
 import SuccessModal from "../../modalMsg/successModal";
+import closeIcon from "../../../Assets/Image/close.svg";
 
-const RegisterModal = ({ onClose, initialRole }) => {
+const CreateAdmin = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
-  const [faculty, setFaculty] = useState("");
-  const [role, setRole] = useState("");
-  const [matricNoOrStaffId, setMatricNoOrStaffId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-  useEffect(() => {
-    if (initialRole === "student" || initialRole === "lecturer") {
-      setRole(initialRole);
-    }
-  }, [initialRole]);
-
-  // Faculty & Department data
-  const [faculties, setFaculties] = useState([]);
-  const [departments, setDepartments] = useState([]);
-
-  // Fetch all faculties
-  useEffect(() => {
-    const fetchFaculties = async () => {
-      try {
-        const data = await get(`${baseUrl}Faculties/AllFaculties`);
-        setFaculties(data || []);
-      } catch (error) {
-        console.error("Failed to load faculties", error);
-      }
-    };
-
-    fetchFaculties();
-  }, []);
-
-  // Fetch departments based on selected faculty
-  useEffect(() => {
-    if (!faculty) return;
-
-    const fetchDepartments = async () => {
-      try {
-        const data = await get(
-          `${baseUrl}Departments/AllDepartments?facultyId=${faculty}`
-        );
-        setDepartments(data || []);
-      } catch (error) {
-        console.error("Failed to load departments", error);
-      }
-    };
-
-    fetchDepartments();
-  }, [faculty]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,26 +27,21 @@ const RegisterModal = ({ onClose, initialRole }) => {
     if (!firstName) newErrors.firstName = "First name is required";
     if (!lastName) newErrors.lastName = "Last name is required";
     if (!email) newErrors.email = "Email is required";
-    if (!faculty) newErrors.faculty = "Faculty is required";
-    if (!department) newErrors.department = "Department is required";
-    if (!role) newErrors.role = "Role is required";
-    if (!matricNoOrStaffId)
-      newErrors.matricNoOrStaffId = "Matric No or Staff ID is required";
     if (!password) newErrors.password = "Password is required";
 
     // Password strength validation
     if (password) {
       const hasUpper = /[A-Z]/.test(password);
       const hasLower = /[a-z]/.test(password);
-      // const hasNumber = /[0-9]/.test(password);
-      // const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
       const isLongEnough = password.length >= 6;
 
       if (
         !hasUpper ||
         !hasLower ||
-        // !hasNumber ||
-        // !hasSpecial ||
+        !hasNumber ||
+        !hasSpecial ||
         !isLongEnough
       ) {
         newErrors.password =
@@ -116,11 +65,11 @@ const RegisterModal = ({ onClose, initialRole }) => {
       FirstName: firstName,
       LastName: lastName,
       Email: email,
-      Department: department,
-      Faculty: faculty,
-      Role: role,
-      MatricNoOrStaffId: matricNoOrStaffId,
+      Role: "admin",
       Password: password,
+      Department: "department",
+      Faculty: "faculty",
+      MatricNoOrStaffId: "matricNoOrStaffId",
     };
 
     try {
@@ -131,7 +80,6 @@ const RegisterModal = ({ onClose, initialRole }) => {
       console.log("Response:", response.data);
       setShowSuccessModal(true);
       setTitle("");
-      setDepartment("");
       setErrors({});
     } catch (error) {
       console.error("Error:", error);
@@ -147,7 +95,7 @@ const RegisterModal = ({ onClose, initialRole }) => {
           <img src={closeIcon} alt="Close Icon" width="32" height="32" />
         </div>
         <div className={styles.modalContainer}>
-          <h2>Create Account</h2>
+          <h2>Create Admin</h2>
           <form className={styles.body} onSubmit={handleSubmit}>
             <div className={styles.details}>
               <div className={styles.section}>
@@ -158,18 +106,11 @@ const RegisterModal = ({ onClose, initialRole }) => {
                   options={["Mr", "Mrs", "Miss"]}
                   error={errors.title}
                 />
-
                 <InputEmail
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   error={errors.email}
-                />
-                <InputNo
-                  placeholder="Matric No or Staff ID"
-                  value={matricNoOrStaffId}
-                  onChange={(e) => setMatricNoOrStaffId(e.target.value)}
-                  error={errors.matricNoOrStaffId}
                 />
               </div>
 
@@ -180,17 +121,6 @@ const RegisterModal = ({ onClose, initialRole }) => {
                   onChange={(e) => setFirstName(e.target.value)}
                   error={errors.firstName}
                 />
-                <SelectField
-                  label="Faculty"
-                  value={faculty}
-                  onChange={(e) => setFaculty(e.target.value)}
-                  error={errors.faculty}
-                  options={faculties.map((f) => ({
-                    value: f.id,
-                    label: f.facultyName,
-                  }))}
-                />
-
                 <InputPwd
                   placeholder="Password"
                   value={password}
@@ -206,17 +136,6 @@ const RegisterModal = ({ onClose, initialRole }) => {
                   onChange={(e) => setLastName(e.target.value)}
                   error={errors.lastName}
                 />
-                <SelectField
-                  label="Department"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  error={errors.department}
-                  options={departments.map((d) => ({
-                    value: d.id,
-                    label: d.departmentName,
-                  }))}
-                />
-
                 <InputPwd
                   placeholder="Confirm Password"
                   value={confirmPassword}
@@ -240,7 +159,7 @@ const RegisterModal = ({ onClose, initialRole }) => {
 
       {showSuccessModal && (
         <SuccessModal
-          title="Account created successfully"
+          title="Admin created successfully"
           btnTitle="Done"
           btnOnclick={() => window.location.reload()}
         />
@@ -249,7 +168,7 @@ const RegisterModal = ({ onClose, initialRole }) => {
   );
 };
 
-// Reusable input field
+// Reusable text input field
 const InputField = ({ placeholder, value, onChange, error }) => (
   <div className={styles.titleText}>
     <input
@@ -262,18 +181,6 @@ const InputField = ({ placeholder, value, onChange, error }) => (
   </div>
 );
 
-// Reusable input field
-const InputNo = ({ placeholder, value, onChange, error }) => (
-  <div className={styles.titleNo}>
-    <input
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-    />
-    {error && <span className={styles.error}>{error}</span>}
-  </div>
-);
 // Reusable email input field
 const InputEmail = ({ placeholder, value, onChange, error }) => (
   <div className={styles.titleTexts}>
@@ -299,7 +206,7 @@ const InputPwd = ({ placeholder, value, onChange, error }) => (
   </div>
 );
 
-// Reusable select field
+// Reusable select dropdown
 const SelectField = ({ label, value, onChange, options, error }) => (
   <div className={styles.titleText}>
     <select value={value} onChange={onChange}>
@@ -320,4 +227,4 @@ const SelectField = ({ label, value, onChange, options, error }) => (
   </div>
 );
 
-export default RegisterModal;
+export default CreateAdmin;

@@ -8,7 +8,8 @@ const ViewLecturerProject = () => {
 
   const projectDetails = {
     author: "Jane Doe",
-    department: "Mass Communication",
+        faculty: "System Engineering",
+department: "Mass Communication",
     program: "HND Mass Communication",
     supervisor: "Dr. Emmanuel Okoro",
     date: "April 22, 2025",
@@ -47,6 +48,8 @@ const ViewLecturerProject = () => {
           </p>
           <p>
             <strong>Project Type:</strong> {projectDetails.projectType}
+          </p>          <p>
+            <strong>Faculty:</strong> {projectDetails.faculty}
           </p>
           <p>
             <strong>Department:</strong> {projectDetails.department}

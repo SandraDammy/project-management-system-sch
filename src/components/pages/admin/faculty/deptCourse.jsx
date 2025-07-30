@@ -6,10 +6,10 @@ import { get } from "../../../context/api";
 import { useParams, useLocation, Link } from "react-router-dom";
 import CreateFaculty from "../../../modal/createFaculty";
 import Button from "../../../common/button/button";
-import Dashboard from "../../../../Assets/Image/dashboard.png";
-import empty from "../../../../Assets/Image/empty.png";
+import ArrowBack from "../../../../Assets/Image/ArrowBack.svg";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const DeptCourse = () => {
   const [course, setCourse] = useState([]);
@@ -50,7 +50,7 @@ const DeptCourse = () => {
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
         <Link to="/admin/faculty" className={styles.wrapperBack}>
-          <img src={Dashboard} alt="Dashboard" className={styles.icon} />
+          <img src={ArrowBack} alt="ArrowBack" className={styles.icon} />
           <h1 className={styles.preTxt}>
             List of Course in the department of {departmentName}
           </h1>

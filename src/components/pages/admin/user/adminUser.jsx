@@ -9,6 +9,7 @@ import { get } from "../../../context/api";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
 import empty from "../../../../Assets/Image/empty.png";
+import CreateAdmin from "../../../section/createAdmin/createAdmin";
 
 const AdminUser = () => {
   const navigate = useNavigate();
@@ -17,18 +18,19 @@ const AdminUser = () => {
   const [showUserModal, setShowUserModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCreateAdmin, setShowCreateAdmin] = useState(false);
 
   const headers = [
     { label: "First Name", key: "firstName" },
     { label: "Last Name", key: "lastName" },
+    { label: "Email", key: "email" },
     { label: "Role", key: "role" },
-    { label: "Student ID", key: "studentId" },
   ];
 
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await get(`${baseUrl}Admins/All`);
+        const response = await get(`${baseUrl}Authentications/AllAdmins`);
         setAdmins(response || []);
       } catch (err) {
         setError(err);
@@ -46,8 +48,7 @@ const AdminUser = () => {
   };
 
   const handleCreateAdminUser = () => {
-    // Logic to handle creating an admin user
-    console.log("Create Admin User button clicked");
+    setShowCreateAdmin(true);
   };
 
   const handleListLecturer = () => {
@@ -95,6 +96,10 @@ const AdminUser = () => {
           data={admins}
           onRowClick={handleRowClick}
         />
+      )}
+
+      {showCreateAdmin && (
+        <CreateAdmin onClose={() => setShowCreateAdmin(false)} />
       )}
 
       {showUserModal && selectedUser && (

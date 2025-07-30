@@ -20,11 +20,22 @@ const UserTable = ({ headers, data, onRowClick }) => {
               onClick={() => onRowClick && onRowClick(row)}
               style={{ cursor: onRowClick ? "pointer" : "default" }}
             >
-              {headers.map((header, colIndex) => (
-                <td key={colIndex} className={styles.cell}>
-                  {row[header.key]}
-                </td>
-              ))}
+              {headers.map((header, colIndex) => {
+                const isRole = header.key === "role";
+                const isEmail = header.key === "email";
+
+                return (
+                  <td
+                    key={colIndex}
+                    className={`${styles.cell} ${isRole ? styles.roleCell : ""} ${
+                      isEmail ? styles.emailCell : ""
+                    }`}
+                    id={isRole ? "role" : isEmail ? "email" : undefined}
+                  >
+                    {row[header.key]}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

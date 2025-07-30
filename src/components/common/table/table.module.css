@@ -23,7 +23,6 @@
   height: 5rem;
   padding: 1rem;
   text-align: left;
-  text-transform: capitalize;
 }
 
 .header th {
@@ -39,10 +38,19 @@
   top: 0;
   z-index: 2;
   color: var(--blue);
+  text-transform: capitalize;
 }
 
+.roleCell {
+  text-transform: capitalize;
+}
+
+.emailCell {
+  text-transform: lowercase;
+}
 .row {
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .body td {
@@ -111,8 +119,3 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-
-
-
-

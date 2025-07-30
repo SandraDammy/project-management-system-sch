@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import styles from "./table.module.css";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const LecturerProjectTable = ({ headers, data }) => {
           {data.map((row, rowIndex) => (
             <tr key={row.id || `row-${rowIndex}`} className={styles.row}>
               {Object.entries(row)
-                .slice(0)
+                .slice(1)
                 .map(([key, value], colIndex) => (
                   <td key={colIndex} className={styles.cell}>
                     {key === "projectStatus" ? (
@@ -40,13 +40,15 @@ const LecturerProjectTable = ({ headers, data }) => {
                         {value}
                       </span>
                     ) : (
-                      <Link
-                        to={`/lecturer/project/projectProfile/${encodeURIComponent(
-                          row.projectName
-                        )}`}
-                      >
+                      (key = { colIndex } ? (
+                        <Link
+                          to={`/lecturer/project/projectProfile/${row.projectId}`}
+                        >
+                          <span>{value}</span>
+                        </Link>
+                      ) : (
                         <span>{value}</span>
-                      </Link>
+                      ))
                     )}
                   </td>
                 ))}
@@ -58,4 +60,4 @@ const LecturerProjectTable = ({ headers, data }) => {
   );
 };
 
-export default LecturerProjectTable
+export default LecturerProjectTable;

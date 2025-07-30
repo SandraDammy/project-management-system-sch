@@ -2,17 +2,20 @@ import React from "react";
 import styles from "./landingNavbar.module.css";
 import Input from "../../common/input/input";
 import Select from "../../common/select/select";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import RoleDropdown from "../../common/roleDropdown/roleDropdown";
+import Logo from "../../../Assets/Image/schLogo.png";
 
 const LandingNavbar = () => {
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link to="/" className={styles.logo}>
-          UNILAG Projects
-        </Link>
+        <div className="sidebarHeader">
+          <Link to="/" className="logoWrapper">
+            <img src={Logo} alt="Unilag Logo" className="logo" />
+            <h1 className="title">University of Lagos</h1>
+          </Link>
+        </div>
 
         <div className={styles.searchContainer}>
           <Input placeholder="Search projects..." className="input" />

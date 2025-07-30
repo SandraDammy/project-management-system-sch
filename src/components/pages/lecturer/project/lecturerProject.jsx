@@ -15,7 +15,7 @@ const LecturerProject = () => {
   const [error, setError] = useState(null);
 
   const headers = [
-    "Project Name",
+    "Project Title",
     "Project Type",
     "Course Code",
     "Course Name",
@@ -25,11 +25,12 @@ const LecturerProject = () => {
 
   const formatProjectData = (projectsArray) =>
     projectsArray.map((project) => ({
-      "Project Name": project.projectName || "N/A",
-      "Project Type": project.projectType || "N/A",
-      "Course Code": project.courseCode || "N/A",
-      "Course Name": project.courseName || "N/A",
-      "Student Name": project.studentName || "N/A",
+      projectId: project.id,
+      projectTitle: project.projectTitle || "N/A",
+      projectType: project.projectType || "N/A",
+      courseCode: project.courseCode || "N/A",
+      courseName: project.courseName || "N/A",
+      studentName: project.studentName || "N/A",
       projectStatus: project.projectStatus || "N/A",
     }));
 
@@ -59,7 +60,7 @@ const LecturerProject = () => {
     fetchProjects();
   }, [user]);
 
-      if (loading) return <Loading />;
+  if (loading) return <Loading />;
 
   if (error) return <ErrorMsg error={error} message={error} />;
 
