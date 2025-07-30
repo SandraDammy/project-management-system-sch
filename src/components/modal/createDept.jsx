@@ -71,7 +71,7 @@ const CreateDept = ({ onClose, facultyId }) => {
                     <label>Name of Department</label>
                     <input
                       type="text"
-                      placeholder="Information Technology"
+                      placeholder="Department"
                       value={departmentName}
                       onChange={(e) => setDepartmentName(e.target.value)}
                     />

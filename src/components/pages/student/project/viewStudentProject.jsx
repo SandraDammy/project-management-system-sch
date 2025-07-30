@@ -34,7 +34,7 @@ const ViewStudentProject = () => {
       </div>
     ) : null;
   return (
-        <div className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.banner}>
         <Banner title={decodeURIComponent(projectName)} />
       </div>

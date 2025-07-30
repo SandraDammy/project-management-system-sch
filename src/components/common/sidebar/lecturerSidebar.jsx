@@ -53,9 +53,11 @@ const LecturerSidebar = () => {
 
           <li className={styles.sidebarItem}>
             <Link
-              to="lecturer/profile"
+              to=""
+              // to="lecturer/profile"
               className={`${styles.sidebarLink} ${
-                location.pathname === "lecturer/profile" ? styles.active : ""
+                location.pathname === "" ? styles.active : ""
+                // location.pathname === "lecturer/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />

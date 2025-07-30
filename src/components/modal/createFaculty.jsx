@@ -69,7 +69,7 @@ const CreateFaculty = ({ onClose }) => {
                     <input
                       type="text"
                       id="facultyName"
-                      placeholder="Information Technology"
+                      placeholder="Faculty"
                       name="facultyName"
                       value={facultyName}
                       onChange={(e) => setFacultyName(e.target.value)}

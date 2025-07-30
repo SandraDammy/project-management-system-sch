@@ -20,8 +20,8 @@ const ActivityCard = ({ activity, onView }) => {
           </div>
           <div className={styles.section}>
             <div className={styles.titleTextView}>
-              <div className={styles.titleJob}>Title</div>
-              <div className={styles.txt}>{activity.projectTitle}</div>
+              <div className={styles.titleJob}>Status</div>
+              <div className={styles.txt}>{activity.activityStatus}</div>
             </div>
           </div>
         </div>
@@ -35,6 +35,12 @@ const ActivityCard = ({ activity, onView }) => {
         </div>
       </div>
 
+      <div className={styles.cardBody}>
+        <div className={styles.titleTextView}>
+          <div className={styles.titleJob}>Title</div>
+          <div className={styles.textarea}>{activity.projectTitle}</div>
+        </div>
+      </div>
       <div className={styles.cardBody}>
         <div className={styles.titleTextView}>
           <div className={styles.titleJob}>Description</div>

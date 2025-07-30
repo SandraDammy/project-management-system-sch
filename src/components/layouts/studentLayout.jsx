@@ -10,7 +10,6 @@ const StudentLayout = () => {
         <StudentSidebar />
       </div>
       <div className="container-body">
-        Student Page
         <Navbar />
         <Outlet />
       </div>
