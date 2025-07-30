@@ -5,7 +5,7 @@ import UserInfoModal from "../../../modal/userInfoModal";
 import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
 import { Link } from "react-router-dom";
-import Dashboard from "../../../../Assets/Image/dashboard.png";
+import ArrowBack from "../../../../Assets/Image/ArrowBack.svg";
 import empty from "../../../../Assets/Image/empty.png";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
@@ -54,7 +54,7 @@ const AllStudent = () => {
     <div className={styles.wrapper}>
       <div className={styles.wrapperTitle}>
         <Link to="/admin/user" className={styles.wrapperBack}>
-          <img src={Dashboard} alt="Dashboard" className={styles.icon} />
+          <img src={ArrowBack} alt="ArrowBack" className={styles.icon} />
           <h1 className={styles.preTxt}>List of Students</h1>
         </Link>
       </div>

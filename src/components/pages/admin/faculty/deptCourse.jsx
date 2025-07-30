@@ -7,9 +7,9 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import CreateFaculty from "../../../modal/createFaculty";
 import Button from "../../../common/button/button";
 import ArrowBack from "../../../../Assets/Image/ArrowBack.svg";
-import empty from "../../../../Assets/Image/empty.png";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
+import empty from "../../../../Assets/Image/empty.png";
 
 const DeptCourse = () => {
   const [course, setCourse] = useState([]);
