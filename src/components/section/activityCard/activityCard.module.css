@@ -103,3 +103,15 @@
   letter-spacing: -0.0375rem;
   color: var(--tertiary-text);
 }
+
+.approve {
+  color: var(--green) !important;
+}
+
+.pending {
+  color: var(--error) !important;
+}
+
+.review {
+  color: var(--yellow) !important;
+}

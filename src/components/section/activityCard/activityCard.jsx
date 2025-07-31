@@ -21,7 +21,13 @@ const ActivityCard = ({ activity, onView }) => {
           <div className={styles.section}>
             <div className={styles.titleTextView}>
               <div className={styles.titleJob}>Status</div>
-              <div className={styles.txt}>{activity.activityStatus}</div>
+              <div
+                className={`${styles.txt} ${
+                  styles[activity.activityStatus?.toLowerCase()]
+                }`}
+              >
+                {activity.activityStatus}
+              </div>
             </div>
           </div>
         </div>
@@ -47,14 +53,25 @@ const ActivityCard = ({ activity, onView }) => {
           <div className={styles.textarea}>{activity.description}</div>
         </div>
       </div>
-      {isValid(activity.commitMessage) && (
-        <div className={styles.cardBody}>
-          <div className={styles.titleTextView}>
-            <div className={styles.titleJob}>Commit Message</div>
-            <div className={styles.textarea}>{activity.commitMessage}</div>
+      {activity.activityStatus?.toLowerCase() === "review" &&
+        isValid(activity.commitMessage) && (
+          <div className={styles.cardBody}>
+            <div className={styles.titleTextView}>
+              <div className={styles.titleJob}>Commit Message</div>
+              <div className={styles.textarea}>{activity.commitMessage}</div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+      {activity.activityStatus?.toLowerCase() === "approve" &&
+        isValid(activity.commitMessage) && (
+          <div className={styles.cardBody}>
+            <div className={styles.titleTextView}>
+              <div className={styles.titleJob}>Approval Message</div>
+              <div className={styles.textarea}>{activity.commitMessage}</div>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

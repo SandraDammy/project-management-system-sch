@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import styles from "./sidebar.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 
 const AdminSidebar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear auth (adjust as needed)
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+
+    // Redirect to login
+    navigate("/login");
+  };
 
   const toggleMenu = () => setOpen(!open);
   return (
@@ -49,6 +60,12 @@ const AdminSidebar = () => {
             >
               Faculty
             </Link>
+          </li>
+
+          <li className={styles.sidebarItem}>
+            <button onClick={handleLogout} className={styles.sidebarBtn}>
+              Logout
+            </button>
           </li>
         </ul>
       </div>

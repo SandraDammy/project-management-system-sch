@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // ✅ Import useLocation
+import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ Import useLocation
 import styles from "./sidebar.module.css";
 import Logo from "../../../Assets/Image/schLogo.png";
 import Dashboard from "../../../Assets/Image/dashboard.png";
@@ -9,10 +9,21 @@ import { IoClose, IoMenu } from "react-icons/io5";
 
 const StudentSidebar = () => {
   const [open, setOpen] = useState(false);
-  const location = useLocation(); 
+  const location = useLocation();
 
   const toggleMenu = () => setOpen(!open);
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear auth (adjust as needed)
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+
+    // Redirect to login
+    navigate("/login");
+  };
+  
   return (
     <div className={styles.container}>
       <div className={styles.sidebarHeader}>
@@ -43,7 +54,9 @@ const StudentSidebar = () => {
             <Link
               to="/student/project"
               className={`${styles.sidebarLink} ${
-                location.pathname === "/student/project" ? styles.active : "/student/project"
+                location.pathname === "/student/project"
+                  ? styles.active
+                  : "/student/project"
               }`}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
@@ -63,6 +76,13 @@ const StudentSidebar = () => {
               <img src={Profile} alt="Profile" className={styles.icon} />
               Profile & Settings
             </Link>
+          </li>
+
+          <li className={styles.sidebarItem}>
+            <button onClick={handleLogout} className={styles.sidebarBtn}>
+              <img src={Profile} alt="Profile" className={styles.icon} />
+              Logout
+            </button>
           </li>
         </ul>
       </div>

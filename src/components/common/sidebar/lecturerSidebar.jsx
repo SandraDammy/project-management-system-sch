@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // ✅ Import useLocation
+import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ Import useLocation
 import styles from "./sidebar.module.css";
 import Logo from "../../../Assets/Image/schLogo.png";
 import Dashboard from "../../../Assets/Image/dashboard.png";
@@ -8,12 +8,23 @@ import Profile from "../../../Assets/Image/profile.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 
 const LecturerSidebar = () => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const location = useLocation(); // ✅ Get current location path
 
   const toggleMenu = () => setOpen(!open);
- 
-    return (
+
+    const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear auth (adjust as needed)
+    localStorage.removeItem("authToken");
+    sessionStorage.clear();
+
+    // Redirect to login
+    navigate("/login");
+  };
+
+  return (
     <div className={styles.container}>
       <div className={styles.sidebarHeader}>
         <Link to="/lecturer" className={styles.logoWrapper}>
@@ -64,10 +75,17 @@ const LecturerSidebar = () => {
               Profile & Settings
             </Link>
           </li>
+
+          <li className={styles.sidebarItem}>
+            <button onClick={handleLogout} className={styles.sidebarBtn}>
+              <img src={Profile} alt="Profile" className={styles.icon} />
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </div>
   );
 };
 
-export default LecturerSidebar
+export default LecturerSidebar;

@@ -125,7 +125,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
   color: var(--text);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .titleFile input {
   width: 100%;

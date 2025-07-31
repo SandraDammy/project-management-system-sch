@@ -53,10 +53,10 @@ const ViewActivityModal = ({ onClose, activity }) => {
                     <strong>{activity.video || "Not provided"}</strong>
                   </div>
                 )}
-                {isValid(activity.link) && (
+                {isValid(activity.links) && (
                   <div className={styles.titleText}>
                     <p>Link</p>
-                    <strong>{activity.link || "Not provided"}</strong>
+                    <strong>{activity.links || "Not provided"}</strong>
                   </div>
                 )}
               </div>
@@ -88,14 +88,6 @@ const ViewActivityModal = ({ onClose, activity }) => {
                 <p>Description</p>
                 <div className={styles.textarea}>
                   {activity.description || "Not provided"}
-                </div>
-              </div>
-            )}
-            {isValid(activity.commitMessage) && (
-              <div className={styles.titleText}>
-                <p>Commit Message</p>
-                <div className={styles.textarea}>
-                  {activity.commitMessage || "Not provided"}
                 </div>
               </div>
             )}

@@ -21,7 +21,10 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
 
     const newErrors = {};
     if (!commitMessage.trim()) {
-      newErrors.commitMessage = "Commit message is required.";
+      newErrors.commitMessage =
+        activity.activityStatus === "Review"
+          ? "Approval message is required."
+          : "Commit message is required.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -33,6 +36,8 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
     const mainData = {
       projectActivityId: activity.id,
       CommitMessage: commitMessage,
+      ActivityStatus:
+        activity.activityStatus === "Pending" ? "Review" : "Approve",
     };
 
     try {
@@ -95,7 +100,7 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
                     <strong>{activity.video}</strong>
                   </div>
                 )}
-                {isValid(activity.link || (activity.links && activity.links[0])) && (
+                {isValid(activity.link || activity.links?.[0]) && (
                   <div className={styles.titleText}>
                     <p>Link</p>
                     <strong>{activity.link || activity.links?.[0]}</strong>
@@ -128,35 +133,45 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
             {isValid(activity.description) && (
               <div className={styles.titleText}>
                 <p>Description</p>
-                <div className={styles.textarea}>
-                  {activity.description}
-                </div>
+                <div className={styles.textarea}>{activity.description}</div>
               </div>
             )}
 
-            <div className={styles.titleText}>
-              <label>
-                Commit Message
-                {errors.commitMessage && (
-                  <span className={styles.error}> ({errors.commitMessage})</span>
-                )}
-              </label>
-              <input
-                type="text"
-                value={commitMessage}
-                onChange={(e) => setCommitMessage(e.target.value)}
-                placeholder="e.g. Added intro chapter"
-              />
-            </div>
+            {["Pending", "Review"].includes(activity.activityStatus) && (
+              <div className={styles.titleText}>
+                <label>
+                  {activity.activityStatus === "Review"
+                    ? "Approval Message"
+                    : "Commit Message"}
+                  {errors.commitMessage && (
+                    <span className={styles.error}>
+                      ({errors.commitMessage})
+                    </span>
+                  )}
+                </label>
+                <input
+                  type="text"
+                  value={commitMessage}
+                  onChange={(e) => setCommitMessage(e.target.value)}
+                  placeholder={
+                    activity.activityStatus === "Review"
+                      ? "Approval message"
+                      : "Commit message"
+                  }
+                />
+              </div>
+            )}
 
-            <div className={styles.btn}>
-              <Button
-                title={isLoading ? "Submitting..." : "Submit"}
-                className="createLarge"
-                disabled={isLoading}
-                type="submit"
-              />
-            </div>
+            {activity.activityStatus !== "Approve" && (
+              <div className={styles.btn}>
+                <Button
+                  title={isLoading ? "Submitting..." : "Submit"}
+                  className="createLarge"
+                  disabled={isLoading}
+                  type="submit"
+                />
+              </div>
+            )}
           </form>
         </div>
       </div>

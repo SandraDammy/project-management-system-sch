@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
-import { post } from "../context/api";
 import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 import ErrorMsg from "../common/errorMsg/errorMsg";
@@ -27,7 +26,7 @@ const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [user, setUser] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -85,6 +84,7 @@ const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
 
   const validateForm = () => {
     let newErrors = {};
+    if (!formData.chapter) newErrors.chapter = "Chapter is required";
     if (!formData.title) newErrors.title = "Title is required";
     if (!formData.description)
       newErrors.description = "Description is required";
@@ -151,7 +151,12 @@ const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
             <div className={styles.details}>
               <div className={styles.section}>
                 <div className={styles.titleText}>
-                  <label htmlFor="chapter">Chapter</label>
+                  <label htmlFor="chapter">
+                    Chapter
+                    {errors.chapter && (
+                      <span className={styles.error}> ({errors.chapter})</span>
+                    )}
+                  </label>
                   <input
                     type="text"
                     id="chapter"

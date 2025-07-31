@@ -9,6 +9,7 @@ import ErrorMsg from "../../../common/errorMsg/errorMsg";
 import BannerTitle from "../../../common/banner/bannerTitle";
 import empty from "../../../../Assets/Image/empty.png";
 import { get } from "../../../context/api";
+import Button from "../../../common/button/button";
 
 const LecturerProjectProfile = () => {
   const { projectId } = useParams();
@@ -26,6 +27,8 @@ const LecturerProjectProfile = () => {
   const handleCloseViewModal = () => {
     setShowProjectCommit(null);
   };
+
+  const handlePostProject = () => {};
 
   useEffect(() => {
     if (!projectId) return;
@@ -66,6 +69,22 @@ const LecturerProjectProfile = () => {
     fetchActivities();
   }, [projectData]);
 
+  //   const handlePost = async () => {
+  //   try {
+  //     // Example: update status to "posted"
+  //     await post(`${baseUrl}/project/post`, { projectId: projectData?._id });
+
+  //     setShowSuccessModal(false);
+
+  //     // Optionally reload project or show a toast
+  //     toast.success("Project successfully posted!");
+  //     // Or trigger a data refetch here
+  //   } catch (error) {
+  //     console.error("Failed to post project:", error);
+  //     toast.error("Something went wrong. Try again.");
+  //   }
+  // };
+
   if (loading) return <Loading />;
 
   if (error) return <ErrorMsg error={error} message={error} />;
@@ -77,6 +96,16 @@ const LecturerProjectProfile = () => {
           title={projectData?.projectTitle || "Project Details"}
           href={`/lecturer/project`}
         />
+
+        <div className={styles.subBanner}>
+          {projectData?.projectStatus === "Approve" && (
+            <Button
+              title="Post Project"
+              className="btnCreate"
+              onClick={handlePostProject}
+            />
+          )}
+        </div>
       </div>
 
       <div className={styles.projectProfile}>
