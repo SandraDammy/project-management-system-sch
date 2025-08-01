@@ -112,21 +112,16 @@ const ProjectProfile = () => {
         />
 
         <div className={styles.subBanner}>
-          {projectData?.projectStatus === "Pending" && (
             <Button
               title="Create Project Activity"
               className="btnCreate"
               onClick={handleCreateProjectActivity}
             />
-          )}
-
-          {projectData?.projectStatus === "Approve" && (
             <Button
               title="Post Project"
               className="btnCreate"
               onClick={handlePostProject}
             />
-          )}
         </div>
       </div>
 

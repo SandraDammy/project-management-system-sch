@@ -2,58 +2,26 @@ import React, { useState } from "react";
 import styles from "./modal.module.css";
 import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
-import { put } from "../context/api";
-import { baseUrl } from "../context/baseUrl";
-import SuccessModal from "../modalMsg/successModal";
+import ReviewProjectModal from "../modalMsg/reviewProjectModal";
+import CompleteProjectModal from "../modalMsg/completeProjectModal";
 
 const ProjectCommitModal = ({ onClose, activity = {} }) => {
   const isValid = (val) =>
     val && val.toString().toLowerCase().trim() !== "not provided";
 
-  const [commitMessage, setCommitMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCompleteProjectModal, setShowCompleteProjectModal] =
+    useState(false);
+  const [showReviewProjectModal, setShowReviewProjectModal] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const newErrors = {};
-    if (!commitMessage.trim()) {
-      newErrors.commitMessage =
-        activity.activityStatus === "Review"
-          ? "Approval message is required."
-          : "Commit message is required.";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setIsLoading(false);
-      return;
-    }
-
-    const mainData = {
-      projectActivityId: activity.id,
-      CommitMessage: commitMessage,
-      ActivityStatus:
-        activity.activityStatus === "Pending" ? "Review" : "Approve",
-    };
-
-    try {
-      await put(
-        `${baseUrl}ProjectActivities/UpdateProjectActivity/projectActivityId?projectActivityId=${activity.id}`,
-        mainData
-      );
-      setShowSuccessModal(true);
-      setCommitMessage("");
-      setErrors({});
-    } catch (error) {
-      console.error("Error updating project activity:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleReviewProject = () => {
+    setShowReviewProjectModal(true);
   };
+
+  const handleCompleteProject = () => {
+    setShowCompleteProjectModal(true);
+  };
+
+  
 
   return (
     <div className={styles.modalOverlay}>
@@ -64,7 +32,7 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
 
         <div className={styles.modalContainer}>
           <h2>View Project Activity</h2>
-          <form className={styles.body} onSubmit={handleSubmit}>
+          <form className={styles.body}>
             <div className={styles.details}>
               <div className={styles.section}>
                 {isValid(activity.chapter) && (
@@ -137,54 +105,26 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
               </div>
             )}
 
-            {["Pending", "Review"].includes(activity.activityStatus) && (
-              <div className={styles.titleText}>
-                <label>
-                  {activity.activityStatus === "Review"
-                    ? "Approval Message"
-                    : "Commit Message"}
-                  {errors.commitMessage && (
-                    <span className={styles.error}>
-                      ({errors.commitMessage})
-                    </span>
-                  )}
-                </label>
-                <input
-                  type="text"
-                  value={commitMessage}
-                  onChange={(e) => setCommitMessage(e.target.value)}
-                  placeholder={
-                    activity.activityStatus === "Review"
-                      ? "Approval message"
-                      : "Commit message"
-                  }
-                />
-              </div>
-            )}
-
-            {activity.activityStatus !== "Approve" && (
-              <div className={styles.btn}>
-                <Button
-                  title={isLoading ? "Submitting..." : "Submit"}
-                  className="createLarge"
-                  disabled={isLoading}
-                  type="submit"
-                />
-              </div>
-            )}
+            <div className={styles.btn}>
+              <Button
+                title="Review the project"
+                className="createLarge"
+                onClick={handleReviewProject}
+              />
+              <Button
+                title="Submit Completed Project"
+                className="createLarge"
+                onClick={handleCompleteProject}
+              />
+            </div>
           </form>
         </div>
       </div>
 
-      {showSuccessModal && (
-        <SuccessModal
-          title="Project Activity updated successfully"
-          btnTitle="Done"
-          btnOnclick={() =>
-            (window.location.href = `/lecturer/project/projectProfile/${activity.projectId}`)
-          }
-        />
-      )}
+      {showCompleteProjectModal && <CompleteProjectModal id={activity.id} onClose={() => setShowCompleteProjectModal(false)}/>}
+
+      {showReviewProjectModal && <ReviewProjectModal id={activity.id} onClose={() => setShowReviewProjectModal(false)}/>}
+
     </div>
   );
 };

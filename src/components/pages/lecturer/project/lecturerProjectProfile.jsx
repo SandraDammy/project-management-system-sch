@@ -28,7 +28,7 @@ const LecturerProjectProfile = () => {
     setShowProjectCommit(null);
   };
 
-  const handlePostProject = () => {};
+  const handleCompletedProject = () => {};
 
   useEffect(() => {
     if (!projectId) return;
@@ -98,13 +98,11 @@ const LecturerProjectProfile = () => {
         />
 
         <div className={styles.subBanner}>
-          {projectData?.projectStatus === "Approve" && (
-            <Button
-              title="Post Project"
-              className="btnCreate"
-              onClick={handlePostProject}
-            />
-          )}
+          <Button
+            title="Submit Completed Project"
+            className="btnCreate"
+            onClick={handleCompletedProject}
+          />
         </div>
       </div>
 
