@@ -4,15 +4,20 @@ import Button from "../../common/button/button";
 import ErrorMsg from "../../common/errorMsg/errorMsg";
 import { post } from "../../context/api";
 import { baseUrl } from "../../context/baseUrl";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RegisterModal from "../registerModal/registerModal";
+import ProjectDetailsModal from "../../modal/projectDetailsModal";
 
 const LoginForm = ({ role }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showProjectModal, setShowProjectModal] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+   const project = location.state?.project; 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,6 +127,14 @@ const LoginForm = ({ role }) => {
         <RegisterModal
           onClose={() => setShowRegisterModal(false)}
           initialRole={role}
+        />
+      )}
+
+       {/* show project details modal */}
+      {showProjectModal && project && (
+        <ProjectDetailsModal
+          project={project}
+          onClose={() => setShowProjectModal(false)}
         />
       )}
     </div>
