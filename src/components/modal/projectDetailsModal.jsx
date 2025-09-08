@@ -10,12 +10,12 @@ const ProjectDetailsModal = ({ project, onClose }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           ✕
         </button>
-        <h2>
+        {/* <h2>
           <strong>Name:</strong> {project.firstName} {project.lastName}
-        </h2>
+        </h2> */}
         <p><strong>Email:</strong> {project.email}</p>
         <p><strong>Role:</strong> {project.role}</p>
-        <p><strong>Gender:</strong> {project.gender}</p>
+        {/* <p><strong>Gender:</strong> {project.gender}</p> */}
       </div>
     </div>
   );

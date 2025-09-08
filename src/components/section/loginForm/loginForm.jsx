@@ -26,11 +26,11 @@ const LoginForm = ({ role }) => {
     const params = new URLSearchParams(location.search);
     const projectData = {
       email: params.get("email"),
-      // uid: params.get("uid"),
       role: params.get("role"),
-      firstName: params.get("first_name"),
-      lastName: params.get("last_name"),
-      gender: params.get("gender"),
+      // uid: params.get("uid"),
+      // firstName: params.get("first_name"),
+      // lastName: params.get("last_name"),
+      // gender: params.get("gender"),
     };
 
     if (projectData.email && projectData.role) {
