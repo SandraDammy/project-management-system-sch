@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6d814771-923a-43d7-8fe6-c1b447713221/resourceGroups/studentresearch/providers/Microsoft.Web/sites/myresearchprojects",
+    "appService.deploySubpath": "build"
+}
