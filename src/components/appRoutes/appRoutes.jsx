@@ -3,6 +3,7 @@ import Login from "../pages/login";
 import LandingPage from "../pages/landingPage";
 import StudentLayout from "../layouts/studentLayout";
 import StudentDashboard from "../pages/student/studentDashboard";
+import AllProjects from "../pages/student/project/allProjects";
 import Project from "../pages/student/project/project";
 import ProjectProfile from "../pages/student/project/projectProfile";
 import ProfileSetting from "../pages/student/profileSetting";
@@ -27,10 +28,10 @@ import AllStudent from "../pages/admin/user/allStudent";
 import ViewAdminProject from "../pages/admin/viewAdminProject";
 import AllCourse from "../pages/lecturer/course/allCourse";
 import LecturerAllProject from "../pages/lecturer/project/lecturerAllProject";
+import StudentCourse from "../pages/student/course/studentCourse";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
-
   const routes = useRoutes([
     { path: "/login", element: <Login /> },
 
@@ -52,9 +53,12 @@ const AppRoutes = () => {
       element: <StudentLayout />, // <-- Layout includes sidebar + navbar
       children: [
         { path: "", element: <StudentDashboard /> },
-        { path: "project", element: <Project /> },
+        { path: "course", element: <AllCourse /> },
+        { path: "course/studentCourse", element: <StudentCourse /> },
+        { path: "project", element: <AllProjects /> },
+        { path: "myProject", element: <Project /> },
         {
-          path: "project/projectProfile/:projectId",
+          path: "myProject/projectProfile/:projectId",
           element: <ProjectProfile />,
         },
         { path: ":projectName", element: <ViewStudentProject /> },
@@ -67,7 +71,7 @@ const AppRoutes = () => {
       element: <LecturerLayout />, // <-- Lecturer layout
       children: [
         { path: "", element: <LecturerDashboard /> }, // default: /Lecturer
-        { path: "course", element: <AllCourse/> },
+        { path: "course", element: <AllCourse /> },
         { path: "course/lecturerCourse", element: <LecturerCourse /> },
         { path: "project", element: <LecturerAllProject /> },
         { path: "myProject", element: <LecturerProject /> },
@@ -85,17 +89,17 @@ const AppRoutes = () => {
     },
     {
       path: "/admin",
-      element: <AdminLayout />, 
+      element: <AdminLayout />,
       children: [
-        { path: "", element: <Admin /> }, 
-                { path: ":projectName", element: <ViewAdminProject/> },
+        { path: "", element: <Admin /> },
+        { path: ":projectName", element: <ViewAdminProject /> },
 
-        { path: "user", element: <AdminUser/> }, 
-        { path: "user/allLecturer/", element: <AllLecturer/> }, 
-        { path: "user/allStudent", element: <AllStudent/> }, 
-        { path: "faculty", element: <Faculty /> }, 
-        { path: "faculty/facultyDept/:id", element: <FacultyDept /> }, 
-        { path: "faculty/facultyDept/deptCourse/:id", element: <DeptCourse/> }, 
+        { path: "user", element: <AdminUser /> },
+        { path: "user/allLecturer/", element: <AllLecturer /> },
+        { path: "user/allStudent", element: <AllStudent /> },
+        { path: "faculty", element: <Faculty /> },
+        { path: "faculty/facultyDept/:id", element: <FacultyDept /> },
+        { path: "faculty/facultyDept/deptCourse/:id", element: <DeptCourse /> },
       ],
     },
 

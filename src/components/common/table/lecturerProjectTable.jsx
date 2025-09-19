@@ -42,7 +42,7 @@ const LecturerProjectTable = ({ headers, data }) => {
                     ) : (
                       (key = { colIndex } ? (
                         <Link
-                          to={`/lecturer/project/projectProfile/${row.projectId}`}
+                          to={`/lecturer/myProject/projectProfile/${row.projectId}`}
                         >
                           <span>{value}</span>
                         </Link>
