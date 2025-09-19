@@ -8,6 +8,7 @@ import ProjectProfile from "../pages/student/project/projectProfile";
 import ProfileSetting from "../pages/student/profileSetting";
 import LecturerLayout from "../layouts/lecturerLayout";
 import LecturerDashboard from "../pages/lecturer/lecturerDashboard";
+import LecturerCourse from "../pages/lecturer/course/lecturerCourse";
 import LecturerProject from "../pages/lecturer/project/lecturerProject";
 import LecturerProjectProfile from "../pages/lecturer/project/lecturerProjectProfile";
 import AllProject from "../pages/project/allProject";
@@ -24,6 +25,8 @@ import AdminUser from "../pages/admin/user/adminUser";
 import AllLecturer from "../pages/admin/user/allLecturer";
 import AllStudent from "../pages/admin/user/allStudent";
 import ViewAdminProject from "../pages/admin/viewAdminProject";
+import AllCourse from "../pages/lecturer/course/allCourse";
+import LecturerAllProject from "../pages/lecturer/project/lecturerAllProject";
 // import { useAuth } from "../context/authContext";
 
 const AppRoutes = () => {
@@ -64,11 +67,19 @@ const AppRoutes = () => {
       element: <LecturerLayout />, // <-- Lecturer layout
       children: [
         { path: "", element: <LecturerDashboard /> }, // default: /Lecturer
-        { path: "project", element: <LecturerProject /> },
+        { path: "course", element: <AllCourse/> },
+        { path: "course/lecturerCourse", element: <LecturerCourse /> },
+        { path: "project", element: <LecturerAllProject /> },
+        { path: "myProject", element: <LecturerProject /> },
+        // { path: "project", element: <LecturerProject /> },
         {
-          path: "project/projectProfile/:projectId",
+          path: "myProject/projectProfile/:projectId",
           element: <LecturerProjectProfile />,
         },
+        // {
+        //   path: "project/projectProfile/:projectId",
+        //   element: <LecturerProjectProfile />,
+        // },
         { path: ":projectName", element: <ViewLecturerProject /> },
       ],
     },
