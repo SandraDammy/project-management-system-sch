@@ -1,31 +1,42 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ Import useLocation
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import Logo from "../../../Assets/Image/schLogo.png";
 import Dashboard from "../../../Assets/Image/dashboard.png";
 import Activity from "../../../Assets/Image/activity.png";
 import Profile from "../../../Assets/Image/profile.png";
-import { IoClose, IoMenu } from "react-icons/io5";
+import {
+  IoClose,
+  IoMenu,
+  IoChevronDown,
+  IoChevronForward,
+} from "react-icons/io5";
 
 const LecturerSidebar = () => {
   const [open, setOpen] = useState(false);
-  const location = useLocation(); // ✅ Get current location path
+  const [dropdown, setDropdown] = useState({
+    course: false,
+    project: false,
+  });
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setOpen(!open);
 
-    const navigate = useNavigate();
+  const toggleDropdown = (section) => {
+    setDropdown((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
 
   const handleLogout = () => {
-    // Clear auth (adjust as needed)
     localStorage.removeItem("authToken");
     sessionStorage.clear();
-
-    // Redirect to login
     navigate("/login");
   };
 
   return (
     <div className={styles.container}>
+      {/* Header */}
       <div className={styles.sidebarHeader}>
         <Link to="/lecturer" className={styles.logoWrapper}>
           <img src={Logo} alt="Unilag Logo" className={styles.logo} />
@@ -36,8 +47,10 @@ const LecturerSidebar = () => {
         </div>
       </div>
 
+      {/* Menu */}
       <div className={open ? styles.sidebarMenuActive : styles.sidebarMenu}>
         <ul className={styles.sidebarList}>
+          {/* Dashboard */}
           <li className={styles.sidebarItem}>
             <Link
               to="/lecturer"
@@ -50,25 +63,92 @@ const LecturerSidebar = () => {
             </Link>
           </li>
 
-          <li className={styles.sidebarItem}>
-            <Link
-              to="/lecturer/project"
-              className={`${styles.sidebarLink} ${
-                location.pathname === "/lecturer/project" ? styles.active : ""
-              }`}
+          {/* Course Dropdown */}
+          <div className={styles.dropdownBody}>
+            <li
+              className={styles.sidebarSubtitle}
+              onClick={() => toggleDropdown("course")}
+            >
+              <img src={Activity} alt="Course" className={styles.icon} />
+              Course
+              {dropdown.course ? <IoChevronDown /> : <IoChevronForward />}
+            </li>
+            {dropdown.course && (
+              <>
+                <li className={styles.sidebarSubItem}>
+                  <Link
+                    to="/lecturer/course"
+                    className={`${styles.sidebarLink} ${
+                      location.pathname === "/lecturer/course"
+                        ? styles.active
+                        : ""
+                    }`}
+                  >
+                    All Courses
+                  </Link>
+                </li>
+                <li className={styles.sidebarSubItem}>
+                  <Link
+                    to="/lecturer/course/lecturerCourse"
+                    className={`${styles.sidebarLink} ${
+                      location.pathname === "/lecturer/course/lecturerCourse"
+                        ? styles.active
+                        : ""
+                    }`}
+                  >
+                    My Courses
+                  </Link>
+                </li>
+              </>
+            )}
+          </div>
+
+          {/* Project Dropdown */}
+          <div className={styles.dropdownBody}>
+            <li
+              className={styles.sidebarSubtitle}
+              onClick={() => toggleDropdown("project")}
             >
               <img src={Activity} alt="Project" className={styles.icon} />
-              My Project
-            </Link>
-          </li>
+              Project
+              {dropdown.project ? <IoChevronDown /> : <IoChevronForward />}
+            </li>
+            {dropdown.project && (
+              <>
+                <li className={styles.sidebarSubItem}>
+                  <Link
+                    to="/lecturer/project"
+                    className={`${styles.sidebarLink} ${
+                      location.pathname === "/lecturer/project"
+                        ? styles.active
+                        : ""
+                    }`}
+                  >
+                    All Projects
+                  </Link>
+                </li>
+                <li className={styles.sidebarSubItem}>
+                  <Link
+                    to="/lecturer/myProject"
+                    className={`${styles.sidebarLink} ${
+                      location.pathname === "/lecturer/myProject"
+                        ? styles.active
+                        : ""
+                    }`}
+                  >
+                    Student Projects
+                  </Link>
+                </li>
+              </>
+            )}
+          </div>
 
+          {/* Profile */}
           <li className={styles.sidebarItem}>
             <Link
               to=""
-              // to="lecturer/profile"
               className={`${styles.sidebarLink} ${
                 location.pathname === "" ? styles.active : ""
-                // location.pathname === "lecturer/profile" ? styles.active : ""
               }`}
             >
               <img src={Profile} alt="Profile" className={styles.icon} />
@@ -76,9 +156,10 @@ const LecturerSidebar = () => {
             </Link>
           </li>
 
+          {/* Logout */}
           <li className={styles.sidebarItem}>
             <button onClick={handleLogout} className={styles.sidebarBtn}>
-              <img src={Profile} alt="Profile" className={styles.icon} />
+              <img src={Profile} alt="Logout" className={styles.icon} />
               Logout
             </button>
           </li>

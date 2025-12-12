@@ -80,10 +80,32 @@
   margin: 0;
 }
 
+.sidebarSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--black);
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .sidebarItem {
   margin: 0.8rem 0;
 }
-
+.sidebarSubItem {
+  margin: 0.25rem 2rem;
+}
+.dropdownBody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0.8rem 0;
+}
 .sidebarLink {
   display: flex;
   align-items: center;

@@ -41,7 +41,7 @@ const ProjectTable = ({ headers, data }) => {
                         {value}
                       </span>
                     ) : key ={colIndex} ? (
-                      <Link to={`/student/project/projectProfile/${row.projectId}`}>
+                      <Link to={`/student/myProject/projectProfile/${row.projectId}`}>
                         <span>{value}</span>
                       </Link>
                     ) : (
