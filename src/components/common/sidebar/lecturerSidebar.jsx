@@ -3,30 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import Logo from "../../../Assets/Image/schLogo.png";
 import Dashboard from "../../../Assets/Image/dashboard.png";
-import Activity from "../../../Assets/Image/activity.png";
 import Profile from "../../../Assets/Image/profile.png";
 import {
   IoClose,
   IoMenu,
-  IoChevronDown,
-  IoChevronForward,
 } from "react-icons/io5";
 
 const LecturerSidebar = () => {
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState({
-    course: false,
-    project: false,
-  });
+
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const toggleMenu = () => setOpen(!open);
-
-  const toggleDropdown = (section) => {
-    setDropdown((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -63,85 +53,20 @@ const LecturerSidebar = () => {
             </Link>
           </li>
 
-          {/* Course Dropdown */}
-          <div className={styles.dropdownBody}>
-            <li
-              className={styles.sidebarSubtitle}
-              onClick={() => toggleDropdown("course")}
+          {/* Project */}
+          <li className={styles.sidebarItem}>
+            <Link
+              to="/lecturer/myProject"
+              className={`${styles.sidebarLink} ${
+                location.pathname === "/lecturer/myProject"
+                  ? styles.active
+                  : "/lecturer/myProject"
+              }`}
             >
-              <img src={Activity} alt="Course" className={styles.icon} />
-              Course
-              {dropdown.course ? <IoChevronDown /> : <IoChevronForward />}
-            </li>
-            {dropdown.course && (
-              <>
-                <li className={styles.sidebarSubItem}>
-                  <Link
-                    to="/lecturer/course"
-                    className={`${styles.sidebarLink} ${
-                      location.pathname === "/lecturer/course"
-                        ? styles.active
-                        : ""
-                    }`}
-                  >
-                    All Courses
-                  </Link>
-                </li>
-                <li className={styles.sidebarSubItem}>
-                  <Link
-                    to="/lecturer/course/lecturerCourse"
-                    className={`${styles.sidebarLink} ${
-                      location.pathname === "/lecturer/course/lecturerCourse"
-                        ? styles.active
-                        : ""
-                    }`}
-                  >
-                    My Courses
-                  </Link>
-                </li>
-              </>
-            )}
-          </div>
-
-          {/* Project Dropdown */}
-          <div className={styles.dropdownBody}>
-            <li
-              className={styles.sidebarSubtitle}
-              onClick={() => toggleDropdown("project")}
-            >
-              <img src={Activity} alt="Project" className={styles.icon} />
+              <img src={Profile} alt="Project" className={styles.icon} />
               Project
-              {dropdown.project ? <IoChevronDown /> : <IoChevronForward />}
-            </li>
-            {dropdown.project && (
-              <>
-                <li className={styles.sidebarSubItem}>
-                  <Link
-                    to="/lecturer/project"
-                    className={`${styles.sidebarLink} ${
-                      location.pathname === "/lecturer/project"
-                        ? styles.active
-                        : ""
-                    }`}
-                  >
-                    All Projects
-                  </Link>
-                </li>
-                <li className={styles.sidebarSubItem}>
-                  <Link
-                    to="/lecturer/myProject"
-                    className={`${styles.sidebarLink} ${
-                      location.pathname === "/lecturer/myProject"
-                        ? styles.active
-                        : ""
-                    }`}
-                  >
-                    Student Projects
-                  </Link>
-                </li>
-              </>
-            )}
-          </div>
+            </Link>
+          </li>
 
           {/* Profile */}
           <li className={styles.sidebarItem}>
