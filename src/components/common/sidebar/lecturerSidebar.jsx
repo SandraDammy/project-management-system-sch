@@ -3,30 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./sidebar.module.css";
 import Logo from "../../../Assets/Image/schLogo.png";
 import Dashboard from "../../../Assets/Image/dashboard.png";
-import Activity from "../../../Assets/Image/activity.png";
 import Profile from "../../../Assets/Image/profile.png";
 import {
   IoClose,
   IoMenu,
-  IoChevronDown,
-  IoChevronForward,
 } from "react-icons/io5";
 
 const LecturerSidebar = () => {
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState({
-    course: false,
-    project: false,
-  });
+
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const toggleMenu = () => setOpen(!open);
-
-  const toggleDropdown = (section) => {
-    setDropdown((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
