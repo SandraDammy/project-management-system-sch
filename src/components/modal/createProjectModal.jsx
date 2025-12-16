@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { get, post } from "../context/api";
 import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
+import ProjectActivityModal from "./projectActivityModal";
+import { useParams } from "react-router-dom";
 
 const CreateProjectModal = ({ onClose }) => {
   const [user, setUser] = useState(null);
@@ -30,6 +32,10 @@ const CreateProjectModal = ({ onClose }) => {
   const [faculties, setFaculties] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [lecturers, setLecturers] = useState([]);
+
+  const [showProjectActivity, setShowProjectActivity] = useState(false);
+  const { projectId } = useParams();
+  const [projectData, setProjectData] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -66,7 +72,9 @@ const CreateProjectModal = ({ onClose }) => {
     if (!facultyName) return;
     const fetchDepartments = async () => {
       try {
-        const data = await get(`${baseUrl}Departments/AllDepartments?facultyId=${facultyName}`);
+        const data = await get(
+          `${baseUrl}Departments/AllDepartments?facultyId=${facultyName}`
+        );
         setDepartments(data || []);
       } catch (error) {
         console.error("Failed to load departments", error);
@@ -137,6 +145,15 @@ const CreateProjectModal = ({ onClose }) => {
     }
   };
 
+  const handleSuccessDone = () => {
+    setShowSuccessModal(false);
+    setShowProjectActivity(true);
+  };
+
+  const handleCloseCreateProjectActivity = () => {
+    setShowProjectActivity(false);
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalBody}>
@@ -168,7 +185,10 @@ const CreateProjectModal = ({ onClose }) => {
                   value={facultyName}
                   onChange={(e) => setFacultyName(e.target.value)}
                   error={errors.facultyName}
-                  options={faculties.map((f) => ({ value: f.id, label: f.facultyName }))}
+                  options={faculties.map((f) => ({
+                    value: f.id,
+                    label: f.facultyName,
+                  }))}
                 />
                 <SelectField
                   label="Semester"
@@ -208,7 +228,10 @@ const CreateProjectModal = ({ onClose }) => {
                   value={departmentName}
                   onChange={(e) => setDepartmentName(e.target.value)}
                   error={errors.departmentName}
-                  options={departments.map((d) => ({ value: d.id, label: d.departmentName }))}
+                  options={departments.map((d) => ({
+                    value: d.id,
+                    label: d.departmentName,
+                  }))}
                 />
                 <InputField
                   label="Course Name"
@@ -226,7 +249,10 @@ const CreateProjectModal = ({ onClose }) => {
                   value={lecturerId}
                   onChange={(e) => setLecturerId(e.target.value)}
                   error={errors.lecturerId}
-                  options={lecturers.map((l) => ({ value: l.id, label: l.fullName }))}
+                  options={lecturers.map((l) => ({
+                    value: l.id,
+                    label: l.fullName,
+                  }))}
                 />
                 <SelectField
                   label="Programme"
@@ -285,16 +311,35 @@ const CreateProjectModal = ({ onClose }) => {
         <SuccessModal
           title="Project created successfully"
           btnTitle="Done"
-          btnOnclick={() => (window.location.href = "/student/project")}
+          btnOnclick={handleSuccessDone}
+          // btnOnclick={() => (window.location.href = "/student/myProject")}
+        />
+      )}
+
+      {showProjectActivity && (
+        <ProjectActivityModal
+          onClose={handleCloseCreateProjectActivity}
+          projectId={projectId}
+          projectTitle={projectData?.projectTitle}
         />
       )}
     </div>
   );
 };
 
-const InputField = ({ label, value, onChange, placeholder, disabled, error }) => (
+const InputField = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  disabled,
+  error,
+}) => (
   <div className={styles.titleText}>
-    <label>{label}{error && <span className={styles.error}>({error})</span>}</label>
+    <label>
+      {label}
+      {error && <span className={styles.error}>({error})</span>}
+    </label>
     <input
       type="text"
       placeholder={placeholder}
@@ -302,24 +347,29 @@ const InputField = ({ label, value, onChange, placeholder, disabled, error }) =>
       onChange={onChange}
       disabled={disabled}
     />
-    
   </div>
 );
 
 const SelectField = ({ label, value, onChange, options, error }) => (
   <div className={styles.titleText}>
-    <label>{label}{error && <span className={styles.error}>({error})</span>}</label>
+    <label>
+      {label}
+      {error && <span className={styles.error}>({error})</span>}
+    </label>
     <select value={value} onChange={onChange}>
       <option value="">Select {label}</option>
       {options.map((opt, i) =>
         typeof opt === "string" ? (
-          <option key={i} value={opt.toLowerCase()}>{opt}</option>
+          <option key={i} value={opt.toLowerCase()}>
+            {opt}
+          </option>
         ) : (
-          <option key={i} value={opt.value}>{opt.label}</option>
+          <option key={i} value={opt.value}>
+            {opt.label}
+          </option>
         )
       )}
     </select>
-    
   </div>
 );
 

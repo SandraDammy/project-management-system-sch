@@ -1,4 +1,3 @@
-// ActivityCard.jsx
 import React from "react";
 import styles from "./activityCard.module.css";
 import Button from "../../common/button/button";
@@ -57,7 +56,7 @@ const ActivityCard = ({ activity, onView }) => {
         isValid(activity.commitMessage) && (
           <div className={styles.cardBody}>
             <div className={styles.titleTextView}>
-              <div className={styles.titleJob}>Commit Message</div>
+              <div className={styles.titleJob}>Review Message</div>
               <div className={styles.textarea}>{activity.commitMessage}</div>
             </div>
           </div>
@@ -68,6 +67,16 @@ const ActivityCard = ({ activity, onView }) => {
           <div className={styles.cardBody}>
             <div className={styles.titleTextView}>
               <div className={styles.titleJob}>Approval Message</div>
+              <div className={styles.textarea}>{activity.commitMessage}</div>
+            </div>
+          </div>
+        )}
+
+      {activity.activityStatus?.toLowerCase() === "post" &&
+        isValid(activity.commitMessage) && (
+          <div className={styles.cardBody}>
+            <div className={styles.titleTextView}>
+              <div className={styles.titleJob}>Post Project Message</div>
               <div className={styles.textarea}>{activity.commitMessage}</div>
             </div>
           </div>

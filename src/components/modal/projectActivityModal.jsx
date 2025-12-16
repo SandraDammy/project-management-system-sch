@@ -6,6 +6,7 @@ import { baseUrl } from "../context/baseUrl";
 import SuccessModal from "../modalMsg/successModal";
 import ErrorMsg from "../common/errorMsg/errorMsg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
   const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -300,7 +302,9 @@ const ProjectActivityModal = ({ onClose, projectId, projectTitle }) => {
         <SuccessModal
           title="Project Activity created successfully"
           btnTitle="Done"
-          btnOnclick={() => (window.location.href = "/student/project")}
+          btnOnclick={() =>
+            navigate(`/student/myProject`)
+          }
         />
       )}
     </div>

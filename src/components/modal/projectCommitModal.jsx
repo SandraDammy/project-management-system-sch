@@ -4,6 +4,7 @@ import closeIcon from "../../Assets/Image/close.svg";
 import Button from "../common/button/button";
 import ReviewProjectModal from "../modalMsg/reviewProjectModal";
 import CompleteProjectModal from "../modalMsg/completeProjectModal";
+import PostProjectModal from "../modalMsg/postProjectModal";
 
 const ProjectCommitModal = ({ onClose, activity = {} }) => {
   const isValid = (val) =>
@@ -11,6 +12,7 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
 
   const [showCompleteProjectModal, setShowCompleteProjectModal] =
     useState(false);
+  const [showPostProjectModal, setShowPostProjectModal] = useState(false);
   const [showReviewProjectModal, setShowReviewProjectModal] = useState(false);
 
   const handleReviewProject = () => {
@@ -21,7 +23,9 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
     setShowCompleteProjectModal(true);
   };
 
-  
+  const handlePostProject = () => {
+    setShowPostProjectModal(true);
+  };
 
   return (
     <div className={styles.modalOverlay}>
@@ -116,15 +120,27 @@ const ProjectCommitModal = ({ onClose, activity = {} }) => {
                 className="createLarge"
                 onClick={handleCompleteProject}
               />
+              <Button
+                title="Post Project"
+                className="createLarge"
+                onClick={handlePostProject}
+              />
             </div>
           </form>
         </div>
       </div>
 
-      {showCompleteProjectModal && <CompleteProjectModal id={activity.id} onClose={() => setShowCompleteProjectModal(false)}/>}
+      {showCompleteProjectModal && (
+        <CompleteProjectModal id={activity.id} onClose={onClose} />
+      )}
 
-      {showReviewProjectModal && <ReviewProjectModal id={activity.id} onClose={() => setShowReviewProjectModal(false)}/>}
+      {showReviewProjectModal && (
+        <ReviewProjectModal id={activity.id} onClose={onClose} />
+      )}
 
+      {showPostProjectModal && (
+        <PostProjectModal id={activity.id} onClose={onClose} />
+      )}
     </div>
   );
 };

@@ -10,6 +10,10 @@ const ProjectTable = ({ headers, data }) => {
         return styles.pending;
       case "approved":
         return styles.approved;
+      case "posted":
+        return styles.posted;
+      case "post":
+        return styles.post;
       case "review":
         return styles.review;
       default:
@@ -40,12 +44,16 @@ const ProjectTable = ({ headers, data }) => {
                       >
                         {value}
                       </span>
-                    ) : key ={colIndex} ? (
-                      <Link to={`/student/myProject/projectProfile/${row.projectId}`}>
-                        <span>{value}</span>
-                      </Link>
                     ) : (
-                      <span>{value}</span>
+                      (key = { colIndex } ? (
+                        <Link
+                          to={`/student/myProject/projectProfile/${row.projectId}`}
+                        >
+                          <span>{value}</span>
+                        </Link>
+                      ) : (
+                        <span>{value}</span>
+                      ))
                     )}
                   </td>
                 ))}
