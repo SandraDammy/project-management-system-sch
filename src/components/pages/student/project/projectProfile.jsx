@@ -85,7 +85,7 @@ const ProjectProfile = () => {
       <div className={styles.banner}>
         <BannerTitle
           title={projectData?.projectTitle || "Project Details"}
-          href={`/student/project`}
+          href={`/student/myProject`}
         />
 
         <div className={styles.subBanner}>
