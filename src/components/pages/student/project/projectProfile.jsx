@@ -6,13 +6,11 @@ import BannerTitle from "../../../common/banner/bannerTitle";
 import Button from "../../../common/button/button";
 import ProjectActivityModal from "../../../modal/projectActivityModal";
 import ViewActivityModal from "../../../modal/viewActivityModal";
-import { get, post } from "../../../context/api";
+import { get } from "../../../context/api";
 import { baseUrl } from "../../../context/baseUrl";
 import empty from "../../../../Assets/Image/empty.png";
 import Loading from "../../../common/loading/loading";
 import ErrorMsg from "../../../common/errorMsg/errorMsg";
-import SuccessModal from "../../../modalMsg/successModal";
-import { toast } from "react-toastify";
 
 const ProjectProfile = () => {
   const { projectId } = useParams();
@@ -22,7 +20,6 @@ const ProjectProfile = () => {
   const [error, setError] = useState(null);
   const [showProjectActivity, setShowProjectActivity] = useState(false);
   const [showViewActivity, setShowViewActivity] = useState(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleCreateProjectActivity = () => {
     setShowProjectActivity(true);
@@ -38,10 +35,6 @@ const ProjectProfile = () => {
 
   const handleCloseViewModal = () => {
     setShowViewActivity(null);
-  };
-
-  const handlePostProject = () => {
-    setShowSuccessModal(true);
   };
 
   useEffect(() => {
@@ -83,22 +76,6 @@ const ProjectProfile = () => {
     fetchActivities();
   }, [projectData]);
 
-  const handlePost = async () => {
-    try {
-      // Example: update status to "posted"
-      await post(`${baseUrl}/project/post`, { projectId: projectData?._id });
-
-      setShowSuccessModal(false);
-
-      // Optionally reload project or show a toast
-      toast.success("Project successfully posted!");
-      // Or trigger a data refetch here
-    } catch (error) {
-      console.error("Failed to post project:", error);
-      toast.error("Something went wrong. Try again.");
-    }
-  };
-
   if (loading) return <Loading />;
 
   if (error) return <ErrorMsg error={error} message={error} />;
@@ -112,16 +89,11 @@ const ProjectProfile = () => {
         />
 
         <div className={styles.subBanner}>
-            <Button
-              title="Create Project Activity"
-              className="btnCreate"
-              onClick={handleCreateProjectActivity}
-            />
-            <Button
-              title="Post Project"
-              className="btnCreate"
-              onClick={handlePostProject}
-            />
+          <Button
+            title="Create Project Activity"
+            className="btnCreate"
+            onClick={handleCreateProjectActivity}
+          />
         </div>
       </div>
 
@@ -186,14 +158,6 @@ const ProjectProfile = () => {
         <ViewActivityModal
           activity={showViewActivity}
           onClose={handleCloseViewModal}
-        />
-      )}
-
-      {showSuccessModal && (
-        <SuccessModal
-          title="Post project"
-          btnTitle="Done"
-          btnOnclick={handlePost}
         />
       )}
     </div>
