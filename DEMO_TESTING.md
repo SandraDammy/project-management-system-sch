@@ -20,9 +20,9 @@ committing them.
 
 | Role | Account email | Password |
 | --- | --- | --- |
-| Admin | Add the provided demo email | Do not store here |
-| Lecturer | Add the provided demo email | Do not store here |
-| Student | Add the provided demo email | Do not store here |
+| Admin | Add the provided demo email | Do not store here. |
+| Lecturer | Add the provided demo email | Do not store here. |
+| Student | Add the provided demo email | Do not store here. |
 
 ## Demo checklist
 
