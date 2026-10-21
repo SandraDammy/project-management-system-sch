@@ -1,70 +1,131 @@
-# Getting Started with Create React App
+# SCH Project Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A role-based project management web app for a university environment. The platform helps students, lecturers, and administrators browse, manage, and review academic projects across faculties, departments, and courses.
+
+## Overview
+
+This application is designed to support the full project lifecycle within a school or university setting. It provides a central place to:
+
+- Explore published projects and academic work
+- View student and lecturer project records
+- Manage course-related academic activities
+- Maintain faculty and department information
+- Support admin oversight for users and projects
+- Offer role-specific dashboards and routes
+
+## Key Features
+
+### Public and project discovery pages
+- Landing page with project overview and browsing experience
+- Search and browse across available projects
+- Individual project detail views for public access
+
+### Student access
+- Student dashboard with assigned or completed project listings
+- Project profile and details view
+- Course-related project navigation
+- Personal profile settings
+
+### Lecturer access
+- Lecturer dashboard for managing academic work
+- Course management and project tracking
+- Lecturer-specific project views and profiles
+
+### Admin access
+- Faculty and department management
+- User management for lecturers and students
+- Administrative project oversight
+- Role-based navigation and data organization
+
+## Tech Stack
+
+- React
+- React Router DOM
+- Axios
+- CSS Modules and custom styling
+- React Icons
+- React Toastify
+
+## Project Structure
+
+```bash
+src/
+├── components/
+│   ├── appRoutes/
+│   ├── common/
+│   ├── context/
+│   ├── layouts/
+│   ├── modal/
+│   ├── modalMsg/
+│   ├── pages/
+│   └── section/
+├── Assets/
+├── App.js
+├── index.js
+├── App.css
+└── index.css
+```
+
+## Role-based App Flow
+
+The application routes are organized around user roles:
+
+- `/` - landing page and public project browsing
+- `/login` - login page for different roles
+- `/student/*` - student dashboard, courses, and project management
+- `/lecturer/*` - lecturer dashboard, courses, and project views
+- `/admin/*` - admin dashboard, faculty, departments, and user management
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Run the app locally
+
+```bash
+npm start
+```
+
+The app will run in development mode at:
+
+```text
+http://localhost:3000
+```
+
+### Build for production
+
+```bash
+npm run build
+```
 
 ## Available Scripts
 
-In the project directory, you can run:
+```bash
+npm start
+npm test
+npm run build
+npm run eject
+```
 
-### `npm start`
+## Demo testing
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+See [DEMO_TESTING.md](./DEMO_TESTING.md) for demo setup, role-based test flows,
+and a checklist for recording results. Demo credentials are not included in the
+repository.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Notes
 
-### `npm test`
+This project was bootstrapped with Create React App and is designed as a university project management system for academic collaboration, tracking, and administration.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## License
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is currently unlicensed unless otherwise specified in the repository.
