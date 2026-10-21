@@ -73,17 +73,12 @@ const AppRoutes = () => {
         { path: "", element: <LecturerDashboard /> }, // default: /Lecturer
         { path: "course", element: <AllCourse /> },
         { path: "course/lecturerCourse", element: <LecturerCourse /> },
-        { path: "project", element: <LecturerAllProject /> },
-        { path: "myProject", element: <LecturerProject /> },
-        // { path: "project", element: <LecturerProject /> },
+        { path: "projects", element: <LecturerAllProject /> },
+        { path: "project", element: <LecturerProject /> },
         {
-          path: "myProject/projectProfile/:projectId",
+          path: "project/projectProfile/:projectId",
           element: <LecturerProjectProfile />,
         },
-        // {
-        //   path: "project/projectProfile/:projectId",
-        //   element: <LecturerProjectProfile />,
-        // },
         { path: ":projectName", element: <ViewLecturerProject /> },
       ],
     },

@@ -10,6 +10,10 @@ const ActivityTable = ({ headers, data }) => {
         return styles.pending;
       case "approved":
         return styles.approved;
+      case "posted":
+        return styles.posted;
+      case "post":
+        return styles.post;
       case "review":
         return styles.review;
       default:
@@ -41,7 +45,11 @@ const ActivityTable = ({ headers, data }) => {
                         {value}
                       </span>
                     ) : (
-                      <Link to={`/student/activity/activityProfile/${encodeURIComponent(row.projectName)}`}>
+                      <Link
+                        to={`/student/activity/activityProfile/${encodeURIComponent(
+                          row.projectName
+                        )}`}
+                      >
                         <span>{value}</span>
                       </Link>
                     )}

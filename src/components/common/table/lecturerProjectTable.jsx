@@ -10,6 +10,10 @@ const LecturerProjectTable = ({ headers, data }) => {
         return styles.pending;
       case "approved":
         return styles.approved;
+      case "posted":
+        return styles.posted;
+      case "post":
+        return styles.post;
       case "review":
         return styles.review;
       default:
@@ -42,7 +46,7 @@ const LecturerProjectTable = ({ headers, data }) => {
                     ) : (
                       (key = { colIndex } ? (
                         <Link
-                          to={`/lecturer/myProject/projectProfile/${row.projectId}`}
+                          to={`/lecturer/project/projectProfile/${row.projectId}`}
                         >
                           <span>{value}</span>
                         </Link>
