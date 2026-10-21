@@ -116,6 +116,12 @@ npm run build
 npm run eject
 ```
 
+## Demo testing
+
+See [DEMO_TESTING.md](./DEMO_TESTING.md) for demo setup, role-based test flows,
+and a checklist for recording results. Demo credentials are not included in the
+repository.
+
 ## Notes
 
 This project was bootstrapped with Create React App and is designed as a university project management system for academic collaboration, tracking, and administration.
